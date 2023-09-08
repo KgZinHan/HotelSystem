@@ -1,0 +1,43 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsRoomAmenity
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MsRoomAmenity</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rmamtycde)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rmamtycde)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rmamtydesc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rmamtydesc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Revdtetime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Revdtetime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Userid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Userid)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Rmamtyid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

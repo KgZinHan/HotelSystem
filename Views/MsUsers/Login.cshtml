@@ -1,0 +1,149 @@
+﻿@model Hotel_Core_MVC_V1.Models.LoginModel
+
+@{
+    Layout = "";
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hotel Core System | MVC</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/lib/adminlte3/dist/css/adminlte.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/bs-stepper/css/bs-stepper.min.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header ">
+                                <h3 class="text-center">Hotel System Login</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="bs-stepper">
+                                    <div class="bs-stepper-header" role="tablist">
+                                        <!-- your steps here -->
+                                        <div class="step" data-target="#logins-part">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                                                <span class="bs-stepper-circle">1</span>
+                                                <span class="bs-stepper-label">Logins</span>
+                                            </button>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="step" data-target="#information-part">
+                                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                                                <span class="bs-stepper-circle">2</span>
+                                                <span class="bs-stepper-label">Confirm login info</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="bs-stepper-content">
+                                        <!-- your steps content here -->
+                                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                            <div class="form-group">
+                                                <label asp-for="Usercde">User Code</label>
+                                                <input id="Usercde" class="form-control" placeholder="Enter User Code">
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Pwd">Password</label>
+                                                <input type="password" class="form-control" id="Pwd" placeholder="Password">
+                                            </div>
+@*                                            <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+*@                                            <button class="btn btn-primary" id="btnNext">Login</button>
+                                        </div>
+                                        <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                                            <div class="form-group">
+                                                <label>Company/Hotel Name</label>
+                                                <input id="Cmpy" class="form-control" disabled="disabled">
+                                                <label id="loginconfirmmsg" class="text-blue"></label>
+                                            </div>
+                                            <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">Go to System</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+@*                            <div class="card-footer">
+                                Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and information about the plugin.
+                            </div>
+*@                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/lib/adminlte3/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/lib/adminlte3/dist/js/adminlte.min.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/lib/adminlte3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- BS-Stepper -->
+    <script src="~/lib/adminlte3/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var stepper = new Stepper($('.bs-stepper')[0])
+        })
+        var stepper = new Stepper(document.querySelector('.bs-stepper'))
+        stepper.next()
+
+    </script>
+    <script type="text/javascript">
+        $(function () {            
+            $("#btnNext").click(function () {                
+                var para1 = $("#Usercde").val();
+                var para2 = $("#Pwd").val();
+                $.ajax({
+                    type: "Get",
+                    url: "/MsUsers/AjaxLogin",
+                    data: {uc:para1, p:para2}, 
+                    //contentType: "application/json; charset=utf-8",
+                    //dataType: "json",
+                    success: function (response) {
+                        //alert("Hello: " + response) ;
+                        $("#Cmpy").val(response);
+                        $("#loginconfirmmsg").text("You are logged in as a member of "+response);
+                        var stepper = new Stepper(document.querySelector('.bs-stepper'))
+                        stepper.next()
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>{ code: code, userid: userid }
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿@model Hotel_Core_MVC_V1.Models.HotelInfoModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HotelInfoModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.cmpyid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.cmpyid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hotelnme)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hotelnme)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.areaid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.areaid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.tspid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.tspid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hoteldte)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hoteldte)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.phone1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.phone1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.phone2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.phone2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.phone3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.phone3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.website)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.website)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checkintime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checkintime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checkouttime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checkouttime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.latecheckintime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.latecheckintime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.autopostflg)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.autopostflg)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.autoposttime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.autoposttime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.revdtetime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.revdtetime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.userid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.userid)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

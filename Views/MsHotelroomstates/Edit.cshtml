@@ -1,0 +1,79 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsHotelroomstate
+
+@{
+    ViewData["Title"] = "Hotel Room State";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Rmstateid" />
+                            <div class="form-group">
+                                <label asp-for="Rmstatecde" class="control-label">Room State Code</label>
+                                <input asp-for="Rmstatecde" class="form-control" />
+                                <span asp-validation-for="Rmstatecde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rmstatedesc" class="control-label">Room State Description</label>
+                                <input asp-for="Rmstatedesc" class="form-control" />
+                                <span asp-validation-for="Rmstatedesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Syscolor" class="control-label">System Color</label>
+                                <input asp-for="Syscolor" class="form-control" />
+                                <span asp-validation-for="Syscolor" class="text-danger"></span>
+                            </div>
+                            @* <div class="form-group">
+                            <label asp-for="Cmpyid" class="control-label"></label>
+                            <input asp-for="Cmpyid" class="form-control" />
+                            <span asp-validation-for="Cmpyid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                            <label asp-for="Revdtetime" class="control-label"></label>
+                            <input asp-for="Revdtetime" class="form-control" />
+                            <span asp-validation-for="Revdtetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                            <label asp-for="Userid" class="control-label"></label>
+                            <input asp-for="Userid" class="form-control" />
+                            <span asp-validation-for="Userid" class="text-danger"></span>
+                            </div>*@
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-secondary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

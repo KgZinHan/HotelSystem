@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Hotel_Core_MVC_V1.Models.HotelInfoModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+            @Html.DisplayNameFor(model => model.cmpyid)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.hotelnme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.areaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tspid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.hoteldte)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.phone1)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.phone2)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.phone3)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.checkintime)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.checkouttime)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.latecheckintime)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.autopostflg)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.autoposttime)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.revdtetime)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.userid)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.cmpyid)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.hotelnme)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.areaid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tspid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.hoteldte)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone1), @Html.DisplayFor(modelItem => item.phone2), @Html.DisplayFor(modelItem => item.phone3)
+                </td>
+                @*            <td>
+            @Html.DisplayFor(modelItem => item.phone2)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.phone3)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.website)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.checkintime) | @Html.DisplayFor(modelItem => item.checkouttime)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.checkouttime)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.latecheckintime)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.autopostflg)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.autoposttime)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.revdtetime)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.userid)
+            </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

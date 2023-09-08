@@ -1,0 +1,60 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsRoomFeature
+
+@{
+    ViewData["Title"] = "Room Features";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Create</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Rmfeaturecde" class="control-label">Feature Code</label>
+                                <input asp-for="Rmfeaturecde" class="form-control" />
+                                <span asp-validation-for="Rmfeaturecde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rmfeaturedesc" class="control-label">Feature Description</label>
+                                <input asp-for="Rmfeaturedesc" class="form-control" />
+                                <span asp-validation-for="Rmfeaturedesc" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

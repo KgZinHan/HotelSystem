@@ -1,0 +1,69 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsHotelRoomType
+
+@{
+    ViewData["Title"] = "Hotel Room Types";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group text-danger">@ViewData["Msg"]</div>
+                            <input type="hidden" asp-for="Rmtypid" />
+                            <div class="form-group">
+                                <label asp-for="Rmtypcde" class="control-label">Room Type Code</label>
+                                <input asp-for="Rmtypcde" class="form-control" />
+                                <span asp-validation-for="Rmtypcde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rmtypdesc" class="control-label">Room Type Description</label>
+                                <input asp-for="Rmtypdesc" class="form-control" />
+                                <span asp-validation-for="Rmtypdesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Paxno" class="control-label">Pax No</label>
+                                <input asp-for="Paxno" class="form-control" />
+                                <span asp-validation-for="Paxno" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Extrabedprice" class="control-label">Room Price</label>
+                                <input type="number" asp-for="Extrabedprice" class="form-control" />
+                                <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

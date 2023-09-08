@@ -1,0 +1,173 @@
+﻿@model Hotel_Core_MVC_V1.Models.HotelRoomModel
+
+@{
+    ViewData["Title"] = "Hotel Rooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section links{
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+
+        .form-check{
+            margin-left:30px;
+        }
+    </style>
+
+}
+@section scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Create</h3>
+            </div>
+            <div class="card-body col-12">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Roomno" class="control-label col-sm-4"></label>
+                                <input asp-for="Roomno" class="form-control col-sm-7" />
+                                <span asp-validation-for="Roomno" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Paxno" class="control-label col-sm-4"></label>
+                                <input asp-for="Paxno" class="form-control col-sm-7" />
+                                <span asp-validation-for="Paxno" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Roomtelno" class="control-label col-sm-4"></label>
+                                <input asp-for="Roomtelno" class="form-control col-sm-7" />
+                                <span asp-validation-for="Roomtelno" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Usefixprice" class="control-label col-sm-4"></label>
+                                <input asp-for="Usefixprice" class="form-control col-sm-7" />
+                                <span asp-validation-for="Usefixprice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Guestactivemsg" class="control-label col-sm-4"></label>
+                                <input asp-for="Guestactivemsg" class="form-control col-sm-7" />
+                                <span asp-validation-for="Guestactivemsg" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check row">
+                                <label class="control-label">
+                                    <input class="form-check-input" asp-for="Isautoapplyrate" /> @Html.DisplayNameFor(model => model.Isautoapplyrate)
+                                </label>
+                            </div>
+                            <div class="form-group form-check row">
+                                <label class="control-label">
+                                    <input class="form-check-input" asp-for="Isguestin" /> @Html.DisplayNameFor(model => model.Isguestin)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group row">
+                                <label asp-for="Locid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Locid" class="form-control select2bs4" asp-items="ViewBag.Locid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Locid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Rmtypid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Rmtypid" class="form-control select2bs4" asp-items="ViewBag.Rmtypid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Rmtypid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Bedid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Bedid" class="form-control select2bs4" asp-items="ViewBag.Bedid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Bedid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Rmamtyid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Rmamtyid" class="form-control select2bs4" multiple="multiple" data-placeholder="Select a State" asp-items="ViewBag.Rmamtyid" style="width: 100%;">
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Rmamtyid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Rmfeatureid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Rmfeatureid" class="form-control select2bs4" multiple="multiple" data-placeholder="Select a State" asp-items="ViewBag.Rmfeatureid" style="width: 100%;">
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Rmfeatureid" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group form-check row">
+                                <label class="control-label ">
+                                    <input class="form-check-input" asp-for="Isdnd" /> @Html.DisplayNameFor(model => model.Isdnd)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

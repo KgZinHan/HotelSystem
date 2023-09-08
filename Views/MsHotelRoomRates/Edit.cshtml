@@ -1,0 +1,106 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsHotelRoomRate
+
+@{
+    ViewData["Title"] = "Hotel Room Rate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section links{
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    }
+@section scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Rmrateid" />
+                            <div class="form-group">
+                                <label asp-for="Rmratecde" class="control-label">Room Rate Code</label>
+                                <input asp-for="Rmratecde" class="form-control" />
+                                <span asp-validation-for="Rmratecde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rmratedesc" class="control-label">Room Rate Description</label>
+                                <input asp-for="Rmratedesc" class="form-control" />
+                                <span asp-validation-for="Rmratedesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rmtypid" class="control-label"> Room Type</label>
+                                <div>
+                                    <select asp-for="Rmtypid" class="form-control select2bs4" asp-items="ViewBag.Rmtypid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Rmtypid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Daymonthstart" class="control-label">Rate Start Date</label>
+                                <input type="date" asp-for="Daymonthstart" class="form-control" />
+                                <span asp-validation-for="Daymonthstart" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Daymonthend" class="control-label">Rate End Date</label>
+                                <input type="date" asp-for="Daymonthend" class="form-control" />
+                                <span asp-validation-for="Daymonthend" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label">Room Price</label>
+                                <input type="number" asp-for="Price" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

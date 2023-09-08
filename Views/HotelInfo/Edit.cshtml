@@ -1,0 +1,119 @@
+﻿@model Hotel_Core_MVC_V1.Models.HotelInfoModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>HotelInfoModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="cmpyid" class="control-label"></label>
+                <input asp-for="cmpyid" class="form-control" />
+                <span asp-validation-for="cmpyid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hotelnme" class="control-label"></label>
+                <input asp-for="hotelnme" class="form-control" />
+                <span asp-validation-for="hotelnme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="areaid" class="control-label"></label>
+                <input asp-for="areaid" class="form-control" />
+                <span asp-validation-for="areaid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tspid" class="control-label"></label>
+                <input asp-for="tspid" class="form-control" />
+                <span asp-validation-for="tspid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hoteldte" class="control-label"></label>
+                <input asp-for="hoteldte" class="form-control" />
+                <span asp-validation-for="hoteldte" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phone1" class="control-label"></label>
+                <input asp-for="phone1" class="form-control" />
+                <span asp-validation-for="phone1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phone2" class="control-label"></label>
+                <input asp-for="phone2" class="form-control" />
+                <span asp-validation-for="phone2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phone3" class="control-label"></label>
+                <input asp-for="phone3" class="form-control" />
+                <span asp-validation-for="phone3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="website" class="control-label"></label>
+                <input asp-for="website" class="form-control" />
+                <span asp-validation-for="website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="checkintime" class="control-label"></label>
+                <input asp-for="checkintime" class="form-control" />
+                <span asp-validation-for="checkintime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="checkouttime" class="control-label"></label>
+                <input asp-for="checkouttime" class="form-control" />
+                <span asp-validation-for="checkouttime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="latecheckintime" class="control-label"></label>
+                <input asp-for="latecheckintime" class="form-control" />
+                <span asp-validation-for="latecheckintime" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="autopostflg" /> @Html.DisplayNameFor(model => model.autopostflg)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="autoposttime" class="control-label"></label>
+                <input asp-for="autoposttime" class="form-control" />
+                <span asp-validation-for="autoposttime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="revdtetime" class="control-label"></label>
+                <input asp-for="revdtetime" class="form-control" />
+                <span asp-validation-for="revdtetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="userid" class="control-label"></label>
+                <input asp-for="userid" class="form-control" />
+                <span asp-validation-for="userid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,184 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsHotelinfo
+
+@{
+    ViewData["Title"] = "Hotel Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links{
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+
+        .form-check {
+            margin-left: 30px;
+        }
+
+        .time{
+            margin-left:8px;
+        }
+    </style>
+
+}
+@section scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Create</h3>
+            </div>
+            <div class="card-body col-12">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Hotelnme" class="control-label col-sm-4"></label>
+                                <input asp-for="Hotelnme" class="form-control col-sm-7" />
+                                <span asp-validation-for="Hotelnme" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Address" class="control-label col-sm-4"></label>
+                                <input asp-for="Address" class="form-control col-sm-7" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Email" class="control-label col-sm-4"></label>
+                                <input asp-for="Email" class="form-control col-sm-7" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Website" class="control-label col-sm-4"></label>
+                                <input asp-for="Website" class="form-control col-sm-7" />
+                                <span asp-validation-for="Website" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Phone1" class="control-label col-sm-4"></label>
+                                <input asp-for="Phone1" class="form-control col-sm-7" />
+                                <span asp-validation-for="Phone1" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone2" class="control-label col-sm-4"></label>
+                                <input asp-for="Phone2" class="form-control col-sm-7" />
+                                <span asp-validation-for="Phone2" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone3" class="control-label col-sm-4"></label>
+                                <input asp-for="Phone3" class="form-control col-sm-7" />
+                                <span asp-validation-for="Phone3" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Hoteldte" class="control-label col-sm-4"></label>
+                                <input type="date" asp-for="Hoteldte" class="form-control col-sm-7" />
+                                <span asp-validation-for="Hoteldte" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Areaid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Areaid" class="form-control select2bs4" asp-items="ViewBag.Areaid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Areaid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Tspid" class="control-label col-sm-4"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Tspid" class="form-control select2bs4" asp-items="ViewBag.Tspid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Tspid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Checkintime" class="control-label col-sm-4"></label>
+                                <input type="time" asp-for="Checkintime" class="form-control time col-sm-6" />
+                                <span asp-validation-for="Checkintime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Checkouttime" class="control-label col-sm-4"></label>
+                                <input type="time" asp-for="Checkouttime" class="form-control time col-sm-6" />
+                                <span asp-validation-for="Checkouttime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Latecheckintime" class="control-label col-sm-4"></label>
+                                <input type="time" asp-for="Latecheckintime" class="form-control time col-sm-6" />
+                                <span asp-validation-for="Latecheckintime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="control-label">
+                                    <input class="form-check-input" asp-for="Autopostflg" /> @Html.DisplayNameFor(model => model.Autopostflg)
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Autoposttime" class="control-label col-sm-4"></label>
+                                <input type="time" asp-for="Autoposttime" class="form-control time col-sm-6" />
+                                <span asp-validation-for="Autoposttime" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>                 
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+*@
