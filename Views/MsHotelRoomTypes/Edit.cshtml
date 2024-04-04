@@ -1,18 +1,18 @@
-﻿@model Hotel_Core_MVC_V1.Models.MsHotelRoomType
+﻿@model Hotel_Core_MVC_V1.Models.HotelRoomTypeModel
 
 @{
-    ViewData["Title"] = "Hotel Room Types";
+    ViewData["Title"] = "Hotel Room Type";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
             </div>
@@ -27,8 +27,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <form asp-action="Edit">
+                    <div class="col-md-6">
+                        <form asp-action="Edit" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group text-danger">@ViewData["Msg"]</div>
                             <input type="hidden" asp-for="Rmtypid" />
@@ -48,9 +48,35 @@
                                 <span asp-validation-for="Paxno" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Extrabedprice" class="control-label">Room Price</label>
+                                <label asp-for="Extrabedprice" class="control-label">Extra Bed Price</label>
                                 <input type="number" asp-for="Extrabedprice" class="form-control" />
                                 <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RmTypMainImg" class="control-label">Room Main Image</label>
+                                <div>
+                                    @if(Model.Base64Image != "")
+                                    {
+                                        <img id="oldImg" src="data:image/jpeg;base64,@Model.Base64Image" alt="Image" width="120" height="100" style="margin-bottom: 10px"/>
+                                    }
+                                    <img id="newImg" alt="Image" width="120" height="100" style="margin-bottom: 10px;display: none" />
+                                    <input id="inputMainImg" type="file" asp-for="RmTypMainImg" onchange="changeImage()" />
+                                    <span asp-validation-for="RmTypMainImg" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RmTypImgList" class="control-label">Room Other Images</label>
+                                <div>
+                                    @if(Model.Base64ImageList != null)
+                                    {
+                                        @foreach (var otherImg in Model.Base64ImageList)
+                                        {
+                                            <img src="data:image/jpeg;base64,@otherImg" alt="Image" width="120" height="100" style="margin-bottom: 10px" />
+                                        }
+                                    }
+                                    <input type="file" asp-for="RmTypImgList" multiple />
+                                    <span asp-validation-for="RmTypImgList" class="text-danger"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -66,4 +92,26 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function changeImage() {
+            var input = document.getElementById('inputMainImg');
+            var newImg = document.getElementById('newImg');
+            var oldImg = document.getElementById('oldImg');
+            if (input.files && input.files[0]) {
+                
+                var file = input.files[0];
+                newImg.style.display = "flex";
+                oldImg.style.display = "none";
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    newImg.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+            else {
+                newImg.style.display = "none";
+            }
+        }
+    </script>
 }

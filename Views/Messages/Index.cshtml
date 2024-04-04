@@ -1,0 +1,231 @@
+﻿@model MessageModels
+
+@{
+    ViewData["Title"] = "Send Message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section links {
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+    </style>
+}
+
+@section scripts
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/Message.js"></script>
+
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+
+<!-- Guest Modal -->
+<div class="modal" id="guestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Guests</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeGuestModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="guestModalBodyId" class="table-responsive" style="max-height: 600px">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default ml-auto" onclick="closeGuestModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <!-- DIRECT CHAT -->
+        <div class="card direct-chat direct-chat-primary">
+            <div class="card-header">
+                <h3 class="card-title">Messages</h3>
+
+                <div class="card-tools">
+                    <span title="3 New Messages" class="badge badge-primary">@Model.totalMessage</span>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="direct-chat-messages" style="height: 350px">
+                    @foreach (var message in Model.Messages)
+                    {
+                        if (message.UserName == (string)ViewData["Username"])
+                        {
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">@message.UserName to @message.MsgTo (@message.MsgTypCde)</span>
+                                    <span class="direct-chat-timestamp float-left">@message.Takedtetime</span>
+                                </div>
+                                <img class="direct-chat-img" src="~/lib/adminlte3/dist/img/user.png" alt="message user image">
+                                <div class="direct-chat-text" onclick="editMsg('@message.MsgTypId')" style="cursor: pointer">
+                                    [@message.Priority]@message.Resolved @message.Msgdetail
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">@message.UserName to @message.MsgTo (@message.MsgTypCde)</span>
+                                    <span class="direct-chat-timestamp float-right">@message.Takedtetime</span>
+                                </div>
+                                <img class="direct-chat-img" src="~/lib/adminlte3/dist/img/user.png" alt="message user image">
+                                <div class="direct-chat-text" onclick="editMsg('@message.MsgTypId')" style="cursor: pointer">
+                                    [@message.Priority]@message.Resolved @message.Msgdetail
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <form asp-action="SendMessage" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input id="hdnMsgTypId" asp-for="MessagesEditor.Msgtypid" type="hidden" />
+                            <input id="inputCheckInId" asp-for="MessagesEditor.Checkinid" type="hidden" />
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">Message Type</label>
+                                <div class="col-sm-5">
+                                    <select id="selectMsgTypCde" asp-for="MessagesEditor.Msgtypcde" class="form-control" style="width: 100%;">
+                                        <option value="DeliverTo">Deliver To</option>
+                                        <option value="LostFound">Lost-Found</option>
+                                        <option value="Complain">Complain</option>
+                                        <option value="FeedBack">FeedBack</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="MessagesEditor.Msgtypcde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">Priority</label>
+                                <div class="col-sm-5">
+                                    <select id="selectPriority" asp-for="MessagesEditor.Priority" class="form-control" style="width: 100%;">
+                                        <option value="Normal">Normal</option>
+                                        <option value="Urgent">Urgent</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="MessagesEditor.Priority" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">Department</label>
+                                <div class="col-sm-5">
+                                    <select id="selectMsgToDept" asp-for="MessagesEditor.Msgtodept" class="form-control" asp-items="@ViewBag.Departments" style="width: 100%;">
+                                        <option value="ALL"> All </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="MessagesEditor.Msgtodept" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">To User</label>
+                                <div class="col-sm-5">
+                                    <select id="selectMsgToPerson" asp-for="MessagesEditor.Msgtoperson" class="form-control" asp-items="@ViewBag.Users" style="width: 100%;">
+                                        <option value=""> All </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="MessagesEditor.Msgtodept" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">Raised By</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="chooseGuest()">Browse</button>
+                                        </div>
+                                        <input id="inputGuestId" asp-for="MessagesEditor.Guestid" type="hidden" class="form-control">
+                                        <input id="inputRaisedBy" asp-for="MessagesEditor.Raisebynme" type="text" class="form-control">
+                                        <span asp-validation-for="MessagesEditor.Raisebynme" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-check">
+                                <label class="form-check-label" style="margin-left: 12px">
+                                    <input id="chkboxResolved" type="checkbox" asp-for="MessagesEditor.Resolveflg" class="form-check-input" /> <label>Resolved?</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label col-sm-4">Resolve Details</label>
+                                <div class="col-sm-8">
+                                    <textarea id="txtAreaResolvedetail" asp-for="MessagesEditor.Resolvedetail" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input id="inputMsgdetails" type="text" asp-for="MessagesEditor.Msgdetail" placeholder="Type Message ..." class="form-control">
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-default" style="background-color: #31849B;color: white">Send</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<table class="table">
+</table>

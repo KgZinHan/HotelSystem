@@ -1,0 +1,126 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsHotelservicegrpd
+
+@{
+    ViewData["Title"] = "Hotel Services Group Setup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section links
+{
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Srvccde" />
+                            <div class="form-group">
+                                <label asp-for="Srvccde" class="control-label">Service Code</label>
+                                <input asp-for="Srvccde" class="form-control" />
+                                <span asp-validation-for="Srvccde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Srvcdesc" class="control-label">Service Desc</label>
+                                <input asp-for="Srvcdesc" class="form-control" />
+                                <span asp-validation-for="Srvcdesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Deptcde" class="control-label">Department</label>
+                                <select asp-for="Deptcde" class="form-control select2bs4" asp-items="ViewBag.DeptcdeList" style="width: 100%;">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="Deptcde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Srvcgrpcde" class="control-label">Services Group</label>
+                                <select asp-for="Srvcgrpcde" class="form-control select2bs4" asp-items="ViewBag.SrvcgrpcdeList" style="width: 100%;">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="Srvcgrpcde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Trantyp" class="control-label">Tran Type</label>
+                                <select asp-for="Trantyp" class="form-control select2bs4" style="width: 100%;">
+                                    <option value=""> - Select One - </option>
+                                    <option value="+"> Plus(+) </option>
+                                    <option value="-"> Minus(-) </option>
+                                </select>
+                                <span asp-validation-for="Trantyp" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Srvcamt" class="control-label">Service Amount</label>
+                                <input asp-for="Srvcamt" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="Srvcamt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Srvcaccde" class="control-label">Service Acc Code</label>
+                                <input asp-for="Srvcaccde" class="form-control" />
+                                <span asp-validation-for="Srvcaccde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label" style="margin: 12px">
+                                    <input class="form-check-input" asp-for="Sysdefine" /> System Define?
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}

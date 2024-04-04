@@ -1,18 +1,18 @@
-﻿@model Hotel_Core_MVC_V1.Models.MsHotelRoomType
+﻿@model Hotel_Core_MVC_V1.Models.HotelRoomTypeModel
 
 @{
-    ViewData["Title"] = "Hotel Room Types";
+    ViewData["Title"] = "Hotel Room Type";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
             </div>
@@ -27,8 +27,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <form asp-action="Create">
+                    <div class="col-md-6">
+                        <form asp-action="Create" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group text-danger">@ViewData["Msg"]</div>
                             <div class="form-group">
@@ -47,9 +47,24 @@
                                 <span asp-validation-for="Paxno" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Extrabedprice" class="control-label">Room Price</label>
+                                <label asp-for="Extrabedprice" class="control-label">Extra Bed Price</label>
                                 <input type="number" asp-for="Extrabedprice" class="form-control" />
                                 <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RmTypMainImg" class="control-label">Room Main Image</label>
+                                <div>
+                                    <img id="selectedMainImg" src="#" width="120" height="100" style="margin-bottom: 10px;display: none">
+                                    <input id="inputMainImg" type="file" asp-for="RmTypMainImg" onchange="displayImage()" />
+                                    <span asp-validation-for="RmTypMainImg" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RmTypImgList" class="control-label">Room Other Images</label>
+                                <div>
+                                    <input type="file" asp-for="RmTypImgList" multiple />
+                                    <span asp-validation-for="RmTypImgList" class="text-danger"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -64,5 +79,29 @@
 </section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function displayImage() {
+            var input = document.getElementById('inputMainImg');
+            var imgFrame = document.getElementById('selectedMainImg');
+            if (input.files && input.files[0]) {
+                imgFrame.style.display = "flex";
+                var file = input.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgFrame.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+            else {
+                imgFrame.style.display = "none";
+            }
+        }
+    </script>
 }
+
+

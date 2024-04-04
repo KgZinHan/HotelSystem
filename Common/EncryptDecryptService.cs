@@ -32,7 +32,7 @@ namespace Hotel_Core_MVC_V1.Common
             return Convert.ToBase64String(array);
         }
 
-        public string DecryptString( string cipherText)
+        public string DecryptString(string cipherText)
         {
             string key = "tkbH1omfiqg13aqVusoCialf7pE6whfU";
             byte[] iv = new byte[16];

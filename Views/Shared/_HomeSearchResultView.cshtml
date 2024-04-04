@@ -1,0 +1,73 @@
+﻿@model IEnumerable<HomeModel>
+<div class="table-responsive">
+    <div class="container-fluid">
+        <table id="homeTable" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example1_info">
+            <thead>
+                <tr class="p-0" style="font-size: 16px;text-align: left">
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        Room No
+                    </th>
+                    <th>
+                        GuestName/ContactName
+                    </th>
+                    <th>
+                        GuestNo/ContactNo
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Room Type
+                    </th>
+                    <th>
+                        Check In Date
+                    </th>
+                    <th>
+                        Depart Date
+                    </th>
+                    <th>
+                        Folio Balance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ledger in Model)
+                {
+                    <tr style="font-size: 14px;cursor: pointer" onclick="openActions('@ledger.RoomLgId')">
+
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => ledger.No)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => ledger.RoomNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ledger.GuestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ledger.GuestNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ledger.OccuState)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ledger.RoomType)
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(ledger.CheckInDate).ToString("dd MMM yyyy")
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(ledger.DepartDate).ToString("dd MMM yyyy")
+                        </td>
+                        <td style="text-align: right">
+                            @Html.DisplayFor(modelItem => ledger.FolioBalance)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

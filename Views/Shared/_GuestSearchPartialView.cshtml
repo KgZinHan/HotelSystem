@@ -1,0 +1,29 @@
+﻿@model IEnumerable<GuestInfo>
+
+@foreach (var guest in Model)
+{
+    <tr style="font-size: 14px;text-align: left;cursor: pointer" onclick="fillForm('@guest.Guestid')">
+        <td>
+            @Html.DisplayFor(modelItem => guest.Guestfullnme)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => guest.ChrgAccCde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => guest.Nationality)
+        </td>
+        <td>
+            @if(guest.LastVistedDate == null)
+            {
+                @Html.DisplayFor(modelItem => guest.LastVistedDate)
+            }
+            else
+            {
+                @Convert.ToDateTime(guest.LastVistedDate).ToString("dd MMM yyyy")
+            }
+        </td>
+        <td style="text-align: right">
+            @Html.DisplayFor(modelItem => guest.VisitCount)
+        </td>
+    </tr>
+}

@@ -1,0 +1,243 @@
+﻿@model ReservationConfirmList
+
+@{
+    ViewData["Title"] = "Reservation Confirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section links{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+    </style>
+}
+
+@section scripts
+    {
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/ReservationConfirm.js"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": false,
+                "lengthChange": false,
+                "autoWidth": false,
+                "ordering": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        });
+    </script>
+}
+<!--Resv Details Modal -->
+<div class="modal" id="resvDetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reserved Rooms Details</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeDetailsModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="resvDetailsModalBody" style="max-height: 600px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content-header">
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h4>@ViewData["Title"]</h4>
+        </div>
+    </div>
+</div>
+</section>
+<section class="content">
+    <div class="card card-gray mt-1">
+        
+        <div class="card-body">
+            <form id="searchForm" asp-action="Search" method="post">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">GuestName</label>
+                            <div class="col-6">
+                                <input id="filterGuestName" asp-for="@Model.SearchResv.GuestName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">Reserve State</label>
+                            <div class="col-6">
+                                <select id="filterResvState" asp-for="@Model.SearchResv.ReserveState" class="form-control select2bs4" asp-items="ViewBag.ReserveState" style="width: 100%;">
+                                    <option value="">- Select All -</option>
+                                    <option value="R">Reserve</option>
+                                    <option value="C">Confirm</option>
+                                    <option value="N">Cancel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">From Date (Optional)</label>
+                            <div class="col-6">
+                                <input id="filterFromDte" asp-for="@Model.SearchResv.FromDate" type="date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">To Date (Optional)</label>
+                            <div class="col-6">
+                                <input id="filterToDte" asp-for="@Model.SearchResv.ToDate" type="date" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-check">
+                            <label class="form-check-label" style="margin-left:20px;">
+                                <input id="filterActive" class="form-check-input" asp-for="@Model.SearchResv.Active" checked /> Active
+                            </label>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <input class="btn btn-default" style="background-color: #31849B;color: white" type="submit" value="Search" />
+                <input class="btn btn-default" style="background-color: #31849B;color: white" onclick="clearScreen()" type="button" value="Clear" />
+            </form>
+        </div>
+
+        <div class="card-body p-1">
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                        <thead>
+                            <tr style="font-size: 16px">
+                                <th>
+                                    No.
+                                </th>
+                                <th>
+                                    Reservation No.
+                                </th>
+                                <th>
+                                    Resv Date
+                                </th>
+                                <th>
+                                    Contact Name
+                                </th>
+                                <th>
+                                    Contact No.
+                                </th>
+                                <th>
+                                    Arrive Date
+                                </th>
+                                <th>
+                                    Depart Date
+                                </th>
+                                <th>
+                                    Room
+                                </th>
+                                <th>
+                                    Agency
+                                </th>
+                                <th>
+                                    Reservation State
+                                </th>
+                                <th>
+                                    View
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ResvConfirms)
+                            {
+                                <tr style="font-size: 14px">
+                                    <td style="padding: 5px;text-align: center">
+                                        @Html.DisplayFor(modelItem => item.No)
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Html.DisplayFor(modelItem => item.ResvNo)
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Convert.ToDateTime(item.ResvDate).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Html.DisplayFor(modelItem => item.GuestName)
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Html.DisplayFor(modelItem => item.ContactNo)
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Convert.ToDateTime(item.ArriveDate).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Convert.ToDateTime(item.DepartDate).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td style="padding: 5px;text-align: center">
+                                        @Html.DisplayFor(modelItem => item.RoomQty)
+                                    </td>
+                                    <td style="padding: 5px">
+                                        @Html.DisplayFor(modelItem => item.Agency)
+                                    </td>
+                                    <td style="padding: 0px">
+                                        <select id="selectResvState" asp-for="@item.State" class="p-1 text-center" style="width: 100%;border: none;color: #31849B;background-color: transparent"
+                                                onchange="updateReservation('@item.ResvNo',this)">
+                                            @if (item.State == "R")
+                                            {
+                                                <option value="R">Reserve</option>
+                                                <option value="C">Confirm</option>
+                                            }
+                                            @if (item.State == "C")
+                                            {
+                                                <option value="C">Confirm</option>
+                                            }
+                                            <option value="N">Cancel</option>
+                                        </select>
+                                    </td>
+                                    <td style="padding: 0px;text-align: center">
+                                        <button class="p-1" style="width: 100%;border: none;color: #31849B;background: transparent" onclick="viewResvDetails('@item.ResvNo')">View</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

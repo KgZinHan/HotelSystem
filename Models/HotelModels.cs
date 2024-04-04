@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotel_Core_MVC_V1.Models
 {
@@ -14,7 +14,7 @@ namespace Hotel_Core_MVC_V1.Models
         public string? hotelnme { get; set; }
         [DisplayName("Area")]
         public int areaid { get; set; }
-        public string? area {  get; set; }
+        public string? area { get; set; }
         [DisplayName("Township")]
         public int tspid { get; set; }
         public string? tsp { get; set; }
@@ -63,13 +63,14 @@ namespace Hotel_Core_MVC_V1.Models
         [DisplayName("Room Amenities")]
 
         public List<int>? Rmamtyid { get; set; }
-        public string? RoomAmenities { get; set; }=null!;
+        public string? RoomAmenities { get; set; } = null!;
         [DisplayName("Room feature")]
 
         public List<int>? Rmfeatureid { get; set; }
         public string? RoomFeatures { get; set; }
         [DisplayName("Auto Apply Rate?")]
         public bool Isautoapplyrate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         [DisplayName("Use Fix Price")]
         public decimal? Usefixprice { get; set; }
 
@@ -103,7 +104,7 @@ namespace Hotel_Core_MVC_V1.Models
         public string? tspcdesc { get; set; }
         public int areaid { get; set; }
     }
-    public class HotelRoomRateModel 
+    public class HotelRoomRateModel
     {
         public int Rmrateid { get; set; }
 
@@ -137,9 +138,17 @@ namespace Hotel_Core_MVC_V1.Models
         [DisplayName("Password")]
 
         public string? Pwd { get; set; }
+
+        [DisplayName("Confirm Password")] public string? ConfirmPassword { get; set; }
+
+        [DisplayName("New Password")] public string NewPassword { get; set; } = string.Empty;
+
         [DisplayName("Menu Group")]
 
         public short? Mnugrpid { get; set; }
+
+        public string? Deptcde { get; set; }
+        [DisplayName("Department")]
         public DateTime Revdtetime { get; set; }
         [DisplayName("Hotel Name")]
 
@@ -159,6 +168,68 @@ namespace Hotel_Core_MVC_V1.Models
         public string Newpwd { get; set; } = null!;
         public string Confirmpwd { get; set; } = null!;
     }
+    public class GuestStateModel
+    {
+        public int Gstateid { get; set; }
+
+        [DisplayName("State Description")] public string Gstatedesc { get; set; } = null!;
+
+        [DisplayName("Country")] public string Country { get; set; }
+
+        public DateTime Revdtetime { get; set; }
+
+        public short Userid { get; set; }
+    }
+
+    public class HotelRoomTypeModel
+    {
+        public int Rmtypid { get; set; }
+
+        public string Rmtypcde { get; set; } = null!;
+
+        public string? Rmtypdesc { get; set; }
+
+        public int Paxno { get; set; }
+
+        public decimal Extrabedprice { get; set; }
+
+        public int Cmpyid { get; set; }
+
+        public DateTime Revdtetime { get; set; }
+
+        public int Userid { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int Quantity { get; set; }
+
+        public int ExtraBedQty { get; set; }
+        public int RoomRateId { get; set; }
+
+        public DateTime ArrivalDate { get; set; }
+
+        public DateTime CheckOutDate { get; set; }
+
+        public virtual ICollection<MsHotelRoomTypeImage> MsHotelRoomTypeImages { get; set; } = new List<MsHotelRoomTypeImage>();
+
+        public IFormFile? RmTypMainImg { get; set; }
+
+        public List<IFormFile>? RmTypImgList { get; set; } = null!;
+
+        public string? Base64Image { get; set; } = null!;//edit
+
+        public List<string>? Base64ImageList { get; set; } = null!;//edit
+    }
+
+    public class UserInfoModel
+    {
+        public string[][] Data { get; set; }
+        public string ContactNme { get; set; } = null!;
+        public string ContactNo { get; set; } = null!;
+        public string? SpecialRemark { get; set; }
+        public bool VipStatus { get; set; } = false;
+    }
+
     //public class HotelLocationModel
     //{
     //    public int Locid { get; set; }

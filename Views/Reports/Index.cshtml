@@ -1,0 +1,100 @@
+﻿@model HomeModel
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+@section links {
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+
+        .fixed-button {
+            position: relative;
+            bottom: 20px; /* Adjust this value to set the desired distance from the bottom */
+            right: 20px; /* Adjust this value to set the desired distance from the right */
+            z-index: 999; /* This ensures the button is on top of other content */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+}
+
+@section scripts
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/Reports.js"></script>
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+<div class="text-center">
+    <h2 class="display-4">Print Report</h2>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                    <div class="input-group row">
+                        <select id="inputKeyword" name="reportNo" type="search" class="form-control form-control-lg select2bs4 col-10" >
+                            <option value="1">Room Available Occupancy Status</option>
+                            <option value="2">Out of order Room Listing</option>
+                            <option value="3">In-house Guest Report</option>
+                            <option value="4">Expected Check-In Report</option>
+                            <option value="5">Expected Actual Check-In Report</option>
+                            <option value="6">Expected Check-Out Report</option>
+                            <option value="7">Expected Actual Check-Out Report</option>
+                            <option value="8">No Show Cancel Listing</option>
+                            <option value="9">Extend Stay Listing</option>
+                            <option value="10">Today Transfer-Upgrade</option>
+                            <option value="11">All Activities</option>
+                            <option value="12">Rooming List</option>
+                        </select>      
+                        <button type="button" class="btn btn-default col-2" onclick="selectReport()">Select</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div id="homeBody">
+        </div>
+    </div>
+</section>

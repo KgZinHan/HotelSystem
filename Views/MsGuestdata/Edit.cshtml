@@ -1,0 +1,176 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsGuestdatum
+
+@{
+    ViewData["Title"] = "Guest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section links
+    {
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+    </style>
+    }
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body col-12">
+                <form asp-action="Edit">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="Guestid" type="hidden"/>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label asp-for="Saluteid" class="col-sm-5 control-label"></label>
+                                <div class="col-sm-7">
+                                    <select id="selectSaluteId" asp-for="Saluteid" asp-items="ViewBag.GuestSalutations" class="form-control" style="width: 100%;">
+                                        <option value="">Select One</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Saluteid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Guestfullnme" class="col-sm-5 control-label">Full Name</label>
+                                <input asp-for="Guestfullnme" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Guestfullnme" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Guestlastnme" class="col-sm-5 control-label">Last Name</label>
+                                <input asp-for="Guestlastnme" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Guestlastnme" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Gender" class="col-sm-5 col-form-label"></label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Gender" class="form-control" style="width: 100%;">
+                                        <option value="">Select One</option>
+                                        <option value="0">Male</option>
+                                        <option value="1">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Idppno" class="col-sm-5 control-label">ID/PPNo</label>
+                                <input asp-for="Idppno" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Idppno" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Idissuedte" class="col-sm-5 control-label">ID Issue Date</label>
+                                <input asp-for="Idissuedte" type="date" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Idissuedte" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Dob" class="col-sm-5 control-label">Date of Birth</label>
+                                <input asp-for="Dob" type="date" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Dob" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="control-label" style="margin-left: 12px;">
+                                    <input class="form-check-input" asp-for="Vipflg" />Vip ?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Countryid" class="col-sm-5 control-label">Country</label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Countryid" asp-items="ViewBag.GuestCountries" class="form-control" style="width: 100%;">
+                                        <option value="">Select One</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Countryid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Stateid" class="col-sm-5 control-label">State</label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Stateid" asp-items="ViewBag.GuestStates" class="form-control" style="width: 100%;">
+                                        <option value="">Select One</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Stateid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Nationid" class="col-sm-5 control-label">Nationality</label>
+                                <div class="col-sm-7">
+                                    <select asp-for="Nationid" asp-items="ViewBag.GuestNationalities" class="form-control" style="width: 100%;">
+                                        <option value="">Select One</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Nationid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Emailaddr" class="col-sm-5 control-label"></label>
+                                <input asp-for="Emailaddr" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Emailaddr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone1" class="col-sm-5 control-label"></label>
+                                <input asp-for="Phone1" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Phone1" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone2" class="col-sm-5 control-label"></label>
+                                <input asp-for="Phone2" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Phone2" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Crlimitamt" class="col-sm-5 control-label">Credit Limit</label>
+                                <input asp-for="Crlimitamt" class="col-sm-7 form-control" />
+                                <span asp-validation-for="Crlimitamt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Remark" class="col-sm-5 control-label"></label>
+                                <textarea asp-for="Remark" class="col-sm-7 form-control"></textarea>
+                                <span asp-validation-for="Remark" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Lastvisitdte" class="col-sm-5 control-label">Last Visit Date</label>
+                                <input asp-for="Lastvisitdte" type="date" class="col-sm-7 form-control" readonly />
+                                <span asp-validation-for="Lastvisitdte" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Visitcount" class="col-sm-5 control-label">Visit Count</label>
+                                <input asp-for="Visitcount" class="col-sm-7 form-control" readonly />
+                                <span asp-validation-for="Visitcount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

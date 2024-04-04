@@ -1,6 +1,5 @@
-using Hotel_Core_MVC_V1.Data;
 using Hotel_Core_MVC_V1.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,20 +8,21 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HotelCoreMVCConnection") ?? throw new InvalidOperationException("Connection string 'HotelCoreMVCConnection' not found.");
 builder.Services.AddDbContext<HotelCoreMvcContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-
-//builder.Services.AddDbContext<HotelCoreMvcContext>((provider, options) => {
-//    IConfiguration config = provider.GetRequiredService<IConfiguration>();    
-//    options.UseSqlServer(connectionString);
-//});
-
-
-
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<HotelCoreMvcContext>();
+/*builder.Services.AddDatabaseDeveloperPageExceptionFilter();*/
 builder.Services.AddControllersWithViews();
+
+// Add authentication dependency injection to authenticate log in user
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/MsUsers/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
+
+/*builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<HotelCoreMvcContext>();*/
+
 
 var app = builder.Build();
 
@@ -43,11 +43,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+    pattern: "{controller=MsUsers}/{action=LogIn}/{id?}");
+/*app.MapRazorPages();*/
 
 app.Run();

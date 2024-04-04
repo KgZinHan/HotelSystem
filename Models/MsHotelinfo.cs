@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Hotel_Core_MVC_V1.Models;
+﻿namespace Hotel_Core_MVC_V1.Models;
 
 public partial class MsHotelinfo
 {
@@ -33,9 +30,17 @@ public partial class MsHotelinfo
 
     public TimeSpan? Latecheckintime { get; set; }
 
+    public byte? Noofshift { get; set; }
+
+    public byte? Curshift { get; set; }
+
     public bool Autopostflg { get; set; }
 
     public TimeSpan? Autoposttime { get; set; }
+
+    public DateTime? Lastrundtetime { get; set; }
+
+    public short? Nightauditintervalhr { get; set; }
 
     public DateTime Revdtetime { get; set; }
 

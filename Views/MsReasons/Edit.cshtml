@@ -1,0 +1,81 @@
+﻿@model Hotel_Core_MVC_V1.Models.MsReason
+
+@{
+    ViewData["Title"] = "Reason";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section links
+    {
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+    </style>
+    }
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Reasonid" />
+                            <div class="form-group">
+                                <label asp-for="Reasondesc" class="control-label">Reason Description</label>
+                                <input asp-for="Reasondesc" class="form-control" />
+                                <span asp-validation-for="Reasondesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label" style="margin-left: 12px;">
+                                    <input class="form-check-input" asp-for="Guestuseflg" /> Guest Used?
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Revdtetime" class="control-label"></label>
+                                <input asp-for="Revdtetime" class="form-control" readonly/>
+                                <span asp-validation-for="Revdtetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Userid" class="control-label"></label>
+                                <input asp-for="Userid" class="form-control" readonly/>
+                                <span asp-validation-for="Userid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

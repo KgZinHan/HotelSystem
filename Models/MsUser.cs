@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Hotel_Core_MVC_V1.Models;
+﻿namespace Hotel_Core_MVC_V1.Models;
 
 public partial class MsUser
 {
@@ -12,6 +9,8 @@ public partial class MsUser
     public string Usernme { get; set; } = null!;
 
     public byte[]? Pwd { get; set; }
+
+    public string? Deptcde { get; set; }
 
     public short? Mnugrpid { get; set; }
 

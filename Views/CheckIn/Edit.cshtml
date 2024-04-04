@@ -1,0 +1,304 @@
+﻿@model CheckInModel
+
+@{
+    ViewData["Title"] = "Expected Check-In Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+
+        .form-check {
+            margin-left: 30px;
+        }
+
+        .time {
+            margin-left: 8px;
+        }
+    </style>
+
+}
+@section scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/CheckIn.js"></script>
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+    </script>
+}
+
+<!-- Room Modal -->
+<div class="modal" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Available Rooms</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeRoomModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="roomModalBodyId" class="table-responsive" style="max-height: 600px">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default ml-auto" onclick="closeRoomModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Guest Modal -->
+<div class="modal" id="guestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Guests</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeGuestModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="guestModalBodyId" class="table-responsive" style="max-height: 600px">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default ml-auto" onclick="closeGuestModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>Edit @ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index" class="btn btn-default" style="background-color: #31849B;color: white">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="expectedCheckInForm" asp-action="Edit" asp-controller="CheckIn" method="POST">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="RoomLgId" />
+                            <input type="hidden" asp-for="CheckInId" />
+                            <input type="hidden" asp-for="BatchNo" />
+                            <input type="hidden" asp-for="GuestId" />
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">Room Details</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Resvno" class="control-label col-sm-4"></label>
+                                        <input asp-for="Resvno" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Resvno" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Occudte" class="control-label col-sm-4"></label>
+                                        <input id="inputCheckInDate" type="date" asp-for="Occudte" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Occudte" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Nightqty" class="control-label col-sm-4"></label>
+                                        <input id="inputNightQty" asp-for="Nightqty" class="form-control col-sm-7" min="0" oninput="calculateCheckOutDate()" readonly/>
+                                        <span asp-validation-for="Nightqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Departdte" class="control-label col-sm-4"></label>
+                                        <input id="inputCheckOutDate" type="date" asp-for="Departdte" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Departdte" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Rmtypdesc" class="control-label col-sm-4"></label>
+                                        <input asp-for="Rmtypdesc" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Rmtypdesc" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="PaxNo" class="control-label col-sm-4"></label>
+                                        <input asp-for="PaxNo" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="PaxNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Adultqty" class="control-label col-sm-4"></label>
+                                        <input asp-for="Adultqty" min="0" class="form-control col-sm-7" />
+                                        <span asp-validation-for="Adultqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Childqty" class="control-label col-sm-4"></label>
+                                        <input asp-for="Childqty" min="0" class="form-control col-sm-7" />
+                                        <span asp-validation-for="Childqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label class="control-label">
+                                            <input class="form-check-input" asp-for="@Model.HKeepingFlg" disabled />  House Keeping?
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">Billing</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-4">Room Rate</label>
+                                        <div class="col-sm-7">
+                                            <select id="selectRmRate" asp-for="Rmrateid" class="form-control" asp-items="ViewBag.Rmrates" style="width: 100%;" onchange="changeAmount()">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Rmprice" class="control-label col-sm-4"></label>
+                                        <input id="inputRmprice" asp-for="Rmprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Rmprice" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Extrabedqty" class="control-label col-sm-4"></label>
+                                        <input id="inputExtrabedqty" asp-for="Extrabedqty" min="0" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Extrabedqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Extrabedprice" class="control-label col-sm-4"></label>
+                                        <input id="inputExtrabedprice" asp-for="Extrabedprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Discountamt" class="control-label col-sm-4"></label>
+                                        <input id="inputDiscountamt" asp-for="Discountamt" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Discountamt" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Amt" class="control-label col-sm-4"></label>
+                                        <input id="inputAmt" asp-for="Amt" min="0" step="0.01" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Amt" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Remark" class="control-label col-sm-4"></label>
+                                        <textarea asp-for="Remark" class="form-control col-sm-7">
+                                            </textarea>
+                                        <span asp-validation-for="Remark" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">Check-In Guests</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="ContactName" class="control-label col-sm-4"></label>
+                                        <input asp-for="ContactName" type="text" class="form-control col-sm-7" readonly>
+                                        <span asp-validation-for="ContactName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="ContactNo" class="control-label col-sm-4"></label>
+                                        <input asp-for="ContactNo" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="ContactNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="SpecialInstruct" class="control-label col-sm-4"></label>
+                                        <textarea asp-for="SpecialInstruct" class="form-control col-sm-7">
+                                            </textarea>
+                                        <span asp-validation-for="SpecialInstruct" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Roomno" class="control-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="chooseRoom('@Model.RoomLgId','@Model.RmtypId')">Choose</button>
+                                                </div>
+                                                <input id="inputRoomNo" asp-for="Roomno" type="text" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <span asp-validation-for="Roomno" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-4">Guests</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group mb-3">
+                                                <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="chooseGuest()">Browse</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <table id="guestDetailsTable" class="table table-bordered table-hover">
+                                                <thead class="text-md-center">
+                                                    <tr style="font-size: 14px;text-align: left">
+                                                        <th>
+                                                            Guest ID
+                                                        </th>
+                                                        <th>
+                                                            Full Name
+                                                        </th>
+                                                        <th>P Flag</th>
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="guestDetailsTableBody" class="text-md-left">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" name="mode" value="Save" class="btn btn-default m-2" style="background-color: #31849B;color: white">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

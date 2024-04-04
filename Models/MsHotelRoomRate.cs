@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Hotel_Core_MVC_V1.Models;
+﻿namespace Hotel_Core_MVC_V1.Models;
 
 public partial class MsHotelRoomRate
 {
@@ -18,6 +15,10 @@ public partial class MsHotelRoomRate
     public int Rmtypid { get; set; }
 
     public decimal Price { get; set; }
+
+    public decimal? Execrate { get; set; }
+
+    public bool? Defrateflg { get; set; }
 
     public int Cmpyid { get; set; }
 

@@ -1,0 +1,377 @@
+﻿@model BillingViewModels
+
+@{
+    ViewData["Title"] = "View Folio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section links {
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+
+@section scripts
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/GuestBilling.js"></script>
+    <script>
+        //$(function () {
+        //  $("#inHouseGuestTable").DataTable({
+        //    "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false, "info": false, 'pagination': false
+        //    });
+        //});
+        //$(function () {
+        //    $("#otherFolioTable").DataTable({
+        //        "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false, "info": false,  'pagination': false
+        //    });
+        //});
+    </script>
+}
+
+<!--Payment Modal -->
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Payment</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true" onclick="closePaymentModal()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label class="col-2 col-form-label text-truncate" style="font-size: 14px"><span id="spanFolioCde"></span> Total</label>
+                    <input class="form-control col-4" id="inputTotalAmt" readonly>
+                    <select id="inputSrvcCde" class="form-control select2bs4 col-3 ml-2">
+                        <option value="FO-R001">Receive Cash</option>
+                        <option value="FO-DP002">Refurn Deposit</option>
+                    </select>
+                    <input class="form-control col-4" id="hiddenCheckInId" type="hidden">
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-3">
+                        <table id="paymentTypeTable" class="table table-bordered table-hover">
+                            <thead class="text-md-center">
+                                <tr>
+                                    <th style="text-align: left">
+                                        Choose Curr Type
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentTypeBodyId" class="text-md-left" style="font-size: 12px">
+                                @*Payment Type Data will be come from GuestBilling.js*@
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-9">
+                        <table id="paymentTable" class="table table-bordered">
+                            <thead class="text-md-center">
+                                <tr>
+                                    <th style="width: 200px;text-align: left">
+                                        Curr Type
+                                    </th>
+                                    <th style="width: 150px;text-align: left">
+                                        Curr Rate
+                                    </th>
+                                    <th style="width: 200px;text-align: left">
+                                        Amount
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentTableBodyId" class="text-md-left">
+                                @*Payment Table Data will be come from GuestBilling.js*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-start">
+                <button id="modelCloseBtnId" type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="savePayment()">Save</button>
+                <button id="modelCloseBtnId" type="button" class="btn btn-default ml-auto" onclick="closePaymentModal()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index" class="btn btn-default" style="background-color: #31849B;color: white">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Main Folio</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-1">
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table id="inHouseGuestTable" class="table table-bordered datatable dtr-inline" aria-describedby="inHouseGuestTable_info">
+                                    <thead>
+                                        <tr class="p-0" style="font-size: 16px;text-align: left">
+                                            <th>
+                                                No.
+                                            </th>
+                                            <th>
+                                                Biz Date
+                                            </th>
+                                            <th>
+                                                Bill No
+                                            </th>
+                                            <th>
+                                                Bill Desp
+                                            </th>
+                                            <th>
+                                                Bill Amount
+                                            </th>
+                                            <th>
+                                                Ref No 2
+                                            </th>
+                                            <th>
+                                                POS ID
+                                            </th>
+                                            <th>
+                                                Outlet ID
+                                            </th>
+                                            <th>
+                                                Bill Datetime
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var bill in Model.MainFolioBills)
+                                        {
+                                            
+                                            string rowStyle = (bill.VoidFlg == true) ? "color: red;" : "";
+                                            
+                                            <tr style="@rowStyle">
+                                                <td style="text-align: center">
+                                                    @Html.DisplayFor(modelItem => bill.No)
+                                                </td>
+                                                <td style="text-align: center">
+                                                    @Convert.ToDateTime(bill.BizDte).ToString("dd MMM yyyy")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bill.BillNo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bill.BillDesp)
+                                                </td>
+                                                <td style="text-align: right">
+                                                    @Html.DisplayFor(modelItem => bill.Amount)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bill.RefNo2)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bill.POSId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bill.OutletId)
+                                                </td>
+                                                <td>
+                                                    @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss")
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <span style="color: red;cursor: pointer" onclick="voidBill('@bill.BillId')"><i class="fas fa-ban"></i></span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="row mt-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-4">Main Folio Total</label>
+                                            <input asp-for="PaymentBillingView.FolioTotal" class="form-control col-sm-7" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 row">
+                                        <div class="form-group row">
+                                            <button class="btn btn-success ml-1" onclick="closeFolio('@Model.PaymentBillingView.FolioCde','@Model.PaymentBillingView.CheckInId','@Model.PaymentBillingView.FolioTotal')">Close Folio</button>
+                                            <button class="btn btn-default ml-3" style="background-color: #31849B;color: white" 
+                                            onclick="choosePayment('@Model.PaymentBillingView.FolioCde','@Model.PaymentBillingView.CheckInId','@Model.PaymentBillingView.FolioTotal')">Payment</button>
+                                            <a asp-action="PrintReview" asp-route-checkInId="@Model.PaymentBillingView.CheckInId"
+                                               asp-route-folioCde="@Model.PaymentBillingView.FolioCde" class="btn btn-default ml-3" style="background-color: #31849B;color: white">Print</a>
+                                        </div>
+                                        <div class="form-group row">
+                                        </div>
+                                        <div class="form-group row">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach (var otherFolio in Model.OtherFolioBillList)
+            {
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">@otherFolio.PaymentBillingView.FolioName</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="row">
+                                <div class="col-md-12 table-responsive">
+                                    <table id="otherFolioTable" class="table table-bordered datatable dtr-inline" aria-describedby="otherFolioTable_info">
+                                        <thead>
+                                            <tr class="p-0" style="font-size: 16px;text-align: left">
+                                                <th>
+                                                    No.
+                                                </th>
+                                                <th>
+                                                    Biz Date
+                                                </th>
+                                                <th>
+                                                    Bill No
+                                                </th>
+                                                <th>
+                                                    Bill Desp
+                                                </th>
+                                                <th>
+                                                    Bill Amount
+                                                </th>
+                                                <th>
+                                                    Ref No 2
+                                                </th>
+                                                <th>
+                                                    POS ID
+                                                </th>
+                                                <th>
+                                                    Outlet ID
+                                                </th>
+                                                <th>
+                                                    Bill Datetime
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var bill in otherFolio.OtherFolioBills)
+                                            {
+                                                string rowStyle = (bill.VoidFlg == true) ? "color: red;" : "";
+                                                <tr style="@rowStyle">
+                                                    <td style="text-align: center">
+                                                        @Html.DisplayFor(modelItem => bill.No)
+                                                    </td>
+                                                    <td style="text-align: center">
+                                                        @Convert.ToDateTime(bill.BizDte).ToString("dd MMM yyyy")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => bill.BillNo)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => bill.BillDesp)
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        @Html.DisplayFor(modelItem => bill.Amount)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => bill.RefNo2)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => bill.POSId)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => bill.OutletId)
+                                                    </td>
+                                                    <td>
+                                                        @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss")
+                                                    </td>
+                                                    <td style="text-align: center">
+                                                        @if (otherFolio.PaymentBillingView.CloseFolioFlg)
+                                                        {
+                                                            <span><i class="fas fa-ban"></i></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="color: red;cursor: pointer" onclick="voidBill('@bill.BillId')"><i class="fas fa-ban"></i></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="control-label col-sm-4">@otherFolio.PaymentBillingView.FolioName Total</label>
+                                                <input asp-for="@otherFolio.PaymentBillingView.FolioTotal" class="form-control col-sm-7" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 row">
+                                            <div class="form-group row">
+                                                @if (otherFolio.PaymentBillingView.CloseFolioFlg)
+                                                {
+                                                    <button class="btn btn-default ml-1" disabled>Close Folio</button>
+                                                    <button class="btn btn-default ml-3" disabled>Payment</button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-success ml-1" onclick="closeFolio('@otherFolio.PaymentBillingView.FolioCde','@otherFolio.PaymentBillingView.CheckInId','@otherFolio.PaymentBillingView.FolioTotal')">Close Folio</button>
+                                                    <button class="btn btn-default ml-3" style="background-color: #31849B;color: white" 
+                                                    onclick="choosePayment('@otherFolio.PaymentBillingView.FolioCde','@otherFolio.PaymentBillingView.CheckInId','@otherFolio.PaymentBillingView.FolioTotal')">Payment</button>
+                                                }
+
+                                                <a asp-action="PrintReview" asp-route-checkInId="@otherFolio.PaymentBillingView.CheckInId"
+                                                   asp-route-folioCde="@otherFolio.PaymentBillingView.FolioCde" class="btn btn-default ml-3" style="background-color: #31849B;color: white">Print</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

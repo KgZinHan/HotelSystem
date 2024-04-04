@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AvailableRoomNumber>
+
+<script>
+    $(function () {
+        $("#tblHotelRoomNumberList").DataTable({
+            "responsive": false, "lengthChange": false, "autoWidth": false, "info": false, "paging": false,
+        }).buttons().container().appendTo('#tblHotelRoomNumberList_wrapper .col-md-6:eq(0)');
+    });
+    $(function () {
+        $('.select2').select2()
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+    });
+</script>
+
+<div class="container mt-2">
+    <table id="tblHotelRoomNumberList" class="table table-bordered table-hover">
+        <thead>
+            <tr class="text-center">
+                <th>
+                    No.
+                </th>
+                <th>
+                    Room No.
+                </th>
+                <th>
+                    Room Type
+                </th>
+                <th>
+                    Bedding
+                </th>
+            </tr>
+        </thead>
+        @foreach (var room in Model)
+        {
+            <tbody>
+                <tr style="cursor: pointer" onclick="assignRoom('@room.RoomNo')">
+                    <td style="text-align: center">@Html.DisplayFor(modelItem => room.No)</td>
+                    <td style="text-align: center">@Html.DisplayFor(modelItem => room.RoomNo)</td>
+                    <td>@Html.DisplayFor(modelItem => room.RoomType)</td>
+                    <td>@Html.DisplayFor(modelItem => room.BedCde)</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>

@@ -1,16 +1,16 @@
-﻿@model Hotel_Core_MVC_V1.Models.MsUser
+﻿@model Hotel_Core_MVC_V1.Models.UserModel
 
 @{
     ViewData["Title"] = "User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section links{
+@section links {
     <!-- Select2 -->
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 }
 @section scripts
-    {
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
@@ -33,13 +33,12 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
-
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
                 </div>
             </div>
         </div>
@@ -53,11 +52,10 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Userid" />
-                            <input type="hidden" asp-for="Pwd" />
                             <input type="hidden" asp-for="Mnugrpid" />
                             <div class="form-group">
                                 <label asp-for="Usercde" class="control-label"></label>
@@ -69,22 +67,6 @@
                                 <input asp-for="Usernme" class="form-control col-sm-5" />
                                 <span asp-validation-for="Usernme" class="text-danger"></span>
                             </div>
-                            @*            <div class="form-group">
-                            <label asp-for="Pwd" class="control-label"></label>
-                            <input asp-for="Pwd" class="form-control" />
-                            <span asp-validation-for="Pwd" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                            <label asp-for="Mnugrpid" class="control-label"></label>
-                            <input asp-for="Mnugrpid" class="form-control" />
-                            <span asp-validation-for="Mnugrpid" class="text-danger"></span>
-                            </div>
-                            *@@*            <div class="form-group">
-                            <label asp-for="Revdtetime" class="control-label"></label>
-                            <input asp-for="Revdtetime" class="form-control" />
-                            <span asp-validation-for="Revdtetime" class="text-danger"></span>
-                            </div>
-                            *@
                             <div class="form-group">
                                 <label asp-for="Cmpyid" class="control-label"></label>
                                 <div class="col-sm-5">
@@ -93,6 +75,15 @@
                                     </select>
                                 </div>
                                 <span asp-validation-for="Cmpyid" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Deptcde" class="control-label">Department</label>
+                                <div class="col-sm-5">
+                                    <select asp-for="Deptcde" class="form-control select2bs4" asp-items="ViewBag.Deptcdeid" style="width: 100%;">
+                                        <option> - Select One - </option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Deptcde" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />

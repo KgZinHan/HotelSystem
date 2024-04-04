@@ -1,0 +1,139 @@
+﻿@model AddBillModels
+
+@{
+    ViewData["Title"] = "Add Bill and Discount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section links {
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+
+@section scripts
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/GuestBilling.js"></script>
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index" class="btn btn-default" style="background-color: #31849B;color: white">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-1">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <input id="hiddenRoomLgId" type="hidden" asp-for="CheckInModel.RoomLgId" />
+                                        <input id="hiddenCheckInId" type="hidden" asp-for="CheckInModel.CheckInId" />
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-4">Room No</label>
+                                            <input id="inputRoomNo" asp-for="CheckInModel.Roomno" class="form-control col-sm-7" readonly />
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-4">Guest Name</label>
+                                            <input id="inputGuestName" asp-for="CheckInModel.GuestName" class="form-control col-sm-7" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-1">
+                        <button class="btn btn-default" style="background-color: #31849B;color: white" onclick="addNewBill()">Add New Bill</button>
+                        <div class="row mt-1">
+                            <div class="col-md-12 table-responsive" style="text-align: center">
+                                @* <label id="loadingLabel">Loading...</label> *@
+                                <table id="addBillTable" class="table table-bordered datatable dtr-inline" aria-describedby="addBillTable_info">
+                                    <thead>
+                                        <tr class="p-0" style="font-size: 16px;text-align: left">
+                                            <th style="min-width: 180px">
+                                                Service Desc
+                                            </th>
+                                            <th style="min-width: 80px">
+                                                Service Code
+                                            </th>
+                                            <th style="min-width: 80px">
+                                                Dept/Outlet
+                                            </th>
+                                            <th style="min-width: 80px">
+                                                Folio Code
+                                            </th>
+                                            <th style="text-align: center;min-width: 100px;width: 100px">
+                                                Qty
+                                            </th>
+                                            <th style="min-width: 100px">
+                                                Price
+                                            </th>
+                                            <th style="min-width: 100px">
+                                                Amount
+                                            </th>
+                                            <th style="min-width: 200px">
+                                                Remark
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="addBillTableBody">
+                                        @foreach(var bill in Model.BillList)
+                                        {
+                                            <tr style="text-align: left">
+                                                <td style="padding: 0px"><input type="text" value="@bill.SrvcCdeDesc" style="padding: 12px;width: 100%;border: none" readonly /></td>
+                                                <td style="padding: 0px"><input type="text" value="@bill.SrvcCde" style="padding: 12px;width: 100%;border: none" readonly /></td>
+                                                <td style="padding: 0px"><input type="text" value="@bill.DeptCde" style="padding: 12px;width: 100%;border: none" readonly /></td>
+                                                <td style="padding: 0px"><input type="text" value="@bill.FolioCde" style="padding: 12px;width: 100%;border: none" readonly /></td>
+                                                <td style="padding: 0px"><input type="number" value="@bill.Qty" oninput="changeAmount(this)" style="padding: 12px;width: 100%;border: none;text-align: center;color: #31849B" /></td>
+                                                <td style="padding: 0px"><input type="number" value="@bill.Price" style="padding: 12px;width: 100%;border: none;color: #31849B" /></td>
+                                                <td style="padding: 0px"><input type="number" value="@bill.Amount" style="padding: 12px;width: 100%;border: none" readonly/></td>
+                                                <td style="padding: 0px"><input type="text" style="padding: 12px;width: 100%;border: none;color: #31849B" /></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-default" style="background-color: #31849B;color: white" onclick="saveBill()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,71 @@
+﻿@model HomeModel
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="container-fluid">
+                    <input id="hiddenResvNo" asp-for="CheckInid" type="hidden" />
+                    <table id="cancelResvTable" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
+                        <thead>
+                            <tr class="p-0" style="font-size: 16px;text-align: left">
+                                <th>
+                                    GuestName
+                                </th>
+                                <th>
+                                    Room Type
+                                </th>
+                                <th>
+                                    Check In Date
+                                </th>
+                                <th>
+                                    Depart Date
+                                </th>
+                                <th>
+                                    Folio Balance
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="font-size: 14px;cursor: pointer">
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.GuestName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.RoomType)
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(Model.CheckInDate).ToString("dd MMM yyyy")
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(Model.DepartDate).ToString("dd MMM yyyy")
+                                </td>
+                                <td style="text-align: right">
+                                    @Html.DisplayFor(modelItem => modelItem.FolioBalance)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <button class="btn btn-default m-1" onclick="closeCheckOutModal()">Cancel</button>
+
+            @if (Model.FolioBalance > 0)
+            {
+                <a asp-action="View" asp-controller="GuestBilling" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1"
+                   style="background-color: #31849B;color: white">Go to Bill</a>
+                <a asp-action="CheckOut" asp-controller="Home" asp-route-id="@Model.CheckInid" class="btn btn-default m-1 ml-auto"
+                   onclick="return confirmForceCheckOut()" style="background-color: #31849B;color: white">Force Check-out</a>
+            }
+            else
+            {
+                <a asp-action="CheckOut" asp-controller="Home" asp-route-id="@Model.CheckInid" class="btn btn-default m-1 ml-auto"
+                   style="background-color: #31849B;color: white">Check-out</a>
+            }
+        </div>
+    </div>
+</div>

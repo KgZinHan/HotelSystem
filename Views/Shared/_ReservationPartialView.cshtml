@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HotelRoomTypeModel>
+
+<table id="tblHotelRoomList" class="table table-borderless">
+    <thead class="text-md-center">
+    </thead>
+    <tbody id="secondCardBodyId">
+        @foreach (var room in Model)
+        {
+            <tr class="custom-card col-12 mt-1 row">
+                <td class="col-6 col-md-4 col-lg-2 p-0">
+                    <img src="data:image/jpeg;base64,@room.Base64Image" alt="Image" width="160" height="120" style="border-radius: 5px" />
+                    <br />
+                    <div onclick="showImages(@room.Rmtypid)" style="cursor: pointer">See more...</div>
+                </td>
+                <td class="col-6 col-md-4 col-lg-2">
+                    <label class="control-label text-center">@Html.DisplayFor(modelItem => room.Rmtypdesc)</label>
+                    <br />
+                    Pax - @Html.DisplayFor(modelItem => room.Paxno)
+                    <input type="hidden" value="@room.Rmtypid" />
+                </td>
+                <td class="col-6 col-md-4 col-lg-2 text-center row">
+                    <div class="text-center">
+                        <h4 class="text-center" style="color:green">MMK @room.Price.ToString("n")</h4>
+                        <input type="hidden" value="@room.Price" />
+                    </div>
+                </td>
+                <td class="col-6 col-md-4 col-lg-2 text-center">
+                    Available Room
+                    <h4><input class="text-center" min="0" value="@room.Quantity" type="number" style="width: 3rem;border: none;color: red" readonly></h4>
+                </td>
+                <td class="col-6 col-md-4 col-lg-2">
+                    Reserved Room
+                    <div class="def-number-input number-input text-center">
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();changeExtraBedMax(this);" class="minus"></button>
+                        <input name="reservedRoom" class="quantity" min="0" value="0" type="number" max="@room.Quantity" readonly>
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();changeExtraBedMax(this);" class="plus"></button>
+                    </div>
+                </td>
+                <td class="col-6 col-md-4 col-lg-2">
+                    Extra Bed
+                    <div class="def-number-input number-input text-center">
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                        <input name="extraBed" class="quantity" min="0" value="0" type="number" max="0" readonly>
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                    </div>
+                    (1 per MMK @room.Extrabedprice.ToString("n"))
+                </td>
+                <td hidden>
+                    <input type="hidden" value="@room.RoomRateId" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="fixed-button-container" style="position: fixed;bottom: 60px;right: 20px;z-index: 999;">
+    <button class="fixed-button btn btn-default" style="display: block;padding: 10px 20px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);background-color: #31849B;color: white" onclick="checkOut()">Check Out</button>
+</div>
+

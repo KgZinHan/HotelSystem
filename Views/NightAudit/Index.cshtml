@@ -1,0 +1,59 @@
+﻿@model NightAuditFormModel
+
+@{
+    ViewData["Title"] = "Night Audit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="defaultContainer" class="content">
+    <div class="card mt-1">
+        <div class="card-body">
+            <form asp-action="DoNightAudit" method="post">
+                
+                <div class="form-group row">
+                    <label class="col-md-3 col-6 col-form-label">Night Audit Date</label>
+                    <div class="col-md-4 col-6">
+                        <input id="inputNightDte" asp-for="@Model.NightDate" name="nightdate" type="date" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-6 col-form-label">Shift No</label>
+                    <div class="col-md-4 col-6">
+                        <input id="inputShiftNo" value="1" name="shiftNo" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-6 col-form-label">Last Night Audit DateTime</label>
+                    <div class="col-md-4 col-6">
+                        <input id="inputLastAuditDtetime" type="text" value="@Model.LastNightAuditDateTime" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-6 col-form-label">Time Left</label>
+                    <div class="col-md-4 col-6">
+                        <input id="inputTimeLeft" asp-for="@Model.TimeLeft" name="timeLeft" class="form-control" readonly/>
+                    </div>
+                </div>
+                @if(Model.ButtonFlag == true)
+                {
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure you want to do night audit?')">Night Audit</button>
+                }
+                else
+                {
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure you want to do night audit?')" disabled>Night Audit</button>
+                }
+
+            </form>
+        </div>
+    </div>
+</section>
+

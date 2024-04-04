@@ -1,76 +1,88 @@
-﻿using Hotel_Core_MVC_V1.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace Hotel_Core_MVC_V1.Common
 {
-    public class CommonItems
+    [Authorize]
+    public class CommonItems : Controller
     {
-        private readonly HotelCoreMvcContext _db;
-        public CommonItems(HotelCoreMvcContext context)
-        {
-            _db = context;
-        }
         public static class CommonStrings
         {
             public const string connectionString = "HotelCoreMVCConnection";
             public const string duplicateDataMessage = "Duplicate data exists.";
+
+            // common
+            public const string DEFAULT_DEPARTMENT = "FO";
+            public const string DEFAULT_LEVEL = "ALL";
+
+            // error messages
+            public const string COMMON_ERROR_MESSAGE = "Error occured!";
+
+            // pms_reservation
+            public const string RESERVATION_CONFIRM = "C";
+            public const string RESERVATION_CANCEL = "N";
+            public const string RESERVATION_RESERVE = "R";
+
+            // pms_roomledger
+            public const string LEDGER_RESERVE = "reserve";
+            public const string LEDGER_OCCUPIED = "occupied";
+            public const string LEDGER_MAINTENANCE = "maintenance";
+            public const string EXTEND_STAY = "Extend Stay";
+
+            // pms_checkin
+            public const string CHECK_IN_CHECKIN = "CheckIn";
+            public const string CHECK_IN_NOSHOW = "NoShow";
+            public const string CHECK_IN_CANCEL = "Cancel";
+
+            // pms_roomfolioh
+            public const string DEFAULT_FOLIO_CODE = "MF";
+
+            // guestbilling
+            public const string ROOM_CHARGES_CODE = "FO-RC001";
+            public const string EXTRA_BED_CODE = "FO-EB001";
+            public const string CASH_RECEIVE = "CASH_RECEIVE";
+
+            // guest
+            public const string DEFAULT_GUEST_CODE = "1401/H01";
+
+            // night audit
+            public const string DEFAULT_NIGHT_AUDIT_CODE = "lastnightauditdtetime";
+
+
+
         }
+
+
         #region Common Functions
         public class AllCommonFunctions
         {
             public DateTime CurrentDatetime()
             {
-                DateTime d = new DateTime();
-                d = DateTime.UtcNow.AddHours(6).AddMinutes(30);
+                var d = DateTime.UtcNow.AddHours(6).AddMinutes(30);
                 return d;
             }
             public int currentUserID()
             {
                 return 1;
             }
+
+            public short currentUserIDShort()
+            {
+                return 1;
+            }
+
             public short currentCompanyID()
             {
                 return 1;
             }
-            //public GetCurrentUserInfoByUserName_Result GetCurrentUserInfoByUserName(string currentUserName)
-            //{
-            //    if (!string.IsNullOrEmpty(currentUserName))
-            //    {
-            //        var empUserInfo = _db.GetCurrentUserInfoByUserName(currentUserName).FirstOrDefault<GetCurrentUserInfoByUserName_Result>();
-            //        return empUserInfo;
-            //    }
-            //    return null;
-            //}
-            //public List<GetCurrentUserInfoByUserName_Result> GetUserInfoList(string userName, string email)
-            //{
-            //    var empUserInfo = _db.GetCurrentUserInfoByUserName(userName).AsEnumerable().Where(x => string.IsNullOrEmpty(email) || x.Email == email).ToList<GetCurrentUserInfoByUserName_Result>();
-            //    //var empUserInfo = _db.GetCurrentUserInfoByUserName(userName).ToList<GetCurrentUserInfoByUserName_Result>();
 
-            //    return empUserInfo;
-            //}
-            //public bool isPermission(string formName, string currentUserRole)
-            //{
-            //    return true;
-            //}
-            //public List<TransactionCodeModel> GetAllTranCodeList()
-            //{
-            //    try
-            //    {
-            //        var list = _db.ms_transactioncode.Select(x => new TransactionCodeModel()
-            //        {
-            //            trancodeid = x.trancodeid,
-            //            trancode = x.trancode,
-            //            trancodedesc = x.trancodedesc,
-            //            createdby = x.createdby,
-            //            createddate = x.createddate
-            //        }).ToList();
-            //        return list;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw ex;
-            //    }
-            //}
+            public int getImageSizeLimit()
+            {
+                return 1024 * 1024; //image size 1MB
+            }
         }
+
         #endregion
     }
 }

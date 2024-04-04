@@ -1,0 +1,168 @@
+﻿@model RoomEnquiryModels
+
+@{
+    ViewData["Title"] = "Room Enquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links {
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <style>
+        .bg-success:hover {
+            opacity: 0.9;
+        }
+
+        .bg-danger:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+}
+
+@section scripts
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 col-sm-6 col-lg-2">
+                        <div class="custom-box">
+                            <div class="info-box-content text-center text-truncate">
+                                <h6 class="info-box-text">Total Room - <b style="color: blue">@Model.TotalRoom</b></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-lg-2">
+                        <div class="custom-box">
+                            <div class="info-box-content text-center text-truncate">
+                                <h6 class="info-box-text">Reserved - <b style="color: blue">@Model.Reserved</b></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-lg-2">
+                        <div class="custom-box">
+                            <div class="info-box-content text-center text-truncate">
+                                <h6 class="info-box-text">Occupied - <b style="color: blue">@Model.Occupied</b></h6>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-lg-2">
+                        <div class="custom-box">
+                            <div class="info-box-content text-center text-truncate">
+                                <h6 class="info-box-text">Maintenance - <b style="color: blue">@Model.Maintenance</b></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-lg-2">
+                        <div class="custom-box">
+                            <div class="info-box-content text-center text-truncate">
+                                <h6 class="info-box-text">Occupancy - <b style="color: blue">@Model.Occupancy %</b></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="RoomEnquiry" class="row">
+                            <div class="form-group row col-md-4">
+                                <label class="col-4 col-form-label">For Next</label>
+                                <div class="col-6">
+                                    <input name="count" min="1" max="30" class="form-control" type="number" value="@Model.NightCount" />
+                                </div>
+                            </div>
+                            <div class="form-group row col-md-4">
+                                <label class="col-4 col-form-label">Room Type</label>
+                                <div class="col-6">
+                                    <select id="selectRmTyp" name="rmTypCde" class="form-control select2bs4" asp-items="ViewBag.RmTypes" style="width: 100%;">
+                                        <option value="">- Select All -</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row col-md-4">
+                                <input class="btn btn-default ml-auto" style="background-color: #31849B;color: white" type="submit" value="Enquiry" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <div class="col-md-12">
+                            <table id="example1" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 200px">
+                                            Room Type
+                                        </th>
+                                        @foreach (var date in Model.DateList)
+                                        {
+                                            <th style="text-align: center;min-width: 60px">
+                                                @Convert.ToDateTime(date).ToString("dd-MM")
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var rmInfo in Model.RoomInfoList)
+                                    {
+                                        <tr style="text-align: center">
+                                            <td style="text-align: left">
+                                                <a asp-action="RoomOccupancy" asp-route-rmTypCde="@rmInfo.RoomType">@Html.DisplayFor(modelItem => rmInfo.RmTypDesc)</a>
+                                            </td>
+
+                                            @for (int i = 1; i <= Model.NightCount; i++)
+                                            {
+                                                var infoProperty = $"Info{i}";
+                                                var infoValue = (int)rmInfo.GetType().GetProperty(infoProperty)?.GetValue(rmInfo);
+
+                                                <td class="@(infoValue > 0 ? "bg-success" : "bg-danger")">
+                                                    @Html.DisplayFor(modelItem => infoValue)
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

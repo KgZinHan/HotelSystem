@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Hotel_Core_MVC_V1.Models.Department>
+
+@{
+    ViewData["Title"] = "Department";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+}
+
+@section scripts
+    {
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 20,
+                "buttons": [{
+                    extend: 'copy',
+                    text: window.csvButtonTrans,
+                    title: "Department",
+                    exportOptions: {
+                        columns: ':not(:nth-last-child(-n + 2))'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: window.csvButtonTrans,
+                    title: "Department",
+                    exportOptions: {
+                        columns: ':not(:nth-last-child(-n + 2))'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: window.csvButtonTrans,
+                    title: "Department",
+                    exportOptions: {
+                        columns: ':not(:nth-last-child(-n + 2))'
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: window.csvButtonTrans,
+                    title: "Department",
+                    exportOptions: {
+                        columns: ':not(:nth-last-child(-n + 2))'
+                    }
+                }],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Create" class="btn btn-primary">Create New  <i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] List</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Department Code
+                                    </th>
+                                    <th>
+                                        Company
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Deptcde)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cmpyid)
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Edit" asp-route-deptCde="@item.Deptcde"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-deptCde="@item.Deptcde"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

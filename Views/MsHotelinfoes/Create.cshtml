@@ -20,10 +20,6 @@
             margin-top: 0.08rem;
         }
 
-        .form-check {
-            margin-left: 30px;
-        }
-
         .time{
             margin-left:8px;
         }
@@ -53,12 +49,12 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
             </div>
@@ -78,52 +74,52 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label asp-for="Hotelnme" class="control-label col-sm-4"></label>
+                                <label asp-for="Hotelnme" class="control-label col-sm-4">Hotel Name</label>
                                 <input asp-for="Hotelnme" class="form-control col-sm-7" />
                                 <span asp-validation-for="Hotelnme" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Address" class="control-label col-sm-4"></label>
+                                <label asp-for="Address" class="control-label col-sm-4">Address</label>
                                 <input asp-for="Address" class="form-control col-sm-7" />
                                 <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
 
                             <div class="form-group row">
-                                <label asp-for="Email" class="control-label col-sm-4"></label>
+                                <label asp-for="Email" class="control-label col-sm-4">E-mail</label>
                                 <input asp-for="Email" class="form-control col-sm-7" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Website" class="control-label col-sm-4"></label>
+                                <label asp-for="Website" class="control-label col-sm-4">Website</label>
                                 <input asp-for="Website" class="form-control col-sm-7" />
                                 <span asp-validation-for="Website" class="text-danger"></span>
                             </div>
 
                             <div class="form-group row">
-                                <label asp-for="Phone1" class="control-label col-sm-4"></label>
+                                <label asp-for="Phone1" class="control-label col-sm-4">Phone 1</label>
                                 <input asp-for="Phone1" class="form-control col-sm-7" />
                                 <span asp-validation-for="Phone1" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Phone2" class="control-label col-sm-4"></label>
+                                <label asp-for="Phone2" class="control-label col-sm-4">Phone 2</label>
                                 <input asp-for="Phone2" class="form-control col-sm-7" />
                                 <span asp-validation-for="Phone2" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Phone3" class="control-label col-sm-4"></label>
+                                <label asp-for="Phone3" class="control-label col-sm-4">Phone 3</label>
                                 <input asp-for="Phone3" class="form-control col-sm-7" />
                                 <span asp-validation-for="Phone3" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Hoteldte" class="control-label col-sm-4"></label>
+                                <label asp-for="Hoteldte" class="control-label col-sm-4">Hotel Date</label>
                                 <input type="date" asp-for="Hoteldte" class="form-control col-sm-7" />
                                 <span asp-validation-for="Hoteldte" class="text-danger"></span>
                             </div>
-
+                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label asp-for="Areaid" class="control-label col-sm-4"></label>
+                                <label asp-for="Areaid" class="control-label col-sm-4">Area</label>
                                 <div class="col-sm-7">
                                     <select asp-for="Areaid" class="form-control select2bs4" asp-items="ViewBag.Areaid" style="width: 100%;">
                                         <option> - Select One - </option>
@@ -132,7 +128,7 @@
                                 <span asp-validation-for="Areaid" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Tspid" class="control-label col-sm-4"></label>
+                                <label asp-for="Tspid" class="control-label col-sm-4">Township</label>
                                 <div class="col-sm-7">
                                     <select asp-for="Tspid" class="form-control select2bs4" asp-items="ViewBag.Tspid" style="width: 100%;">
                                         <option> - Select One - </option>
@@ -141,29 +137,39 @@
                                 <span asp-validation-for="Tspid" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Checkintime" class="control-label col-sm-4"></label>
+                                <label asp-for="Noofshift" class="control-label col-sm-4">Number of Shift</label>
+                                <input type="number" asp-for="Noofshift" class="form-control col-sm-7" />
+                                <span asp-validation-for="Noofshift" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Curshift" class="control-label col-sm-4">Current Shift</label>
+                                <input type="number" asp-for="Curshift" class="form-control col-sm-7" />
+                                <span asp-validation-for="Curshift" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Checkintime" class="control-label col-sm-4">Check-in Time</label>
                                 <input type="time" asp-for="Checkintime" class="form-control time col-sm-6" />
                                 <span asp-validation-for="Checkintime" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Checkouttime" class="control-label col-sm-4"></label>
+                                <label asp-for="Checkouttime" class="control-label col-sm-4">Check-out Time</label>
                                 <input type="time" asp-for="Checkouttime" class="form-control time col-sm-6" />
                                 <span asp-validation-for="Checkouttime" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Latecheckintime" class="control-label col-sm-4"></label>
+                                <label asp-for="Latecheckintime" class="control-label col-sm-4">Late Check-in Time</label>
                                 <input type="time" asp-for="Latecheckintime" class="form-control time col-sm-6" />
                                 <span asp-validation-for="Latecheckintime" class="text-danger"></span>
                             </div>
-                            <div class="form-group form-check">
-                                <label class="control-label">
-                                    <input class="form-check-input" asp-for="Autopostflg" /> @Html.DisplayNameFor(model => model.Autopostflg)
-                                </label>
-                            </div>
                             <div class="form-group row">
-                                <label asp-for="Autoposttime" class="control-label col-sm-4"></label>
+                                <label asp-for="Autoposttime" class="control-label col-sm-4">Auto Post Time</label>
                                 <input type="time" asp-for="Autoposttime" class="form-control time col-sm-6" />
                                 <span asp-validation-for="Autoposttime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label" style="margin-left: 12px">
+                                    <input class="form-check-input" asp-for="Autopostflg" /> Auto Post?
+                                </label>
                             </div>
                         </div>
                     </div>                 

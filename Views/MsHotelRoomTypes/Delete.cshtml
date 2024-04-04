@@ -1,19 +1,19 @@
 ﻿@model Hotel_Core_MVC_V1.Models.MsHotelRoomType
 
 @{
-    ViewData["Title"] = "Hotel Room Types";
+    ViewData["Title"] = "Hotel Room Type";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
             </div>
@@ -82,8 +82,7 @@
             <div class="card-footer">
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Rmtypid" />
-                    <input type="submit" value="Delete" class="btn btn-danger" /> |
-                    <a asp-action="Index">Back to List</a>
+                    <input type="submit" value="Delete" class="btn btn-danger" /> 
                 </form>
             </div>
         </div>

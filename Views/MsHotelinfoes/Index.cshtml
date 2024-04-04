@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section links{
+@section links {
     <!-- DataTables -->
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -14,7 +14,7 @@
 }
 
 @section scripts
-    {
+{
     <!-- DataTables  & Plugins -->
     <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -32,35 +32,39 @@
     <script>
         $(function () {
             $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "responsive": true, "lengthChange": false, "autoWidth": false,"pageLength" : 20,
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
+                    title: "Hotel Room Info",
                     exportOptions: {
-                        columns: [0, 1, 2], // Only first 3 columns
+                        columns: ':not(:nth-last-child(-n + 2))'
                     }
                 },
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
+                    title: "Hotel Room Info",
                     exportOptions: {
-                        columns: [0, 1, 2],
+                        columns: ':not(:nth-last-child(-n + 2))'
                     }
                 },
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
+                    title: "Hotel Room Info",
                     exportOptions: {
-                        columns: [0, 1, 2],
+                        columns: '::not(:nth-last-child(-n + 2))'
                     }
                 },
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
+                    title: "Hotel Room Info",
                     exportOptions: {
-                        columns: [0, 1, 2],
+                        columns: ':not(:nth-last-child(-n + 2))'
                     }
-                }, "colvis"],
+                }],
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>
@@ -69,12 +73,12 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-6">
                 <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Create">Create New  <i class="fas fa-plus"></i></a>
+                    <a asp-action="Create" class="btn btn-primary">Create New  <i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -88,7 +92,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 table-responsive">
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                                 <tr>
@@ -105,7 +109,7 @@
                                         @Html.DisplayNameFor(model => model.address)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.hoteldte)
+                                        Hotel Date
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.phone1)
@@ -122,10 +126,11 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.autopostflg)
                                     </th>
-                                    <th >
+                                    <th>
                                         @Html.DisplayNameFor(model => model.autoposttime)
                                     </th>
-                                    <th ></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -142,10 +147,10 @@
                                             @Html.DisplayFor(modelItem => item.tsp)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.address)
+                                            @Html.DisplayFor(modelItem => item.address) 
                                         </td>
                                         <td>
-                                            @Convert.ToDateTime(item.hoteldte).ToString("dd/MM/yyyy")
+                                            @Convert.ToDateTime(item.hoteldte).ToString("dd MMM yyyy")
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.phone1)
@@ -165,10 +170,11 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.autoposttime)
                                         </td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.cmpyid">Edit</a> |
-                                            <a asp-action="Details" asp-route-id="@item.cmpyid">Details</a> |
-                                            <a asp-action="Delete" asp-route-id="@item.cmpyid">Delete</a>
+                                        <td style="text-align: center">
+                                            <a asp-action="Edit" asp-route-id="@item.cmpyid"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-id="@item.cmpyid"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 }

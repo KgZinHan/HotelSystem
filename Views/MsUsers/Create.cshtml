@@ -1,17 +1,17 @@
-﻿@model Hotel_Core_MVC_V1.Models.MsUser
+﻿@model Hotel_Core_MVC_V1.Models.UserModel
 
 @{
     ViewData["Title"] = "User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section links{
+@section links {
     <!-- Select2 -->
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 }
 @section scripts
-    {
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
@@ -35,13 +35,12 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="col-sm-6">
-                <div class="breadcrumb float-sm-right active">
-                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
-
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
                 </div>
             </div>
         </div>
@@ -53,8 +52,8 @@
             <div class="card-header">
                 <h3 class="card-title">@ViewData["Title"] Create</h3>
             </div>
-            <div class="card-body col-12">
-                <p>Please take note that the user will be created with default password 'User@123'</p>
+            <div class="card-body col-md-12">
+                <p>Please take note that the user will be created with default password 'User@123' if there is no password was provided.</p>
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -67,12 +66,17 @@
                         <input asp-for="Usernme" class="form-control col-md-5" />
                         <span asp-validation-for="Usernme" class="text-danger"></span>
                     </div>
-@*                    <div class="form-group" hidden>
+                    <div class="form-group">
                         <label asp-for="Pwd" class="control-label"></label>
-                        <input asp-for="Pwd" class="form-control col-md-5" />
+                        <input asp-for="Pwd" class="form-control col-md-5" type="password" />
                         <span asp-validation-for="Pwd" class="text-danger"></span>
                     </div>
-*@                    <div class="form-group">
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" class="form-control col-md-5" type="password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Cmpyid" class="control-label"></label>
                         <div class="col-sm-5">
                             <select asp-for="Cmpyid" class="form-control select2bs4" asp-items="ViewBag.Cmpyid" style="width: 100%;">
@@ -81,10 +85,19 @@
                         </div>
                         <span asp-validation-for="Cmpyid" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Deptcde" class="control-label"></label>
+                        <div class="col-sm-5">
+                            <select asp-for="Deptcde" class="form-control select2bs4" asp-items="ViewBag.Deptcdeid" style="width: 100%;">
+                                <option> - Select One - </option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Deptcde" class="text-danger"></span>
+                    </div>
                     @*<div class="form-group">
-                        <label asp-for="Mnugrpid" class="control-label"></label>
-                        <input asp-for="Mnugrpid" class="form-control" />
-                        <span asp-validation-for="Mnugrpid" class="text-danger"></span>
+                    <label asp-for="Mnugrpid" class="control-label"></label>
+                    <input asp-for="Mnugrpid" class="form-control" />
+                    <span asp-validation-for="Mnugrpid" class="text-danger"></span>
                     </div>*@
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />

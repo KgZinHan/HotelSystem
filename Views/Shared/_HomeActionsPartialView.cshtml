@@ -1,0 +1,26 @@
+﻿@model HomeModel
+
+<div class="table-responsive">
+    <div class="container-fluid">
+        <div class="card mt-2">
+            <div class="card-body">
+                @if (@Model.OccuState == "occupied")
+                {
+                    <a asp-action="Edit" asp-controller="InHouseGuest" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Edit Check-In</a>
+                    <a asp-action="Edit" asp-controller="TransferUpgrade" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Transfer</a>
+                    <a asp-action="Add" asp-controller="GuestBilling" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Billing</a>
+                    <a asp-action="Index" asp-controller="ExtendStay" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Extend Stay</a>
+                    <a class="btn btn-default m-1" onclick="openCheckOutModal('@Model.RoomLgId')" style="background-color: #31849B;color: white">Check-Out</a>
+                    <a asp-action="Edit" asp-controller="Messages" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Message</a>
+                    <a asp-action="Index" asp-controller="Visits" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Visits</a>
+                }
+                @if (@Model.OccuState == "reserve")
+                {
+                    <a class="btn btn-default m-1" onclick="confirmCancelResv('@Model.RoomLgId')" style="background-color: #31849B;color: white">Cancel Resv</a>
+                    <a asp-action="Edit" asp-controller="CheckIn" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Check-In</a>
+                    <a asp-action="Index" asp-controller="Visits" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1" style="background-color: #31849B;color: white">Visits</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

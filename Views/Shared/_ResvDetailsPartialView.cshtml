@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ReserveRoomDetails>
+<div class="container">
+    <div class="card col-12 mt-1">
+        <div class="card-body p-1 row">
+            @foreach (var room in Model)
+            {
+                <label class="col-4">
+                    @room.Rmtypdesc
+                </label>
+                <div class="col-5" style="color: green">
+                    1 Night - @room.Price.ToString("n0") MMK
+                </div>
+                <div class="col-3 row">
+                    Extra Bed - &nbsp;<span style="color: red">@room.Extrabedqty</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,288 @@
+﻿@model Hotel_Core_MVC_V1.Models.CheckInModel
+
+@{
+    ViewData["Title"] = "Today Check-In Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links{
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <style type="text/css">
+        .form-check-input {
+            width: 23px;
+            height: 23px;
+            margin-left: -2rem;
+            margin-top: 0.08rem;
+        }
+
+        .form-check {
+            margin-left: 30px;
+        }
+
+        .time {
+            margin-left: 8px;
+        }
+    </style>
+
+}
+@section scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Select2 -->
+    <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/TodayCheckIn.js"></script>
+    <script>
+        $(function () {
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+        });
+        document.getElementById('TodayCheckInForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            function testing() {
+                $.ajax({
+                    type: 'GET',
+                    url: "/TodayCheckIn/GuestInfo",
+                    data: { id: 1 },
+                    success: function () {
+                    },
+                    error: function (data) {
+                        alert('error');
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+<!-- Room Modal -->
+<div class="modal" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content table-responsive" style="max-height: 600px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Available Rooms</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeRoomModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="roomModalBodyId">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Guest Modal -->
+<div class="modal" id="guestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content table-responsive" style="max-height: 600px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Guests</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeGuestModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="guestModalBodyId">
+            </div>
+            <div class="modal-footer">
+                <button id="modelCloseBtnId" type="button" class="btn btn-default" onclick="closeGuestModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4>Edit @ViewData["Title"]</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="breadcrumb float-sm-right active">
+                    <a asp-action="Index">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form  id="TodayCheckInForm" asp-action="Edit" asp-controller="TodayCheckIn"  multiple>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input id="inputRoomLgId" type="hidden" asp-for="RoomLgId" />
+                            <input type="hidden" asp-for="CheckInId" />
+                            <input type="hidden" asp-for="GuestId" />
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">Room Details</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="CheckInId" class="control-label col-sm-4"></label>
+                                        <input asp-for="CheckInId" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="CheckInId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Occudte" class="control-label col-sm-4"></label>
+                                        <input id="inputCheckInDate" type="date" asp-for="Occudte" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Occudte" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="Nightqty" class="control-label col-sm-4"></label>
+                                        <input id="inputNightQty" asp-for="Nightqty" class="form-control col-sm-7" oninput="calculateCheckOutDate()" />
+                                        <span asp-validation-for="Nightqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Departdte" class="control-label col-sm-4"></label>
+                                        <input id="inputCheckOutDate" type="date" asp-for="Departdte" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Departdte" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Rmtypdesc" class="control-label col-sm-4"></label>
+                                        <input asp-for="Rmtypdesc" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Rmtypdesc" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="PaxNo" class="control-label col-sm-4"></label>
+                                        <input asp-for="PaxNo" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="PaxNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Adultqty" class="control-label col-sm-4"></label>
+                                        <input asp-for="Adultqty" min="0" class="form-control col-sm-7" />
+                                        <span asp-validation-for="Adultqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Childqty" class="control-label col-sm-4"></label>
+                                        <input asp-for="Childqty" min="0" class="form-control col-sm-7" />
+                                        <span asp-validation-for="Childqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label class="control-label">
+                                            <input class="form-check-input" asp-for="@Model.HKeepingFlg" />  House Keeping?
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">Billing</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Rmprice" class="control-label col-sm-4"></label>
+                                        <input id="inputRmprice"  asp-for="Rmprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Rmprice" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Extrabedqty" class="control-label col-sm-4"></label>
+                                        <input id="inputExtrabedqty"  asp-for="Extrabedqty" min="0" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Extrabedqty" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Extrabedprice" class="control-label col-sm-4"></label>
+                                        <input id="inputExtrabedprice"  asp-for="Extrabedprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Discountamt" class="control-label col-sm-4"></label>
+                                        <input id="inputDiscountamt"  asp-for="Discountamt" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
+                                        <span asp-validation-for="Discountamt" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Amt" class="control-label col-sm-4"></label>
+                                        <input id="inputAmt"  asp-for="Amt" min="0" step="0.01" class="form-control col-sm-7" readonly />
+                                        <span asp-validation-for="Amt" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Remark" class="control-label col-sm-4"></label>
+                                        <textarea asp-for="Remark" class="form-control col-sm-7">
+                                            </textarea>
+                                        <span asp-validation-for="Remark" class="text-danger"></span>
+                                    </div>
+                                    @* <div class="form-group row">
+                                        <label asp-for="Paymenttyp" class="control-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control select2bs4" asp-for="Paymenttyp" asp-items="ViewBag.PaymentType" style="width: 100%;">
+                                            </select>
+                                        </div>
+                                        <span asp-validation-for="Paymenttyp" class="text-danger"></span>
+                                    </div> *@
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group row">
+                                        <h4 class="control-label">CheckIn Guest</h4>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="ContactName" class="control-label col-sm-4"></label>
+                                        <input asp-for="ContactName" type="text" class="form-control col-sm-7" readonly>
+                                        <span asp-validation-for="ContactName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="ContactNo" class="control-label col-sm-4"></label>
+                                        <input asp-for="ContactNo" class="form-control col-sm-7" readonly/>
+                                        <span asp-validation-for="ContactNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="SpecialInstruct" class="control-label col-sm-4"></label>
+                                        <textarea asp-for="SpecialInstruct" class="form-control col-sm-7">
+                                            </textarea>
+                                        <span asp-validation-for="SpecialInstruct" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Roomno" class="control-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <button type="button" class="btn btn-info" onclick="chooseRoom('@Model.RoomLgId','@Model.RmtypId')">Choose</button>
+                                                </div>
+                                                <input id="inputRoomNo" asp-for="Roomno" type="text" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <span asp-validation-for="Roomno" class="text-danger"></span>
+                                    </div>
+                                    @* <div class="form-group row">
+                                        <label asp-for="ContactName" class="control-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <a asp-action="GuestInfo" asp-controller="TodayCheckIn" asp-route-id="@Model.GuestId">
+                                                        <button type="button" class="btn btn-info">Browse</button>
+                                                    </a>
+                                                </div>
+                                                <input id="inputGuestName" asp-for="ContactName" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <span asp-validation-for="ContactName" class="text-danger"></span>
+                                    </div> *@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary"/>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

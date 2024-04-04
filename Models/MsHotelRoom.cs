@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Hotel_Core_MVC_V1.Models;
+﻿namespace Hotel_Core_MVC_V1.Models;
 
 public partial class MsHotelRoom
 {
@@ -28,6 +25,10 @@ public partial class MsHotelRoom
     public string? Guestactivemsg { get; set; }
 
     public bool Isdnd { get; set; }
+
+    public bool? Occuflg { get; set; }
+
+    public string? Roomstate { get; set; }
 
     public int Cmpyid { get; set; }
 

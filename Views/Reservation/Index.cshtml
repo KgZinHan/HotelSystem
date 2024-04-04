@@ -1,0 +1,272 @@
+﻿@model MsHotelinfo
+
+@{
+    ViewData["Title"] = "Reservation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section links{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+}
+
+@section scripts
+    {
+    <!-- DataTables  & Plugins -->
+    <script src="~/lib/adminlte3/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/jszip/jszip.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/adminlte3/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Custom Js for this form -->
+    <script src="~/javascript/Reservation.js"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": [{
+                    extend: 'copy',
+                    text: window.csvButtonTrans,
+                    exportOptions: {
+                        columns: [0, 1, 2], // Only first 3 columns
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: window.csvButtonTrans,
+                    exportOptions: {
+                        columns: [0, 1, 2],
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: window.csvButtonTrans,
+                    exportOptions: {
+                        columns: [0, 1, 2],
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: window.csvButtonTrans,
+                    exportOptions: {
+                        columns: [0, 1, 2],
+                    }
+                }, "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+        // Restrict choosing date before today
+        const today = new Date().toISOString().split('T')[0];
+       
+        document.getElementById('inputCheckInDateId').setAttribute('min', today);
+    </script>
+}
+
+<style>
+    .custom-card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 5px;
+    }
+
+    .number-input input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    .number-input input[type=number]::-webkit-inner-spin-button,
+    .number-input input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .number-input {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+    }
+
+    .number-input button {
+        -webkit-appearance: none;
+        background-color: transparent;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+    }
+
+    .number-input button:before,
+    .number-input button:after {
+        display: inline-block;
+        position: absolute;
+        content: '';
+        height: 2px;
+        transform: translate(-50%, -50%);
+    }
+
+    .number-input button.plus:after {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .number-input input[type=number] {
+        text-align: center;
+    }
+
+    .number-input.number-input {
+        border: 1px solid #ced4da;
+        width: 10rem;
+        border-radius: .25rem;
+    }
+
+    .number-input.number-input button {
+        width: 2.6rem;
+        height: .7rem;
+    }
+
+    .number-input.number-input button.minus {
+        padding-left: 10px;
+    }
+
+    .number-input.number-input button:before,
+    .number-input.number-input button:after {
+        width: .7rem;
+        background-color: #495057;
+    }
+
+    .number-input.number-input input[type=number] {
+        max-width: 4rem;
+        padding: .5rem;
+        border: 1px solid #ced4da;
+        border-width: 0 1px;
+        font-size: 1rem;
+        height: 2rem;
+        color: #495057;
+    }
+
+</style>
+
+<!--Images Modal -->
+<div class="modal" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Room Images</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeImagesModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <p id="loadingTextId" class="text-center">Loading...</p>
+            <div id="imagesBodyListId" class="modal-body table-responsive" style="height: 400px;padding: 0px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Guest Info Modal -->
+<div class="modal" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Guest Info</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeUserInfoModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="userInfoModelBodyId" class="table-responsive" style="max-height: 600px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-1">
+    <div class="card-header">
+        <div class="text-center">
+            <h4><b>@Model.Hotelnme</b></h4>
+            (Check-In <i class="fas fa-clock"></i>:@Html.DisplayFor(modelItem => Model.Checkintime) - Check-Out
+            <i class="fas fa-clock"></i>: @Html.DisplayFor(modelItem => Model.Checkouttime) )
+        </div><br />
+        <h3 class="card-title">
+            <i class="fas fa-map-marker-alt"></i>&nbsp;@Model.Address
+            @{
+                var phones = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(Model.Phone1))
+                {
+                    phones.Add(Model.Phone1);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.Phone2))
+                {
+                    phones.Add(Model.Phone2);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.Phone3))
+                {
+                    phones.Add(Model.Phone3);
+                }
+
+                if (phones.Count > 0)
+                {
+                    <text>(@String.Join(", ", phones))</text>
+                }
+            }
+        </h3><br />
+        <h3 class="card-title"><i class="fas fa-envelope"></i>&nbsp;@Model.Email</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-lg-2 col-md-2 col-6 col-form-label">Check-in Date</label>
+            <div class="col-lg-2 col-md-4 col-6">
+                <input id="inputCheckInDateId" type="date" class="form-control" oninput="calculateCheckOutDate()">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2 col-md-2 col-6 col-form-label">No. of Days</label>
+            <div class="col-lg-1 col-md-2 col-6">
+                <input id="inputNoOfDaysId" type="number" min="1" class="form-control" oninput="calculateCheckOutDate()" />
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2 col-md-2 col-6 col-form-label">Check-out Date</label>
+            <div class="col-lg-2 col-md-4 col-6">
+                <input id="inputCheckOutDateId" type="date" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2 col-md-2 col-form-label"></label>
+            <div class="col-lg-4 col-md-6 col-10 row">
+                <div class="form-check col-3">
+                    <input id="inputRadio" class="form-check-input" type="radio" name="paxType" style="transform:scale(2)" checked>
+                    <label class="form-check-label">Local</label>
+                </div>
+                <div class="form-check col-3">
+                    <input class="form-check-input" type="radio" name="paxType" style="transform:scale(2)">
+                    <label class="form-check-label">Foreigner</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-default" onclick="searchRooms()" style="background-color: #31849B;color: white">Search Room</button>
+    </div>
+</div>
+<div id="defaultContainer" class="container">
+</div>
+
