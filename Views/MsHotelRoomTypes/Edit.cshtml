@@ -59,7 +59,7 @@
                                     {
                                         <img id="oldImg" src="data:image/jpeg;base64,@Model.Base64Image" alt="Image" width="120" height="100" style="margin-bottom: 10px"/>
                                     }
-                                    <img id="newImg" alt="Image" width="120" height="100" style="margin-bottom: 10px;display: none" />
+                                    <img id="newImg" alt="Image" src="#" width="120" height="100" style="margin-bottom: 10px;display: none" />
                                     <input id="inputMainImg" type="file" asp-for="RmTypMainImg" onchange="changeImage()" />
                                     <span asp-validation-for="RmTypMainImg" class="text-danger"></span>
                                 </div>
@@ -69,12 +69,14 @@
                                 <div>
                                     @if(Model.Base64ImageList != null)
                                     {
+                                        <div id="image-container">
                                         @foreach (var otherImg in Model.Base64ImageList)
                                         {
                                             <img src="data:image/jpeg;base64,@otherImg" alt="Image" width="120" height="100" style="margin-bottom: 10px" />
                                         }
+                                        </div>
                                     }
-                                    <input type="file" asp-for="RmTypImgList" multiple />
+                                    <input type="file" asp-for="RmTypImgList" multiple onchange="changeImages(this)"/>
                                     <span asp-validation-for="RmTypImgList" class="text-danger"></span>
                                 </div>
                             </div>
@@ -113,5 +115,26 @@
                 newImg.style.display = "none";
             }
         }
+
+        function changeImages(input) {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = '';
+
+            const files = input.files;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.width = 120;
+                    img.height = 100;
+                    img.style.marginRight = 10 + 'px';
+                    img.style.marginBottom = 10 + 'px';
+                    img.src = e.target.result;
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
     </script>
+
 }

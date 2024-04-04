@@ -62,7 +62,8 @@
                             <div class="form-group">
                                 <label asp-for="RmTypImgList" class="control-label">Room Other Images</label>
                                 <div>
-                                    <input type="file" asp-for="RmTypImgList" multiple />
+                                    <div id="image-container"></div>
+                                    <input type="file" asp-for="RmTypImgList" multiple onchange="displayImages(this)" />
                                     <span asp-validation-for="RmTypImgList" class="text-danger"></span>
                                 </div>
                             </div>
@@ -99,6 +100,25 @@
             }
             else {
                 imgFrame.style.display = "none";
+            }
+        }
+        function displayImages(input) {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = ''; 
+
+            const files = input.files;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.width = 120;
+                    img.height = 100;
+                    img.style.marginRight = 10 + 'px';
+                    img.style.marginBottom = 10 + 'px';
+                    img.src = e.target.result;
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
             }
         }
     </script>

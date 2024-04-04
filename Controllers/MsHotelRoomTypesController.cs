@@ -22,7 +22,6 @@ namespace Hotel_Core_MVC_V1.Controllers
 
         #region // Main methods //
 
-        // GET: MsHotelRoomTypes
         public async Task<IActionResult> Index()
         {
             SetLayOutData();
@@ -31,7 +30,6 @@ namespace Hotel_Core_MVC_V1.Controllers
                         Problem("Entity set 'HotelCoreMvcContext.MsHotelRoomTypes'  is null.");
         }
 
-        // GET: MsHotelRoomTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             SetLayOutData();
@@ -50,14 +48,12 @@ namespace Hotel_Core_MVC_V1.Controllers
             return View(msHotelRoomType);
         }
 
-        // GET: MsHotelRoomTypes/Create
         public IActionResult Create()
         {
             SetLayOutData();
             return View();
         }
 
-        // POST: MsHotelRoomTypes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Rmtypid,Rmtypcde,Rmtypdesc,Paxno,Extrabedprice,Cmpyid,RmTypMainImg,RmTypImgList")] HotelRoomTypeModel msHotelRoomType)
@@ -161,7 +157,6 @@ namespace Hotel_Core_MVC_V1.Controllers
 
         }
 
-        // GET: MsHotelRoomTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             SetLayOutData();
@@ -211,7 +206,6 @@ namespace Hotel_Core_MVC_V1.Controllers
             return View(hotelRoomType);
         }
 
-        // POST: MsHotelRoomTypes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Rmtypid,Rmtypcde,Rmtypdesc,Paxno,Extrabedprice,Cmpyid,Revdtetime,Userid,RmTypMainImg,RmTypImgList")] HotelRoomTypeModel hotelRoomTypeModel)
@@ -334,7 +328,6 @@ namespace Hotel_Core_MVC_V1.Controllers
             }
         }
 
-        // GET: MsHotelRoomTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             SetLayOutData();
@@ -353,7 +346,6 @@ namespace Hotel_Core_MVC_V1.Controllers
             return View(msHotelRoomType);
         }
 
-        // POST: MsHotelRoomTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
