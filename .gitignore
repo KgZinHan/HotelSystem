@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Hotel_Core_MVC_V1.csproj
+/Hotel_Core_MVC_V1.csproj

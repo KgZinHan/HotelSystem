@@ -54,8 +54,6 @@ namespace Hotel_Core_MVC_V1.Controllers
         }
 
         // POST: MsHotelRoomTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Rmtypid,Rmtypcde,Rmtypdesc,Paxno,Extrabedprice,Cmpyid,Revdtetime,Userid")] MsHotelRoomType msHotelRoomType)
@@ -92,9 +90,10 @@ namespace Hotel_Core_MVC_V1.Controllers
             return View(msHotelRoomType);
         }
 
+            return View(hotelRoomType);
+        }
+
         // POST: MsHotelRoomTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Rmtypid,Rmtypcde,Rmtypdesc,Paxno,Extrabedprice,Cmpyid,Revdtetime,Userid")] MsHotelRoomType msHotelRoomType)

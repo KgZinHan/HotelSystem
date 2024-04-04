@@ -48,7 +48,6 @@ public partial class HotelCoreMvcContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<HotelRoomModel>(entity => entity.HasNoKey());
         modelBuilder.Entity<LinkHotelRoomRoomAmenity>(entity =>
         {
             entity.ToTable("link_HotelRoom_RoomAmenities");
@@ -67,6 +66,7 @@ public partial class HotelCoreMvcContext : DbContext
             entity.Property(e => e.Roomid).HasColumnName("roomid");
         });
 
+        modelBuilder.Entity<MsAgency>(entity =>
         modelBuilder.Entity<MsArea>(entity =>
         {
             entity.HasKey(e => e.Areaid);
