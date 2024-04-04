@@ -188,31 +188,6 @@ namespace Hotel_Core_MVC_V1.Controllers
                         Problem("Entity set 'HotelCoreMvcContext.MsUsers'  is null.");
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            SetLayOutData();
-            if (id == null || _context.MsUsers == null)
-            {
-                return NotFound();
-            }
-
-            var msUser = await _context.MsUsers
-                .FirstOrDefaultAsync(m => m.Userid == id);
-            if (msUser == null)
-            {
-                return NotFound();
-            }
-            var model = new UserModel();
-            model.Cmpy = _context.MsHotelinfos.Where(x => x.Cmpyid == msUser.Cmpyid).Select(x => x.Hotelnme).First();
-            model.Usercde = msUser.Usercde;
-            model.Usernme = msUser.Usernme;
-            //model.Cmpyid = msUser.Cmpyid,
-            model.Userid = msUser.Userid;
-            //model.Mnugrpid = msUser.Mnugrpid
-
-            return View(model);
-        }
-
         public IActionResult Create()
         {
             SetLayOutData();
@@ -249,6 +224,7 @@ namespace Hotel_Core_MVC_V1.Controllers
                     Usernme = user.Usernme,
                     Pwd = Encoding.UTF8.GetBytes(encodedString),
                     Mnugrpid = 1,
+                    Deptcde = user.Deptcde,
                     Cmpyid = user.Cmpyid,
                     Revdtetime = DateTime.Now,
                 };

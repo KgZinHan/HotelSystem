@@ -22,10 +22,12 @@ namespace Hotel_Core_MVC_V1.Controllers
 
 
         #region // Main methods //
+
         public async Task<IActionResult> Index()
         {
             SetLayOutData();
-            var rawList = _context.MsHotelinfos.Select(x => new HotelInfoModel()
+
+            var hotelInfoList = await _context.MsHotelinfos.Select(x => new HotelInfoModel()
             {
                 address = x.Address,
                 area = _context.MsAreas.Where(j => j.Areaid == x.Areaid).Select(j => j.Areacde).FirstOrDefault(),
@@ -33,51 +35,27 @@ namespace Hotel_Core_MVC_V1.Controllers
                 areaid = x.Areaid,
                 autoposttime = x.Autoposttime.HasValue ? x.Autoposttime.Value.ToString("hh\\:mm") : "",
                 checkintime = (x.Checkintime.HasValue ? x.Checkintime.Value.ToString("hh\\:mm") : "") + " / " + (x.Checkouttime.HasValue ? x.Checkouttime.Value.ToString("hh\\:mm") : ""),
-                //checkouttime=x.Checkouttime,
                 cmpyid = x.Cmpyid,
                 email = x.Email,
-                hoteldte = x.Hoteldte,
+                hoteldte = x.Hoteldte == null ? "" : x.Hoteldte.Value.ToString("dd MMM yyyy"),
                 hotelnme = x.Hotelnme,
                 latecheckintime = x.Latecheckintime.HasValue ? x.Latecheckintime.Value.ToString("hh\\:mm") : "",
-                phone1 = String.Join(", ", x.Phone1, x.Phone2, x.Phone3) + " " + x.Website,
-                tsp = _context.MsTownships.Where(j => j.Tspid == x.Tspid).Select(j => j.Tspcde).FirstOrDefault(),
+                phone1 = x.Phone1,
+                phone2 = x.Phone2,
+                phone3 = x.Phone3,
                 website = x.Website,
+                tsp = _context.MsTownships.Where(j => j.Tspid == x.Tspid).Select(j => j.Tspcde).FirstOrDefault(),
                 revdtetime = x.Revdtetime,
                 userid = x.Userid,
                 tspid = x.Tspid
             }).ToListAsync();
-            return _context.MsHotelinfos != null ?
-                        View(await rawList) :
-                        Problem("Entity set 'HotelCoreMvcContext.MsHotelinfos'  is null.");
-        }
 
-        public async Task<IActionResult> Details(short? id)
-        {
-            SetLayOutData();
-            if (id == null || _context.MsHotelinfos == null)
+            foreach (var data in hotelInfoList)
             {
-                return NotFound();
+                data.phone1 = JoinPhones(data.phone1, data.phone2, data.phone3, data.website) ?? "";
             }
 
-            var msHotelinfo = await _context.MsHotelinfos
-                .FirstOrDefaultAsync(m => m.Cmpyid == id);
-            if (msHotelinfo == null)
-            {
-                return NotFound();
-            }
-            HotelInfoModel model = new HotelInfoModel();
-            model.cmpyid = msHotelinfo.Cmpyid;
-            model.email = msHotelinfo.Email;
-            model.checkintime = (msHotelinfo.Checkintime.HasValue ? msHotelinfo.Checkintime.Value.ToString("hh\\:mm") : "") + " / " + (msHotelinfo.Checkouttime.HasValue ? msHotelinfo.Checkouttime.Value.ToString("hh\\:mm") : "");
-            model.phone1 = String.Join(", ", msHotelinfo.Phone1, msHotelinfo.Phone2, msHotelinfo.Phone3) + " | " + msHotelinfo.Website;
-            model.address = msHotelinfo.Address;
-            model.area = _context.MsAreas.Where(j => j.Areaid == msHotelinfo.Areaid).Select(j => j.Areacde).FirstOrDefault();
-            model.tsp = _context.MsTownships.Where(j => j.Tspid == msHotelinfo.Tspid).Select(j => j.Tspcde).FirstOrDefault();
-            model.autoposttime = msHotelinfo.Autoposttime.HasValue ? msHotelinfo.Autoposttime.Value.ToString("hh\\:mm") : "";
-            model.autopostflg = msHotelinfo.Autopostflg;
-            model.hoteldte = msHotelinfo.Hoteldte;
-            model.hotelnme = msHotelinfo.Hotelnme;
-            return View(model);
+            return View(hotelInfoList);
         }
 
         public IActionResult Create()
@@ -96,6 +74,8 @@ namespace Hotel_Core_MVC_V1.Controllers
             SetLayOutData();
             if (ModelState.IsValid)
             {
+                msHotelinfo.Checkintime ??= new TimeSpan(12, 0, 0);
+                msHotelinfo.Checkouttime ??= new TimeSpan(12, 0, 0);
                 msHotelinfo.Revdtetime = DateTime.Now;
                 msHotelinfo.Userid = GetUserId();
 
@@ -181,17 +161,17 @@ namespace Hotel_Core_MVC_V1.Controllers
             {
                 return NotFound();
             }
-            HotelInfoModel model = new HotelInfoModel();
+            var model = new HotelInfoModel();
             model.cmpyid = msHotelinfo.Cmpyid;
             model.email = msHotelinfo.Email;
             model.checkintime = (msHotelinfo.Checkintime.HasValue ? msHotelinfo.Checkintime.Value.ToString("hh\\:mm") : "") + " / " + (msHotelinfo.Checkouttime.HasValue ? msHotelinfo.Checkouttime.Value.ToString("hh\\:mm") : "");
-            model.phone1 = String.Join(", ", msHotelinfo.Phone1, msHotelinfo.Phone2, msHotelinfo.Phone3) + " | " + msHotelinfo.Website;
+            model.phone1 = string.Join(", ", msHotelinfo.Phone1, msHotelinfo.Phone2, msHotelinfo.Phone3) + " | " + msHotelinfo.Website;
             model.address = msHotelinfo.Address;
             model.area = _context.MsAreas.Where(j => j.Areaid == msHotelinfo.Areaid).Select(j => j.Areacde).FirstOrDefault();
             model.tsp = _context.MsTownships.Where(j => j.Tspid == msHotelinfo.Tspid).Select(j => j.Tspcde).FirstOrDefault();
             model.autoposttime = msHotelinfo.Autoposttime.HasValue ? msHotelinfo.Autoposttime.Value.ToString("hh\\:mm") : "";
             model.autopostflg = msHotelinfo.Autopostflg;
-            model.hoteldte = msHotelinfo.Hoteldte;
+            model.hoteldte = msHotelinfo.Hoteldte == null ? "" : msHotelinfo.Hoteldte.Value.ToString("dd MMM yyyy");
             model.hotelnme = msHotelinfo.Hotelnme;
 
             return View(model);
@@ -219,6 +199,15 @@ namespace Hotel_Core_MVC_V1.Controllers
         private bool MsHotelinfoExists(short id)
         {
             return (_context.MsHotelinfos?.Any(e => e.Cmpyid == id)).GetValueOrDefault();
+        }
+
+        #endregion
+
+        #region // Other spin-off methods //
+        private static string? JoinPhones(string? phone1, string? phone2, string? phone3, string? website)
+        {
+            var phones = new List<string?>() { phone1, phone2, phone3, website }.Where(p => !string.IsNullOrEmpty(p));
+            return phones.Any() ? string.Join(", ", phones) : "";
         }
 
         #endregion

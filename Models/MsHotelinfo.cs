@@ -1,14 +1,16 @@
-﻿namespace Hotel_Core_MVC_V1.Models;
+﻿using System.ComponentModel;
+
+namespace Hotel_Core_MVC_V1.Models;
 
 public partial class MsHotelinfo
 {
     public short Cmpyid { get; set; }
 
-    public string Hotelnme { get; set; } = null!;
+    [DisplayName("Hotel Name")]public string Hotelnme { get; set; } = null!;
 
-    public int Areaid { get; set; }
+    [DisplayName("Area")] public int Areaid { get; set; }
 
-    public int Tspid { get; set; }
+    [DisplayName("Township")] public int Tspid { get; set; }
 
     public string Address { get; set; } = null!;
 

@@ -150,7 +150,7 @@
                                             @Html.DisplayFor(modelItem => item.address) 
                                         </td>
                                         <td>
-                                            @Convert.ToDateTime(item.hoteldte).ToString("dd MMM yyyy")
+                                            @Html.DisplayFor(modelItem => item.hoteldte)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.phone1)

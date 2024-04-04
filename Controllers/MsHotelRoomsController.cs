@@ -324,39 +324,50 @@ namespace Hotel_Core_MVC_V1.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             SetLayOutData();
+
             if (id == null || _context.MsHotelRooms == null)
             {
                 return NotFound();
             }
 
-            var msHotelRoom = await _context.MsHotelRooms
-                .FirstOrDefaultAsync(m => m.Roomid == id);
+            var msHotelRoom = await _context.MsHotelRooms.FirstOrDefaultAsync(m => m.Roomid == id);
+
             if (msHotelRoom == null)
             {
                 return NotFound();
             }
-            HotelRoomModel model = new HotelRoomModel();
-            model.Roomid = msHotelRoom.Roomid;
-            model.Cmpyid = msHotelRoom.Cmpyid;
-            model.Revdtetime = msHotelRoom.Revdtetime;
-            model.Userid = msHotelRoom.Userid;
-            model.Locid = msHotelRoom.Locid;
-            model.Loccde = _context.MsHotellocations.Where(x => x.Locid == msHotelRoom.Locid).Select(x => x.Loccde).FirstOrDefault();
-            model.Isautoapplyrate = msHotelRoom.Isautoapplyrate;
-            model.Usefixprice = msHotelRoom.Usefixprice;
-            model.Bedid = msHotelRoom.Bedid;
-            model.bedcde = _context.MsHotelroombeddings.Where(x => x.Bedid == msHotelRoom.Bedid).Select(x => x.Bedcde).FirstOrDefault();
-            model.Guestactivemsg = msHotelRoom.Guestactivemsg;
-            model.Isdnd = msHotelRoom.Isdnd;
-            model.Isguestin = msHotelRoom.Isguestin;
-            model.Paxno = msHotelRoom.Paxno;
-            model.Rmtypid = msHotelRoom.Rmtypid;
-            model.rmtypcde = _context.MsHotelRoomTypes.Where(x => x.Rmtypid == msHotelRoom.Rmtypid).Select(x => x.Rmtypcde).FirstOrDefault();
-            model.Roomno = msHotelRoom.Roomno;
-            model.Roomtelno = msHotelRoom.Roomtelno;
 
-            model.RoomAmenities = String.Join(",", _context.LinkHotelRoomRoomAmenities.Join(_context.MsRoomAmenities, l => l.Rmamtyid, rm => rm.Rmamtyid, (l, rm) => new { l, rm }).Where(x => x.l.Roomid == msHotelRoom.Roomid).Select(x => x.rm.Rmamtycde).ToList());
-            model.RoomFeatures = String.Join(",", _context.LinkHotelRoomRoomFeatures.Join(_context.MsRoomFeatures, l => l.Rmfeatureid, rf => rf.Rmfeatureid, (l, rf) => new { l, rf }).Where(x => x.l.Roomid == msHotelRoom.Roomid).Select(x => x.rf.Rmfeaturecde).ToList());
+            var model = new HotelRoomModel()
+            {
+                Roomid = msHotelRoom.Roomid,
+                Cmpyid = msHotelRoom.Cmpyid,
+                Revdtetime = msHotelRoom.Revdtetime,
+                Userid = msHotelRoom.Userid,
+                Locid = msHotelRoom.Locid,
+                Loccde = _context.MsHotellocations.FirstOrDefault(x => x.Locid == msHotelRoom.Locid)?.Loccde,
+                Isautoapplyrate = msHotelRoom.Isautoapplyrate,
+                Usefixprice = msHotelRoom.Usefixprice,
+                Bedid = msHotelRoom.Bedid,
+                bedcde = _context.MsHotelroombeddings.FirstOrDefault(x => x.Bedid == msHotelRoom.Bedid)?.Bedcde,
+                Guestactivemsg = msHotelRoom.Guestactivemsg,
+                Isdnd = msHotelRoom.Isdnd,
+                Isguestin = msHotelRoom.Isguestin,
+                Paxno = msHotelRoom.Paxno,
+                Rmtypid = msHotelRoom.Rmtypid,
+                rmtypcde = _context.MsHotelRoomTypes.FirstOrDefault(x => x.Rmtypid == msHotelRoom.Rmtypid)?.Rmtypcde,
+                Roomno = msHotelRoom.Roomno,
+                Roomtelno = msHotelRoom.Roomtelno,
+                RoomAmenities = string.Join(",", _context.LinkHotelRoomRoomAmenities
+                    .Join(_context.MsRoomAmenities, l => l.Rmamtyid, rm => rm.Rmamtyid, (l, rm) => new { l, rm })
+                    .Where(x => x.l.Roomid == msHotelRoom.Roomid)
+                    .Select(x => x.rm.Rmamtycde)
+                    .ToList()),
+                RoomFeatures = string.Join(",", _context.LinkHotelRoomRoomFeatures
+                    .Join(_context.MsRoomFeatures, l => l.Rmfeatureid, rf => rf.Rmfeatureid, (l, rf) => new { l, rf })
+                    .Where(x => x.l.Roomid == msHotelRoom.Roomid)
+                    .Select(x => x.rf.Rmfeaturecde)
+                    .ToList())
+            };
 
             return View(model);
         }
@@ -480,5 +491,6 @@ namespace Hotel_Core_MVC_V1.Controllers
 
 
         #endregion
+
     }
 }

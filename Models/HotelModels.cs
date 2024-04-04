@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,40 +8,32 @@ namespace Hotel_Core_MVC_V1.Models
     public class HotelModels
     {
     }
+
     public class HotelInfoModel
     {
         public int cmpyid { get; set; }
-        [DisplayName("Hotel")]
-        public string? hotelnme { get; set; }
-        [DisplayName("Area")]
-        public int areaid { get; set; }
+        [DisplayName("Hotel")] public string? hotelnme { get; set; }
+        [DisplayName("Area")] public int areaid { get; set; }
         public string? area { get; set; }
-        [DisplayName("Township")]
-        public int tspid { get; set; }
+        [DisplayName("Township")] public int tspid { get; set; }
         public string? tsp { get; set; }
-        [DisplayName("Address")]
-        public string? address { get; set; }
-        public DateTime? hoteldte { get; set; }
-        [DisplayName("Phone & Website")]
-        public string? phone1 { get; set; }
+        [DisplayName("Address")] public string? address { get; set; }
+        [DisplayName("Hotel Date")] public string hoteldte { get; set; } = string.Empty;
+        [DisplayName("Phone & Website")] public string? phone1 { get; set; }
         public string? phone2 { get; set; }
         public string? phone3 { get; set; }
-        [DisplayName("Email")]
-        public string? email { get; set; }
-        [DisplayName("Website")]
-        public string? website { get; set; }
-        [DisplayName("Check In/Out")]
-        public string? checkintime { get; set; }
-        public TimeSpan? checkouttime { get; set; }
-        [DisplayName("Late Checkin")]
-        public string? latecheckintime { get; set; }
-        [DisplayName("Auto Post?")]
-        public bool autopostflg { get; set; }
-        [DisplayName("Auto Post Time")]
-        public string? autoposttime { get; set; }
-        public DateTime revdtetime { get; set; }
+        [DisplayName("Email")] public string? email { get; set; }
+        [DisplayName("Website")] public string? website { get; set; }
+        [DisplayName("Check-In/Out")] public string? checkintime { get; set; }
+        [DisplayName("Check Out Time")] public TimeSpan? checkouttime { get; set; }
+        [DisplayName("Late Check-In")] public string? latecheckintime { get; set; }
+        [DisplayName("Auto Post?")] public bool autopostflg { get; set; }
+        [DisplayName("Auto Post Time")] public string? autoposttime { get; set; }
+        [DisplayName("Revision Datetime")]public DateTime revdtetime { get; set; }
         public int userid { get; set; }
+        [DisplayName("Revised by")] public string UserCode { get; set; } = string.Empty;
     }
+
     [Keyless]
     public class HotelRoomModel
     {
@@ -91,12 +84,14 @@ namespace Hotel_Core_MVC_V1.Models
         public int Userid { get; set; }
 
     }
+
     public class AreaModel
     {
         public int areaid { get; set; }
         public string? areacde { get; set; }
         public string? areadesc { get; set; }
     }
+
     public class TownshipModel
     {
         public int tspid { get; set; }
@@ -104,6 +99,7 @@ namespace Hotel_Core_MVC_V1.Models
         public string? tspcdesc { get; set; }
         public int areaid { get; set; }
     }
+
     public class HotelRoomRateModel
     {
         public int Rmrateid { get; set; }
@@ -126,35 +122,22 @@ namespace Hotel_Core_MVC_V1.Models
 
         public int Userid { get; set; }
     }
+
     public class UserModel
     {
         public int Userid { get; set; }
-        [DisplayName("User Code")]
-
-        public string Usercde { get; set; } = null!;
-        [DisplayName("User Name")]
-
-        public string Usernme { get; set; } = null!;
-        [DisplayName("Password")]
-
-        public string? Pwd { get; set; }
-
+        [DisplayName("User Code")] public required string Usercde { get; set; }
+        [DisplayName("User Name")] public required string Usernme { get; set; }
+        [DisplayName("Password")] public string? Pwd { get; set; }
         [DisplayName("Confirm Password")] public string? ConfirmPassword { get; set; }
-
         [DisplayName("New Password")] public string NewPassword { get; set; } = string.Empty;
-
-        [DisplayName("Menu Group")]
-
-        public short? Mnugrpid { get; set; }
-
-        public string? Deptcde { get; set; }
-        [DisplayName("Department")]
+        [DisplayName("Menu Group")] public short? Mnugrpid { get; set; }
+        [DisplayName("Department")] public string? Deptcde { get; set; }
         public DateTime Revdtetime { get; set; }
-        [DisplayName("Hotel Name")]
-
-        public short Cmpyid { get; set; }
-        public string? Cmpy { get; set; }
+        [DisplayName("Hotel Name")] public short Cmpyid { get; set; }
+        [DisplayName("Hotel Name")] public string? Cmpy { get; set; }
     }
+
     public class LoginModel
     {
         public string? Usernme { get; set; }
@@ -162,12 +145,14 @@ namespace Hotel_Core_MVC_V1.Models
         public string Pwd { get; set; } = null!;
         public short Cmpyid { get; set; }
     }
+
     public class ChangePasswordModel
     {
         public string Oldpwd { get; set; } = null!;
         public string Newpwd { get; set; } = null!;
         public string Confirmpwd { get; set; } = null!;
     }
+
     public class GuestStateModel
     {
         public int Gstateid { get; set; }
@@ -230,45 +215,5 @@ namespace Hotel_Core_MVC_V1.Models
         public bool VipStatus { get; set; } = false;
     }
 
-    //public class HotelLocationModel
-    //{
-    //    public int Locid { get; set; }
 
-    //    public string Loccde { get; set; } = null!;
-
-    //    public string? Locdesc { get; set; }
-
-    //    public int Cmpyid { get; set; }
-
-    //    public bool Isoutlet { get; set; }
-
-    //    public DateTime Revdtetime { get; set; }
-
-    //    public int Userid { get; set; }
-    //}
-    //public class HotelRoomBeddingModel
-    //{
-    //    public int bedid { get; set; }
-    //    public string? bedcde { get; set; }
-    //    public string? beddesc { get;set; }
-    //    public int cmpyid { get; set; }
-    //    public DateTime revdtetime { get; set; }
-    //    public int userid { get; set; }
-    //}
-    //public class HotelRoomStateModel
-    //{
-    //    public int Rmstateid { get; set; }
-
-    //    public string Rmstatecde { get; set; } = null!;
-
-    //    public string? Rmstatedesc { get; set; }
-
-    //    public int? Syscolor { get; set; }
-
-    //    public int Cmpyid { get; set; }
-
-    //    public DateTime Revdtetime { get; set; }
-
-    //    public int Userid { get; set; }
-    //}
 }

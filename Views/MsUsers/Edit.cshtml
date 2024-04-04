@@ -1,7 +1,7 @@
 ﻿@model Hotel_Core_MVC_V1.Models.UserModel
 
 @{
-    ViewData["Title"] = "User";
+    ViewData["Title"] = "User Info";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section links {
@@ -17,7 +17,7 @@
     <!-- Select2 -->
     <script src="~/lib/adminlte3/plugins/select2/js/select2.full.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script>
         $(function () {
@@ -71,7 +71,7 @@
                                 <label asp-for="Cmpyid" class="control-label"></label>
                                 <div class="col-sm-5">
                                     <select asp-for="Cmpyid" class="form-control select2bs4" asp-items="ViewBag.Cmpyid" style="width: 100%;">
-                                        <option> - Select One - </option>
+                                        <option value=""> - Select One - </option>
                                     </select>
                                 </div>
                                 <span asp-validation-for="Cmpyid" class="text-danger"></span>
@@ -80,7 +80,7 @@
                                 <label asp-for="Deptcde" class="control-label">Department</label>
                                 <div class="col-sm-5">
                                     <select asp-for="Deptcde" class="form-control select2bs4" asp-items="ViewBag.Deptcdeid" style="width: 100%;">
-                                        <option> - Select One - </option>
+                                        <option value=""> - Select One - </option>
                                     </select>
                                 </div>
                                 <span asp-validation-for="Deptcde" class="text-danger"></span>
@@ -96,8 +96,3 @@
         </div>
     </div>
 </section>
-
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-*@
