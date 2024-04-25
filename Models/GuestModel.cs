@@ -16,6 +16,6 @@
 
         public DateTime? lastvisitdte { get; set; }
 
-        public int? visitcount { get; set; }
+        public int? visitcount { get; set; } //test
     }
 }
