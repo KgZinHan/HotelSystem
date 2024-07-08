@@ -151,7 +151,7 @@ namespace Hotel_Core_MVC_V1.Controllers
             _context.Update(msUser);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Logout()
