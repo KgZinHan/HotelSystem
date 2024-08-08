@@ -15,25 +15,6 @@
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <style type="text/css">
-        .form-check-input {
-            width: 23px;
-            height: 23px;
-            margin-left: -2rem;
-            margin-top: 0.08rem;
-        }
-
-        .form-check {
-            margin-left: 30px;
-        }
-
-        .time {
-            margin-left: 8px;
-        }
-    </style>
-
 }
 @section scripts
     {
@@ -113,7 +94,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Edit @ViewData["Title"]</h4>
+                <h4>@ViewData["Title"]</h4>
             </div>
             <div class="col-sm-6">
                 <div class="breadcrumb float-sm-right active">
@@ -125,7 +106,7 @@
 </section>
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-gray">
+        <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -136,93 +117,84 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group row">
-                                        <h4 class="control-label">Room Details</h4>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label asp-for="CheckInModel.CheckInId" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.CheckInId" class="col-form-label col-sm-4"></label>
                                         <input id="inputCheckInId" asp-for="CheckInModel.CheckInId" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.CheckInId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Occudte" class="control-label col-sm-4"></label>
-                                        <input id="inputCheckInDate" type="date" asp-for="CheckInModel.Occudte" class="form-control col-sm-7" readonly />
+                                        <label asp-for="CheckInModel.Occudte" class="col-form-label col-sm-4"></label>
+                                        <input id="inputCheckInDate" type="hidden" asp-for="CheckInModel.Occudte" />
+                                        <input asp-for="CheckInModel.StringArriveDte" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.Occudte" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Nightqty" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Nightqty" class="col-form-label col-sm-4"></label>
                                         <input id="inputNightQty" asp-for="CheckInModel.Nightqty" class="form-control col-sm-7" min="0" oninput="calculateCheckOutDate()" readonly/>
                                         <span asp-validation-for="CheckInModel.Nightqty" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Departdte" class="control-label col-sm-4"></label>
-                                        <input id="inputCheckOutDate" type="date" asp-for="CheckInModel.Departdte" class="form-control col-sm-7" readonly />
+                                        <label asp-for="CheckInModel.Departdte" class="col-form-label col-sm-4"></label>
+                                        <input id="inputCheckOutDate" type="hidden" asp-for="CheckInModel.Departdte" />
+                                        <input asp-for="CheckInModel.StringDepartDte" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.Departdte" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Rmtypdesc" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Rmtypdesc" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.Rmtypdesc" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.Rmtypdesc" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.PaxNo" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.PaxNo" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.PaxNo" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.PaxNo" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Adultqty" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Adultqty" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.Adultqty" min="0" class="form-control col-sm-7" />
                                         <span asp-validation-for="CheckInModel.Adultqty" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Childqty" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Childqty" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.Childqty" min="0" class="form-control col-sm-7" />
                                         <span asp-validation-for="CheckInModel.Childqty" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group form-check">
-                                        <label class="control-label">
-                                            <input class="form-check-input" asp-for="CheckInModel.HKeepingFlg" />  House Keeping?
-                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group row">
-                                        <h4 class="control-label">Billing</h4>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Room Rate</label>
+                                        <label class="col-form-label col-sm-4">Room Rate</label>
                                         <div class="col-sm-7">
                                             <select id="selectRmRate" asp-for="CheckInModel.Rmrateid" class="form-control" asp-items="ViewBag.Rmrates" style="width: 100%;" onchange="changeAmount()">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Rmprice" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Rmprice" class="col-form-label col-sm-4"></label>
                                         <input id="inputRmprice" asp-for="CheckInModel.Rmprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
                                         <span asp-validation-for="CheckInModel.Rmprice" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Extrabedqty" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Extrabedqty" class="col-form-label col-sm-4"></label>
                                         <input id="inputExtrabedqty" asp-for="CheckInModel.Extrabedqty" min="0" class="form-control col-sm-7" oninput="calculateAmount()" />
                                         <span asp-validation-for="CheckInModel.Extrabedqty" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Extrabedprice" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Extrabedprice" class="col-form-label col-sm-4"></label>
                                         <input id="inputExtrabedprice" asp-for="CheckInModel.Extrabedprice" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
                                         <span asp-validation-for="CheckInModel.Extrabedprice" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Discountamt" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Discountamt" class="col-form-label col-sm-4"></label>
                                         <input id="inputDiscountamt" asp-for="CheckInModel.Discountamt" min="0" step="0.01" class="form-control col-sm-7" oninput="calculateAmount()" />
                                         <span asp-validation-for="CheckInModel.Discountamt" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Amt" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Amt" class="col-form-label col-sm-4"></label>
                                         <input id="inputAmt" asp-for="CheckInModel.Amt" min="0" step="0.01" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.Amt" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Remark" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Remark" class="col-form-label col-sm-4"></label>
                                         <textarea asp-for="CheckInModel.Remark" class="form-control col-sm-7">
                                             </textarea>
                                         <span asp-validation-for="CheckInModel.Remark" class="text-danger"></span>
@@ -230,26 +202,22 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group row">
-                                        <h4 class="control-label">Check-In Guests</h4>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label asp-for="CheckInModel.ContactName" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.ContactName" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.ContactName" type="text" class="form-control col-sm-7" readonly>
                                         <span asp-validation-for="CheckInModel.ContactName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.ContactNo" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.ContactNo" class="col-form-label col-sm-4"></label>
                                         <input asp-for="CheckInModel.ContactNo" class="form-control col-sm-7" readonly />
                                         <span asp-validation-for="CheckInModel.ContactNo" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.SpecialInstruct" class="control-label col-sm-4"></label>
-                                        <textarea asp-for="CheckInModel.SpecialInstruct" class="form-control col-sm-7">
-                                            </textarea>
+                                        <label asp-for="CheckInModel.SpecialInstruct" class="col-form-label col-sm-4"></label>
+                                        <input asp-for="CheckInModel.SpecialInstruct" class="form-control col-sm-7" readonly/>
                                         <span asp-validation-for="CheckInModel.SpecialInstruct" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="CheckInModel.Roomno" class="control-label col-sm-4"></label>
+                                        <label asp-for="CheckInModel.Roomno" class="col-form-label col-sm-4"></label>
                                         <div class="col-sm-7">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
@@ -261,7 +229,7 @@
                                         <span asp-validation-for="CheckInModel.Roomno" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">Guests</label>
+                                        <label class="col-form-label col-sm-4">Guests</label>
                                         <div class="col-sm-7">
                                             <div class="input-group mb-3">
                                                 <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="chooseGuest('@Model.CheckInModel.CheckInId')">Browse</button>

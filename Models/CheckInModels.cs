@@ -70,6 +70,8 @@ namespace Hotel_Core_MVC_V1.Models
         public bool CheckOutFlag { get; set; }
 
         public string? PreferRoomNo { get; set; }
+        public string? StringArriveDte { get; set; }
+        public string? StringDepartDte { get; set; }
 
 
     }

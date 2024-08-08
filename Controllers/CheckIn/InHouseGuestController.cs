@@ -112,8 +112,10 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
             if (pmsCheckIn != null)
             {
                 checkIn.Occudte = pmsCheckIn.Checkindte;
+                checkIn.StringArriveDte = pmsCheckIn.Checkindte.ToString("dd MMM yyyy");
                 checkIn.Nightqty = pmsCheckIn.Nightqty;
                 checkIn.Departdte = checkIn.Occudte.AddDays(pmsCheckIn.Nightqty);
+                checkIn.StringDepartDte = checkIn.Departdte.ToString("dd MMM yyyy");
                 checkIn.Adultqty = pmsCheckIn.Adultqty;
                 checkIn.Childqty = pmsCheckIn.Childqty;
                 checkIn.ContactName = pmsCheckIn.Contactnme;
@@ -328,31 +330,6 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
             }
 
             var cmpyId = GetCmpyId();
-            /*string key = keyword;
-            try
-            {
-                var rawSql = "EXEC GetGuests @action={0}, @cmpyid={1}, @keyword={2}";
-                var guestList = _context.GuestDBSet
-                    .FromSqlRaw(rawSql, 0, cmpyId, key)
-                    .AsEnumerable()
-                    .Select(x => new GuestInfo
-                    {
-                        Guestid = x.guestId,
-                        Guestfullnme = x.guestfullnme,
-                        Nationality = x.idppno,
-                        ChrgAccCde = x.chrgacccde ?? "",
-                        LastVistedDate = x.lastvisitdte,
-                        VisitCount = x.visitcount
-                    })
-                    .ToList();
-
-                return PartialView("_GuestSearchPartialView", guestList);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-            */
 
             var query = _context.MsGuestdata.AsQueryable().AsNoTracking();
 

@@ -183,6 +183,7 @@ namespace Hotel_Core_MVC_V1.Controllers.TransferUpgrade
                 if (chkIn != null)
                 {
                     checkIn.Departdte = chkIn.Checkindte.AddDays(chkIn.Nightqty);
+                    
                     checkIn.Nightqty = chkIn.Nightqty;
                     checkIn.CheckOutFlag = chkIn.Checkoutflg;
                 }
@@ -209,8 +210,8 @@ namespace Hotel_Core_MVC_V1.Controllers.TransferUpgrade
                 {
                     RoomLgId = ldg.Roomlgid,
                     CheckInId = ldg.Checkinid,
-                    Occudte = chkin.Checkindte,
-                    Departdte = chkin.Checkindte.AddDays(chkin.Nightqty),
+                    StringArriveDte = chkin.Checkindte.ToString("dd MMM yyyy"),
+                    StringDepartDte = chkin.Checkindte.AddDays(chkin.Nightqty).ToString("dd MMM yyyy"),
                     Rmrateid = ldg.Rmrateid,
                     Extrabedqty = ldg.Extrabedqty,
                     Extrabedprice = ldg.Extrabedprice,

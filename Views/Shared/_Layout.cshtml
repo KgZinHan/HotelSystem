@@ -39,7 +39,7 @@
                     <a href="../../RoomEnquiry/Index" class="btn btn-default m-1">Rooms</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn m-1 text-truncate" style="cursor: default"><b>HotelDate-@ViewData["Hotel Date"]</b></a>
+                    <a class="btn m-1 text-truncate" style="cursor: default"><b>HotelDate : @ViewData["Hotel Date"]</b></a>
                 </li>
                 <li class="nav-item">
                     <a href="../../Home/ShiftEnd" class="btn btn-danger m-1 text-truncate" onclick="return confirm('Are you sure you want to end shift?')"><b>Shift-@ViewData["Hotel Shift"]</b></a>
@@ -55,28 +55,6 @@
                         <span class="badge badge-danger navbar-badge">@ViewBag.MsgCount</span>
                     </a>
                 </li>
-
-                @* <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li> *@
 
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item">
@@ -124,94 +102,132 @@
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="../../Reservation/index" class="nav-link">
-                                <i class="far fa-calendar nav-icon"></i>
-                                <p>Reservation</p>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-calendar"></i>
+                                <p>
+                                    Reservation
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../Reservation/index" class="nav-link">
+                                        <i class="far fa-calendar nav-icon"></i>
+                                        <p>Reservation</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../ReservationConfirm/index" class="nav-link">
+                                        <i class="far fa-calendar-check nav-icon"></i>
+                                        <p>Reservation Confirm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../ReservationActivity/index" class="nav-link">
+                                        <i class="far fa-calendar-alt nav-icon"></i>
+                                        <p>Reservation Activity</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="../../ReservationConfirm/index" class="nav-link">
-                                <i class="far fa-calendar-check nav-icon"></i>
-                                <p>Reservation Confirm</p>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-clipboard-check"></i>
+                                <p>
+                                    Check-In
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../WalkInGuest/index" class="nav-link">
+                                        <i class="fas fa-walking nav-icon"></i>
+                                        <p>Quick Check-In</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../CheckIn/index" class="nav-link">
+                                        <i class="fas fa-clipboard-check nav-icon"></i>
+                                        <p>Expected Check-In</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="../../ReservationActivity/index" class="nav-link">
-                                <i class="far fa-calendar-alt nav-icon"></i>
-                                <p>Reservation Activity</p>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    In-House Guests
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="InHouseGuest" class="nav-link">
+                                        <i class="fas fa-house-user nav-icon"></i>
+                                        <p>In-House Guest</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="GuestBilling" class="nav-link">
+                                        <i class="fas fa-dollar-sign nav-icon"></i>
+                                        <p>Billing</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="TransferUpgrade" class="nav-link">
+                                        <i class="fas fa-exchange-alt nav-icon"></i>
+                                        <p>Transfer/Upgrade</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="ExtendStay" class="nav-link">
+                                        <i class="fas fa-calendar-plus nav-icon"></i>
+                                        <p>Extend Stay</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="DailyCharges" class="nav-link">
+                                        <i class="fas fa-file-invoice-dollar nav-icon"></i>
+                                        <p>Daily Charges</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="FolioManagement" class="nav-link">
+                                        <i class="fas fa-folder nav-icon"></i>
+                                        <p>Folio Management</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="../../WalkInGuest/index" class="nav-link">
-                                <i class="fas fa-walking nav-icon"></i>
-                                <p>Quick Check-In</p>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-flag"></i>
+                                <p>
+                                    Reports & System
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../CheckIn/index" class="nav-link">
-                                <i class="fas fa-clipboard-check nav-icon"></i>
-                                <p>Expected Check-In</p>
-                            </a>
-                        </li>
-                        @* <li class="nav-item">
-                        <a asp-action="Index" asp-controller="TodayCheckIn" class="nav-link">
-                        <i class="fas fa-clipboard-check nav-icon"></i>
-                        <p>Today Check In</p>
-                        </a>
-                        </li> *@
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="InHouseGuest" class="nav-link">
-                                <i class="fas fa-house-user nav-icon"></i>
-                                <p>In-House Guest</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="FolioManagement" class="nav-link">
-                                <i class="fas fa-folder nav-icon"></i>
-                                <p>Folio Management</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="DailyCharges" class="nav-link">
-                                <i class="fas fa-file-invoice-dollar nav-icon"></i>
-                                <p>Daily Charges</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="TransferUpgrade" class="nav-link">
-                                <i class="fas fa-exchange-alt nav-icon"></i>
-                                <p>Transfer/Upgrade</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="ExtendStay" class="nav-link">
-                                <i class="fas fa-calendar-plus nav-icon"></i>
-                                <p>Extend Stay</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="GuestBilling" class="nav-link">
-                                <i class="fas fa-dollar-sign nav-icon"></i>
-                                <p>Billing</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="Visits" class="nav-link">
-                                <i class="fas fa-user-clock nav-icon"></i>
-                                <p>Visits</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="NightAudit" class="nav-link">
-                                <i class="fas fa-stopwatch nav-icon"></i>
-                                <p>Night Audit</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-controller="Reports" class="nav-link">
-                                <i class="fas fa-file nav-icon"></i>
-                                <p>Reports</p>
-                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Visits" class="nav-link">
+                                        <i class="fas fa-user-clock nav-icon"></i>
+                                        <p>Visits</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="NightAudit" class="nav-link">
+                                        <i class="fas fa-stopwatch nav-icon"></i>
+                                        <p>Night Audit</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Reports" class="nav-link">
+                                        <i class="fas fa-file nav-icon"></i>
+                                        <p>Reports</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -225,68 +241,73 @@
                                 <li class="nav-item">
                                     <a href="../../MsHotelInfoes/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Information</p>
+                                        <p>Hotel</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotellocations/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Locations</p>
+                                        <p>Locations</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotelRooms/Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Rooms</p>
+                                        <p>Rooms</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotelRoomTypes/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room Types</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../MsHotelroombeddings/index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room Beddings</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="../../MsHotelroomstates/index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room States</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../MsRoomFeatures/index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room Features</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../MsRoomAmenities/index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room Amenities</p>
+                                        <p>Room Types</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotelRoomRates/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Room Rates</p>
+                                        <p>Room Rates</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MsHotelroombeddings/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Room Beddings</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MsHotelroomstates/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Room States</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MsRoomFeatures/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Room Features</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MsRoomAmenities/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Room Amenities</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotelservicegrps/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Services Group</p>
+                                        <p>Services Group</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../MsHotelservicegrpds/index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Hotel Services Group Setup</p>
+                                        <p>Services Group Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MsCurrency/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Currency</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -301,7 +322,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cogs"></i>
                                 <p>
-                                    Guest Info Setup
+                                    Guest Info 
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -337,12 +358,7 @@
                                         <p>Guest Salutations</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="../../MsCurrency/index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Currency</p>
-                                    </a>
-                                </li>
+                                
                             </ul>
                         </li>
                         <li class="nav-item">

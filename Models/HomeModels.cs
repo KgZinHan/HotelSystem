@@ -35,6 +35,7 @@ namespace Hotel_Core_MVC_V1.Models
         public string? OccuState { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N0}")] public decimal FolioBalance { get; set; }
+        public short? BatchNo { get; set; }
 
     }
 

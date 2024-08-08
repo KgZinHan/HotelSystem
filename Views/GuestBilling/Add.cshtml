@@ -60,11 +60,11 @@
                                         <input id="hiddenRoomLgId" type="hidden" asp-for="CheckInModel.RoomLgId" />
                                         <input id="hiddenCheckInId" type="hidden" asp-for="CheckInModel.CheckInId" />
                                         <div class="form-group row">
-                                            <label class="control-label col-sm-4">Room No</label>
+                                            <label class="col-form-label col-sm-4">Room No</label>
                                             <input id="inputRoomNo" asp-for="CheckInModel.Roomno" class="form-control col-sm-7" readonly />
                                         </div>
                                         <div class="form-group row">
-                                            <label class="control-label col-sm-4">Guest Name</label>
+                                            <label class="col-form-label col-sm-4">Guest Name</label>
                                             <input id="inputGuestName" asp-for="CheckInModel.GuestName" class="form-control col-sm-7" readonly />
                                         </div>
                                     </div>
@@ -72,8 +72,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body p-1">
-                        <button class="btn btn-default" style="background-color: #31849B;color: white" onclick="addNewBill()">Add New Bill</button>
+                    <div class="card-body">
+                        <button class="btn btn-default" style="background-color: #31849B;color: white" onclick="addNewBill()">Add New Bill +</button>
                         <div class="row mt-1">
                             <div class="col-md-12 table-responsive" style="text-align: center">
                                 @* <label id="loadingLabel">Loading...</label> *@
@@ -89,16 +89,16 @@
                                             <th style="min-width: 80px">
                                                 Dept/Outlet
                                             </th>
-                                            <th style="min-width: 80px">
+                                            <th style="min-width: 100px">
                                                 Folio Code
                                             </th>
-                                            <th style="text-align: center;min-width: 100px;width: 100px">
+                                            <th style="text-align: center;min-width: 80px;width: 80px">
                                                 Qty
                                             </th>
-                                            <th style="min-width: 100px">
+                                            <th style="min-width: 80px">
                                                 Price
                                             </th>
-                                            <th style="min-width: 100px">
+                                            <th style="min-width: 80px">
                                                 Amount
                                             </th>
                                             <th style="min-width: 200px">

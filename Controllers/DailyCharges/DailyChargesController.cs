@@ -212,7 +212,7 @@ namespace Hotel_Core_MVC_V1.Controllers.Folio
                 {
                     RoomLgId = ldg.Roomlgid,
                     CheckInId = ldg.Checkinid,
-                    Occudte = chkin.Checkindte,
+                    StringArriveDte = chkin.Checkindte.ToString("dd MMM yyyy"),
                     Nightqty = chkin.Nightqty,
                     Roomno = ldg.Roomno,
                 }

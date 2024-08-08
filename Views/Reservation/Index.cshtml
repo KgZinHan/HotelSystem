@@ -180,7 +180,7 @@
 
 <!--Guest Info Modal -->
 <div class="modal" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Guest Info</h5>
@@ -188,7 +188,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div id="userInfoModelBodyId" class="table-responsive" style="max-height: 600px">
+            <div id="userInfoModelBodyId" class="table-responsive" style="max-height: 480px">
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div class="form-group ">
+                    <input type="button" onclick="saveCheckOut()" value="Reserve" class="btn btn-default" style="background-color: #31849B;color: white" />
+                </div>
             </div>
         </div>
     </div>
@@ -233,7 +238,7 @@
         <div class="form-group row">
             <label class="col-lg-2 col-md-2 col-6 col-form-label">Check-in Date</label>
             <div class="col-lg-2 col-md-4 col-6">
-                <input id="inputCheckInDateId" type="date" class="form-control" oninput="calculateCheckOutDate()">
+                <input id="inputCheckInDateId" type="date" class="form-control" oninput="calculateCheckOutDate()" autofocus>
             </div>
         </div>
         <div class="form-group row">

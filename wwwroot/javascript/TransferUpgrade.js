@@ -33,10 +33,9 @@ function chooseInHouseRoom(roomLgId) {
             $('#inputExBedPrice').val(room.extrabedprice.toLocaleString());
             $('#inputDiscountAmt').val(room.discountamt.toLocaleString());
             $('#inputGuestName').val(room.guestName);
-            var occudte = room.occudte.split('T')[0];
-            $('#inputArriveDate').val(occudte);
-            var departdte = room.departdte.split('T')[0];
-            $('#inputDepartureDate').val(departdte);
+            $('#inputArriveDate').val(room.stringArriveDte);
+            console.log(room.stringArriveDte);
+            $('#inputDepartureDate').val(room.stringDepartDte);
             $('#hiddenRoomLgId').val(room.roomLgId);
             $('#inputCheckInId').val(room.checkInId);
             closeInHouseRoomModal();

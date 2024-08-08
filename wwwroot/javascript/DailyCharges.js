@@ -30,8 +30,7 @@ function chooseInHouseRoom(roomLgId) {
             $('#hiddenRoomLgId').val(room.roomLgId);
             $('#inputRoomNo').val(room.roomno);
             $('#inputGuestName').val(room.guestName);
-            var occudte = room.occudte.split('T')[0];
-            $('#inputArriveDate').val(occudte);
+            $('#inputArriveDate').val(room.stringArriveDte);
             $('#inputNightQty').val(room.nightqty);
 
             loadDailyCharges(roomLgId);
@@ -97,7 +96,7 @@ function generateDailyCharge() {
 
 
                 //td Date
-                var tdDate = $('<td>').text(data.date);
+                var tdDate = $('<td>').css('textAlign','left').text(data.date);
                 newRow.append(tdDate);
 
                 //td SrvCde
@@ -132,7 +131,7 @@ function generateDailyCharge() {
                 newRow.append($('<td>').css('padding', '0px').append(selectFolio));
 
                 //td Delete
-                var tdDelete = $('<td>').text('Delete').css({ 'color': 'red', 'cursor': 'pointer' });
+                var tdDelete = $('<td>').text('remove').css({ 'color': 'red', 'cursor': 'pointer' });
                 tdDelete.on('click', function () {
                     newRow.remove();
                 })

@@ -1,7 +1,7 @@
 ﻿@model PmsRoomledger
 
 @{
-    ViewData["Title"] = "Room Tranfer/Upgrade";
+    ViewData["Title"] = "Room Transfer/Upgrade";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,25 +14,6 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/lib/adminlte3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="~/lib/adminlte3/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <style type="text/css">
-        .form-check-input {
-            width: 23px;
-            height: 23px;
-            margin-left: -2rem;
-            margin-top: 0.08rem;
-        }
-
-        .form-check {
-            margin-left: 30px;
-        }
-
-        .time {
-            margin-left: 8px;
-        }
-    </style>
 
 }
 @section scripts
@@ -62,17 +43,17 @@
     <script>
         $(function () {
             $("#inHouseGuestTable").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "paging": false, "info":false,
+                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "paging": false, "info": false,
             }).buttons().container().appendTo('#inHouseGuestTable_wrapper .col-md-6:eq(0)');;
         });
-        
+
         $(function () {
             $('.select2').select2()
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             })
         });
-        
+
     </script>
 }
 
@@ -157,7 +138,6 @@
                 </button>
             </div>
             <div id="availableRoomModalBodyId">
-                
             </div>
             <div class="modal-footer">
                 <button id="modelCloseBtnId" type="button" class="btn btn-default" onclick="closeAvailableRoomModal()">Close</button>
@@ -183,108 +163,149 @@
                     <div class="col-md-12">
                         <form id="TransferUpgradeForm" asp-action="Index" asp-controller="TransferUpgrade" method="POST">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            
                             <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group row">
-                                        <h4 class="control-label">Guest</h4>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Guest Name</label>
-                                        <input id="inputGuestName" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Arrive Date</label>
-                                        <input id="inputArriveDate" type="date" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Departure Date</label>
-                                        <input id="inputDepartureDate" type="date" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Check-in ID</label>
-                                        <input id="inputCheckInId" asp-for="Checkinid" class="form-control col-sm-7" readonly />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group row">
-                                        <h4 class="control-label">From Room</h4>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Room No</label>
-                                        <div class="col-sm-7">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="openInHouseRoomModal()">Choose</button>
-                                                </div>
-                                                <input id="inputRoomNo" type="text" class="form-control" readonly>
-                                            </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="control-label">Old Room</h4>
                                         </div>
-                                        <span asp-validation-for="Roomlgid" class="text-danger"></span>
-                                    </div>
+                                        <div class="card-body">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Room No.</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="openInHouseRoomModal()" autofocus>Choose</button>
+                                                            </div>
+                                                            <input id="inputRoomNo" type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label class="col-form-label col-sm-4">Guest Name</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputGuestName" class="form-control" readonly />
+                                                    </div>
 
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Old Room Price</label>
-                                        <input id="inputOldRoomPrice" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Extra Bed Qty</label>
-                                        <input id="inputExBedQty" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Extra Bed Price</label>
-                                        <input id="inputExBedPrice" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Discount Amount</label>
-                                        <input id="inputDiscountAmt" class="form-control col-sm-7" readonly />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group row">
-                                        <h4 class="control-label">To New Room</h4>
-                                    </div>
-                                    <input type="hidden" id="hiddenRoomLgId" asp-for="Roomlgid" />
-                                    <input type="hidden" id="hiddenRmTypId" asp-for="Rmtypid" />
-                                    <input type="hidden" id="hiddenRmRateid" asp-for="Rmrateid" />
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Room No.</label>
-                                        <div class="col-sm-7">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="openAvailableRoomModal()">Choose</button>
                                                 </div>
-                                                <input id="inputNewRoomNo" asp-for="Roomno" type="text" class="form-control" readonly>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Check-in ID</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputCheckInId" asp-for="Checkinid" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Arrive Date</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputArriveDate" type="text" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Departure Date</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputDepartureDate" type="text" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Old Room Price</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputOldRoomPrice" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Extra Bed Qty</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputExBedQty" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Extra Bed Price</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputExBedPrice" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Discount Amount</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputDiscountAmt" class="form-control" readonly />
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">New Room Price</label>
-                                        <input id="inputNewRoomPrice" asp-for="Price" class="form-control col-sm-7" />
-                                        <span asp-validation-for="Price" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Extra Bed Qty</label>
-                                        <input id="inputNewExBedQty" asp-for="Extrabedqty" type="number" class="form-control col-sm-7" />
-                                        <span asp-validation-for="Extrabedqty" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Extra Bed Price</label>
-                                        <input id="inputNewExBedPrice" asp-for="Extrabedprice" class="form-control col-sm-7" />
-                                        <span asp-validation-for="Extrabedprice" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Discount Amount</label>
-                                        <input id="inputNewDiscountAmt" asp-for="Discountamt" class="form-control col-sm-7" />
-                                        <span asp-validation-for="Discountamt" class="text-danger"></span>
-                                    </div>  
                                 </div>
-                                
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="control-label">New Room</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-md-12">
+                                                <input type="hidden" id="hiddenRoomLgId" asp-for="Roomlgid" />
+                                                <input type="hidden" id="hiddenRmTypId" asp-for="Rmtypid" />
+                                                <input type="hidden" id="hiddenRmRateid" asp-for="Rmrateid" />
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Room No.</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="openAvailableRoomModal()">Choose</button>
+                                                            </div>
+                                                            <input id="inputNewRoomNo" asp-for="Roomno" type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">New Room Price</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputNewRoomPrice" asp-for="Price" class="form-control" />
+                                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Extra Bed Qty</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputNewExBedQty" asp-for="Extrabedqty" type="number" class="form-control" />
+                                                        <span asp-validation-for="Extrabedqty" class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Extra Bed Price</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputNewExBedPrice" asp-for="Extrabedprice" class="form-control" />
+                                                        <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Discount Amount</label>
+                                                    <div class="col-sm-7">
+                                                        <input id="inputNewDiscountAmt" asp-for="Discountamt" class="form-control" />
+                                                        <span asp-validation-for="Discountamt" class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" name="mode" value="Transfer" class="btn btn-default m-2" style="background-color: #31849B;color: white" />
+                                                or
+                                                <input type="submit" name="mode" value="Upgrade" class="btn btn-default m-2" style="background-color: #31849B;color: white" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="submit" name="mode" value="Transfer" class="btn btn-default m-2" style="background-color: #31849B;color: white" />
-                                <input type="submit" name="mode" value="Upgrade" class="btn btn-default m-2" style="background-color: #31849B;color: white" />
-                            </div>
+
                         </form>
                     </div>
                 </div>

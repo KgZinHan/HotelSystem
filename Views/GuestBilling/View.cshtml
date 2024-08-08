@@ -140,7 +140,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body p-1">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
                                 <table id="inHouseGuestTable" class="table table-bordered datatable dtr-inline" aria-describedby="inHouseGuestTable_info">
@@ -149,28 +149,28 @@
                                             <th>
                                                 No.
                                             </th>
-                                            <th>
+                                            <th style="min-width: 120px">
                                                 Biz Date
                                             </th>
-                                            <th>
-                                                Bill No
+                                            <th style="min-width: 100px">
+                                                Bill No.
                                             </th>
-                                            <th>
-                                                Bill Desp
+                                            <th style="min-width: 100px">
+                                                Bill Desc
                                             </th>
-                                            <th>
-                                                Bill Amount
+                                            <th style="min-width: 80px">
+                                                Amount
                                             </th>
-                                            <th>
+                                            <th style="min-width: 100px">
                                                 Ref No 2
                                             </th>
-                                            <th>
+                                            <th style ="min-width: 80px">
                                                 POS ID
                                             </th>
-                                            <th>
+                                            <th style="min-width: 80px">
                                                 Outlet ID
                                             </th>
-                                            <th>
+                                            <th style="min-width: 120px">
                                                 Bill Datetime
                                             </th>
                                             <th></th>
@@ -182,7 +182,7 @@
                                             
                                             string rowStyle = (bill.VoidFlg == true) ? "color: red;" : "";
                                             
-                                            <tr style="@rowStyle">
+                                            <tr style="@rowStyle font-size: 14px">
                                                 <td style="text-align: center">
                                                     @Html.DisplayFor(modelItem => bill.No)
                                                 </td>
@@ -207,8 +207,8 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => bill.OutletId)
                                                 </td>
-                                                <td>
-                                                    @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss")
+                                                <td >
+                                                    @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss tt")
                                                 </td>
                                                 <td style="text-align: center">
                                                     <span style="color: red;cursor: pointer" onclick="voidBill('@bill.BillId')"><i class="fas fa-ban"></i></span>
@@ -217,10 +217,10 @@
                                         }
                                     </tbody>
                                 </table>
-                                <div class="row mt-1">
+                                <div class="container-fluid row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="control-label col-sm-4">Main Folio Total</label>
+                                            <label class="col-form-label col-sm-4">Main Folio Total</label>
                                             <input asp-for="PaymentBillingView.FolioTotal" class="form-control col-sm-7" readonly />
                                         </div>
                                     </div>
@@ -256,7 +256,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body p-1">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 table-responsive">
                                     <table id="otherFolioTable" class="table table-bordered datatable dtr-inline" aria-describedby="otherFolioTable_info">
@@ -265,28 +265,28 @@
                                                 <th>
                                                     No.
                                                 </th>
-                                                <th>
+                                                <th style="min-width: 100px">
                                                     Biz Date
                                                 </th>
-                                                <th>
+                                                <th style="min-width: 100px">
                                                     Bill No
                                                 </th>
-                                                <th>
-                                                    Bill Desp
+                                                <th style="min-width: 100px">
+                                                    Bill Desc
                                                 </th>
-                                                <th>
-                                                    Bill Amount
+                                                <th style="min-width: 80px">
+                                                   Amount
                                                 </th>
-                                                <th>
+                                                <th style="min-width: 100px">
                                                     Ref No 2
                                                 </th>
-                                                <th>
+                                                <th style ="min-width: 80px">
                                                     POS ID
                                                 </th>
-                                                <th>
+                                                <th style="min-width: 80px">
                                                     Outlet ID
                                                 </th>
-                                                <th>
+                                                <th style="min-width: 120px">
                                                     Bill Datetime
                                                 </th>
                                                 <th></th>
@@ -296,7 +296,7 @@
                                             @foreach (var bill in otherFolio.OtherFolioBills)
                                             {
                                                 string rowStyle = (bill.VoidFlg == true) ? "color: red;" : "";
-                                                <tr style="@rowStyle">
+                                                <tr style="@rowStyle font-size: 14px">
                                                     <td style="text-align: center">
                                                         @Html.DisplayFor(modelItem => bill.No)
                                                     </td>
@@ -321,8 +321,8 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => bill.OutletId)
                                                     </td>
-                                                    <td>
-                                                        @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss")
+                                                    <td >
+                                                        @Convert.ToDateTime(bill.BillDateTime).ToString("dd MMM yyyy hh:mm:ss tt")
                                                     </td>
                                                     <td style="text-align: center">
                                                         @if (otherFolio.PaymentBillingView.CloseFolioFlg)
@@ -338,10 +338,10 @@
                                             }
                                         </tbody>
                                     </table>
-                                    <div class="row mt-1">
+                                    <div class="container-fluid row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-4">@otherFolio.PaymentBillingView.FolioName Total</label>
+                                                <label class="col-form-label col-sm-4">@otherFolio.PaymentBillingView.FolioName Total</label>
                                                 <input asp-for="@otherFolio.PaymentBillingView.FolioTotal" class="form-control col-sm-7" readonly />
                                             </div>
                                         </div>

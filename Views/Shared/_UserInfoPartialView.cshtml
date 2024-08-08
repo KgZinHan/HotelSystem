@@ -1,67 +1,66 @@
 ﻿@model IEnumerable<HotelRoomTypeModel>
 
-<div class="container row">
-    <label class="m-1">Room(s) Info</label>
-    <div class="card col-md-12 m-1">
+<div class="container-fluid">
+    <div class="card">
         <div class="card-header">
-            <h4 class="card-title">From @Model.FirstOrDefault().ArrivalDate.ToString("dd MMM") to @Model.FirstOrDefault().CheckOutDate.ToString("dd MMM")</h4>
+            <h4 class="card-title"><b>@Model.FirstOrDefault().ArrivalDate.ToString("dd MMM yyyy")</b> to <b>@Model.FirstOrDefault().CheckOutDate.ToString("dd MMM yyyy")</b></h4>
         </div>
-        <div class="card-body col-12 row p-2">
+        <div class="card-body">
             @foreach (var room in Model)
             {
-                <div class="col-3 m-0 row">
-                    <h5 style="color: red">@room.Quantity</h5> &nbsp;Room(s)
-                </div>
-                <label class="col-3">
-                    @room.Rmtypcde
-                </label>
-                <div class="col-3" style="color: green">
-                    @room.Price.ToString("n0") MMK
-                </div>
-                <div class="col-3 m-0 row">
-                    Ex Bed -  &nbsp;<h5 style="color: red">@room.ExtraBedQty</h5>
+                <div class="col-md-12 row">
+                    <div class="col-md-3 col-6 m-0 row">
+                        Room - <h5 style="color: red">@room.Quantity</h5> 
+                    </div>
+                    <label class="col-md-3 col-6">
+                        @room.Rmtypcde
+                    </label>
+                    <div class="col-md-3 col-6" style="color: green">
+                        @room.Price.ToString("n0") MMK
+                    </div>
+                    <div class="col-md-3 col-6 m-0 row">
+                        Ex Bed -  &nbsp;<h5 style="color: red">@room.ExtraBedQty</h5>
+                    </div>
                 </div>
 
             }
         </div>
     </div>
-    <label class="m-1 mt-2">User Info</label>
-    <div class="card col-md-12 m-1">
-        <form>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Contact Name &nbsp;<span style="color: red">*</span></label>
-                <input id="inputContactNme" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Contact Number &nbsp;<span style="color: red">*</span></label>
-                <input id="inputContactNo" class="form-control" required />
-            </div>
-            <div class="col-12 row">
-                <div class="form-group col-6">
-                    <label class="control-label">Total Adults</label>
-                    <input id="inputTotalAdult" class="form-control" type="number" min="0" />
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-12">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Contact Name &nbsp;<span style="color: red">*</span></label>
+                    <input id="inputContactNme" class="form-control" required autofocus />
                 </div>
-                <div class="form-group col-6">
-                    <label class="control-label">Total Children</label>
-                    <input id="inputTotalChild" class="form-control" type="number" min="0" />
+                <div class="form-group">
+                    <label class="control-label">Contact Number &nbsp;<span style="color: red">*</span></label>
+                    <input id="inputContactNo" class="form-control" required />
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Special Remark</label>
-                <textarea id="inputSpecialRemark" class="form-control">
-                </textarea>
-            </div>
-            <div class="form-group form-check">
+                <div class="col-12 row">
+                    <div class="form-group col-6">
+                        <label class="control-label">Total Adults</label>
+                        <input id="inputTotalAdult" class="form-control" type="number" min="0" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label">Total Children</label>
+                        <input id="inputTotalChild" class="form-control" type="number" min="0" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Special Remark</label>
+                    <textarea id="inputSpecialRemark" class="form-control">
+                        </textarea>
+                </div>
+                @* <div class="form-group col-4">
                 <label class="form-check-label" style="margin-left:12px;">
-                    <input id="checkBoxVipStatus" type="checkbox" class="form-check-input" /> Vip Guest ?
+                <input id="checkBoxVipStatus" type="checkbox" class=" form-check form-check-input" /> Vip Guest ?
                 </label>
+                </div> *@
             </div>
-            <div class="form-group">
-                <input type="button" onclick="saveCheckOut()" value="Reserve" class="btn btn-default" style="background-color: #31849B;color: white" />
-            </div>
-        </form>
-
+            
+        </div>
     </div>
 </div>
 

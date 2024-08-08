@@ -33,7 +33,7 @@
     <script>
         $(function () {
             $("#guestBillingTable").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "pageLength" : 20,
+                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "pageLength" : 20, "info": false,
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
@@ -84,11 +84,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card card-gray mt-1">
-                    <div class="card-body p-1">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <table id="guestBillingTable" class="table table-striped table-bordered datatable dtr-inline" aria-describedby="guestBillingTable_info">
+                                <table id="guestBillingTable" class="table table-bordered datatable dtr-inline" aria-describedby="guestBillingTable_info">
                                     <thead>
                                         <tr class="p-0" style="font-size: 16px;text-align: left">
                                             <th>
@@ -116,7 +116,7 @@
                                     <tbody>
                                         @foreach (var ledger in Model)
                                         {
-                                            <tr>
+                                            <tr style="font-size:14px">
                                                 <td style="text-align: center">
                                                     @Html.DisplayFor(modelItem => ledger.No)
                                                 </td>

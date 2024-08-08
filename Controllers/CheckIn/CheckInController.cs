@@ -79,6 +79,7 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
             {
                 RoomLgId = ldg.Roomlgid,
                 Occudte = ldg.Occudte,
+                StringArriveDte = ldg.Occudte.ToString("dd MMM yyyy"),
                 Resvno = ldg.Resvno,
                 BatchNo = ldg.Batchno,
                 RmtypId = ldg.Rmtypid,
@@ -98,8 +99,10 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
             var resv = GetReservationByResvNo(checkIn.Resvno);
             if (resv != null)
             {
+                var departDte = checkIn.Occudte.AddDays(resv.Nightqty);
+                checkIn.Departdte = departDte;
+                checkIn.StringDepartDte = departDte.ToString("dd MMM yyyy");
                 checkIn.Nightqty = resv.Nightqty;
-                checkIn.Departdte = checkIn.Occudte.AddDays(resv.Nightqty);
                 checkIn.Adultqty = resv.Adult;
                 checkIn.Childqty = resv.Child;
                 checkIn.ContactName = resv.Contactnme;

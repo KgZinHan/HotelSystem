@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CheckInModel>
 
 @{
-    ViewData["Title"] = "Extend Stay";
+    ViewData["Title"] = "Room Extend Stay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,7 +33,7 @@
     <script>
         $(function () {
             $("#inHouseGuestTable").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "pageLength" : 20,
+                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "pageLength" : 20, "info": false,
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
@@ -84,8 +84,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card card-gray mt-1">
-                    <div class="card-body p-1">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
                                 <table id="inHouseGuestTable" class="table table-bordered datatable dtr-inline" aria-describedby="inHouseGuestTable_info">
@@ -131,11 +131,11 @@
                                                 <td>
                                                     @Convert.ToDateTime(ledger.Departdte).ToString("dd MMM yyyy")
                                                 </td>
-                                                <td style="text-align: left;padding: 0px">
-                                                    <input id="@ledger.RoomLgId" type="number" min="0" style="padding: 12px;border: none;width: 100%;color: #31849B" value="0" />
+                                                <td>
+                                                    <input id="@ledger.RoomLgId" class="form-control" type="number" min="0" value="0" />
                                                 </td>
                                                 <td style="text-align: center;">
-                                                    <span style="color: #31849B;cursor: pointer" onclick="checkAvailability('@ledger.RoomLgId')">Check and Extend</span>
+                                                    <button class="btn btn-sm btn-info"  onclick="checkAvailability('@ledger.RoomLgId')">Check and Extend</button>
                                                 </td>
                                             </tr>
                                         }

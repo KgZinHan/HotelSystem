@@ -42,32 +42,6 @@ namespace Hotel_Core_MVC_V1.Controllers
             {
                 return StatusCode(401);
             }
-
-            /*var resultList = await (from leg in _context.PmsRoomledgers
-                                    where leg.Cmpyid == cmpyId && leg.Occudte.Date == hotelDate.Date
-                                    join chkIn in _context.PmsCheckins
-                                    on leg.Checkinid equals chkIn.Checkinid
-                                    where chkIn.Checkoutflg == false
-                                    join chkInRoomGuest in _context.PmsCheckinroomguests
-                                    on leg.Checkinid equals chkInRoomGuest.Checkinid
-                                    join guestData in _context.MsGuestdata
-                                    on chkInRoomGuest.Guestid equals guestData.Guestid
-                                    where guestData.Guestfullnme.Contains(keyword) || leg.Roomno.Contains(keyword)
-                                    select new HomeModel
-                                    {
-                                        CheckInid = leg.Checkinid,
-                                        RoomLgId = leg.Roomlgid,
-                                        ResvNo = leg.Resvno,
-                                        RoomNo = leg.Roomno,
-                                        CheckInDate = chkIn.Checkindte,
-                                        NightQty = chkIn.Nightqty,
-                                        RmTypId = leg.Rmtypid,
-                                        OccuState = leg.Occustate,
-                                        GuestName = guestData.Guestfullnme,
-                                        GuestNo = guestData.Phone1
-                                    })
-                                    .ToListAsync();*/
-
             var resultList = await (from chkin in _context.PmsCheckins
                                     join ledg in _context.PmsRoomledgers on chkin.Checkinid equals ledg.Checkinid
                                     where chkin.Checkoutflg == false && chkin.Cmpyid == cmpyId
@@ -75,7 +49,7 @@ namespace Hotel_Core_MVC_V1.Controllers
                                     on chkin.Checkinid equals chkInRoomGuest.Checkinid
                                     join guestData in _context.MsGuestdata
                                     on chkInRoomGuest.Guestid equals guestData.Guestid
-                                    where guestData.Guestfullnme.Contains(keyword) || ledg.Roomno.Contains(keyword)
+                                    where guestData.Guestfullnme.Contains(keyword) || (ledg.Roomno != null && ledg.Roomno.Contains(keyword))
                                     group new { chkin, ledg, guestData } by new { chkin.Checkinid, ledg.Resvno, ledg.Roomno, chkin.Checkindte, chkin.Nightqty, guestData.Guestfullnme, guestData.Phone1 } into grouped
                                     orderby grouped.Key.Roomno
                                     select new HomeModel
@@ -91,29 +65,20 @@ namespace Hotel_Core_MVC_V1.Controllers
                                     })
                              .ToListAsync();
 
-            var resvResultList = await _context.PmsRoomledgers
-                                    .Where(leg => leg.Cmpyid == cmpyId)
-                                    .Join(_context.PmsReservations,
-                                    leg => leg.Resvno,
-                                        resv => resv.Resvno,
-                                        (leg, resv) => new HomeModel
+            var resvResultList = await (from l in _context.PmsRoomledgers
+                                        join r in _context.PmsReservations on l.Resvno equals r.Resvno
+                                        where r.Contactnme.Contains(keyword) && l.Roomno == null
+                                        group new { l, r } by new { r.Resvno, l.Batchno, r.Nightqty, r.Arrivedte, r.Contactnme, r.Contactno } into g
+                                        select new HomeModel
                                         {
-                                            CheckInid = leg.Checkinid,
-                                            RoomLgId = leg.Roomlgid,
-                                            ResvNo = leg.Resvno,
-                                            RoomNo = leg.Roomno,
-                                            CheckInDate = resv.Arrivedte,
-                                            NightQty = resv.Nightqty,
-                                            GuestName = resv.Contactnme,
-                                            GuestNo = resv.Contactno
+                                            RoomLgId = g.Min(x => x.l.Roomlgid),
+                                            ResvNo = g.Key.Resvno,
+                                            CheckInDate = g.Key.Arrivedte,
+                                            NightQty = g.Key.Nightqty,
+                                            GuestName = g.Key.Contactnme,
+                                            GuestNo = g.Key.Contactno
                                         })
-                                    .Where(gp => gp.GuestName.Contains(keyword) && gp.CheckInDate.Date <= hotelDate.Date)
-                                    .ToListAsync();
-
-            foreach (var result in resultList)
-            {
-                resvResultList.RemoveAll(resv => resv.ResvNo == result.ResvNo && resv.RoomNo != null);
-            }
+                                 .ToListAsync();
 
             var allResultList = resultList.Union(resvResultList).ToList();
 
