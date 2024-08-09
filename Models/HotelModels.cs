@@ -184,6 +184,7 @@ namespace Hotel_Core_MVC_V1.Models
 
         public int Userid { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N0}")] 
         public decimal Price { get; set; }
 
         public int Quantity { get; set; }

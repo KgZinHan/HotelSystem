@@ -56,10 +56,10 @@
 
             @if (Model.FolioBalance > 0)
             {
-                <a asp-action="View" asp-controller="GuestBilling" asp-route-id="@Model.RoomLgId" class="btn btn-default m-1"
-                   style="background-color: #31849B;color: white">Go to Bill</a>
-                <a asp-action="CheckOut" asp-controller="Home" asp-route-id="@Model.CheckInid" class="btn btn-default m-1 ml-auto"
-                   onclick="return confirmForceCheckOut()" style="background-color: #31849B;color: white">Force Check-out</a>
+                <a asp-action="View" asp-controller="GuestBilling" asp-route-id="@Model.RoomLgId" class="btn btn-success m-1"
+                   >Go to Bill</a>
+                <a asp-action="CheckOut" asp-controller="Home" asp-route-id="@Model.CheckInid" class="btn btn-danger m-1 ml-auto"
+                   onclick="return confirmForceCheckOut()">Force Check-out</a>
             }
             else
             {

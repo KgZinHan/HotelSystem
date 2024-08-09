@@ -61,13 +61,13 @@
 </section>
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-gray">
+        <div class="card">
             <div class="card-header">
                 <h3 class="card-title">@Model.RoomType</h3>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="height: 500px">
                         <div class="col-md-12">
                             <table id="example1" class="table table-bordered dataTable table-hover dtr-inline" aria-describedby="example1_info">
                                 <thead>
@@ -78,7 +78,7 @@
                                         @foreach (var date in Model.DateList)
                                         {
                                             <th style="text-align: center;min-width: 60px">
-                                                @Convert.ToDateTime(date).ToString("dd-MM")
+                                                @Convert.ToDateTime(date).ToString("dd MMM")
                                             </th>
                                         }
                                     </tr>

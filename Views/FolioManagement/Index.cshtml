@@ -166,7 +166,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <input id="hiddenRoomLgId" type="hidden" asp-for="Roomlgid" />
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">Room No</label>
+                                        <label class="col-form-label col-sm-4">Room No</label>
                                         <div class="col-sm-7">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -176,25 +176,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">Guest Name</label>
-                                        <input id="inputGuestName" class="form-control col-sm-7" readonly />
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Check-in ID</label>
-                                        <input id="inputCheckInId" class="form-control col-sm-7" readonly />
+                                        <label class="col-form-label col-sm-4">Guest Name</label>
+                                        <div class="col-sm-7">
+                                            <input id="inputGuestName" class="form-control" readonly />
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">Arrive Date</label>
-                                        <input id="inputArriveDate" type="date" class="form-control col-sm-7" readonly />
+                                        <label class="col-form-label col-sm-4">Arrive Date</label>
+                                        <div class="col-sm-7">
+                                            <input id="inputArriveDate" class="form-control" readonly />
+                                        </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">No. of Night</label>
-                                        <input id="inputNightQty" class="form-control col-sm-7" readonly />
+                                        <label class="col-form-label col-sm-4">No. of Night</label>
+                                        <div class="col-sm-7">
+                                            <input id="inputNightQty" class="form-control" readonly />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -219,46 +220,52 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-6 table-responsive" style="height: 500px">
-                                <button class="btn">Folio Routing(Bill Routing)</button>
-                                <table id="srvcFolioTable" class="table table-bordered datatable dtr-inline mt-1" aria-describedby="inHouseGuestTable_info">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Service
-                                            </th>
-                                            <th>
-                                                Service Code
-                                            </th>
-                                            <th>
-                                                Folio Code
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="SrvcFolioTableBody">
-                                        @foreach (SrvcFolio srvc in @ViewBag.SrvcFolioList)
-                                        {
-                                            <tr style="font-size: 14px;text-align: left">
-                                                <td>@srvc.SrvcDesc</td>
-                                                <td>@srvc.SrvcCde</td>
-                                                <td style="padding: 0px">
-                                                    <select value="@srvc.FolioCde" style="padding: 12px;width: 100%;border: none;">
-                                                        <option>MF</option>
-                                                    </select>
-                                                </td>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-8 ">Folio Routing(Bill Routing)</label>
+                                    <div class="col-4">
+                                        <input type="button" value="Save" class="btn btn-default" style="background-color: #31849B;color: white;float: right" onclick="saveFolioManagement()" />
+                                    </div>
+                                </div>
+                                <div class="table-responsive" style="height: 500px">
+                                    <table id="srvcFolioTable" class="table table-bordered datatable dtr-inline mt-1" aria-describedby="inHouseGuestTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Service
+                                                </th>
+                                                <th>
+                                                    Service Code
+                                                </th>
+                                                <th>
+                                                    Folio Code
+                                                </th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody id="SrvcFolioTableBody">
+                                            @foreach (SrvcFolio srvc in @ViewBag.SrvcFolioList)
+                                            {
+                                                <tr style="font-size: 14px;text-align: left">
+                                                    <td>@srvc.SrvcDesc</td>
+                                                    <td>@srvc.SrvcCde</td>
+                                                    <td style="padding: 0px">
+                                                        <select value="@srvc.FolioCde" style="padding: 12px;width: 100%;border: none;">
+                                                            <option>MF</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="card-footer col-md-12">
-                <input type="button" value="Save" class="btn btn-default m-2" style="background-color: #31849B;color: white" onclick="saveFolioManagement()" />
-            </div>
+
         </div>
     </div>
 </section>

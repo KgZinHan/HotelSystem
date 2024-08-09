@@ -25,10 +25,14 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
         {
             SetLayOutData();
 
+            var hotelDate = GetHotelDate();
+
             var checkInModel = new CheckInModel()
             {
-                Occudte = GetHotelDate(),
-                Departdte = GetHotelDate().AddDays(1)
+                Occudte = hotelDate,
+                StringArriveDte = hotelDate.ToString("dd MMM yyyy"),
+                Departdte = hotelDate.AddDays(1),
+                StringDepartDte = hotelDate.ToString("dd MMM yyyy")
             };
 
             return View(checkInModel);
@@ -46,7 +50,9 @@ namespace Hotel_Core_MVC_V1.Controllers.CheckIn
                 .Select(rm => new CheckInModel
                 {
                     Occudte = hotelDate,
+                    StringArriveDte = hotelDate.ToString("dd MMM yyyy"),
                     Departdte = hotelDate.AddDays(1),
+                    StringDepartDte = hotelDate.ToString("dd MMM yyyy"),
                     Roomno = rm.Roomno,
                     Rmtypdesc = _context.MsHotelRoomTypes.Where(typ => typ.Rmtypid == rm.Rmtypid && typ.Cmpyid == cmpyId).Select(typ => typ.Rmtypcde).FirstOrDefault() ?? "",
                     Rmprice = _context.MsHotelRoomRates.Where(rate => rate.Rmtypid == rm.Rmtypid && rate.Cmpyid == cmpyId && rate.Defrateflg == true).Select(rate => rate.Price).FirstOrDefault(),

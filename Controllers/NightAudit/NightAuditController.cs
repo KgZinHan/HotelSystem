@@ -47,12 +47,13 @@ namespace Hotel_Core_MVC_V1.Controllers.NightAudit
                 timeLeft = new TimeSpan(0);
             }
 
-
+            var hotelDate = GetHotelDate();
 
             var model = new NightAuditFormModel()
             {
                 LastNightAuditDateTime = storeDtetime.ToString("dd MMM yyyy hh:mm:ss tt"),
-                NightDate = GetHotelDate(),
+                NightDate = hotelDate,
+                StringNightDate = hotelDate.ToString("dd MMM yyyy"),
                 ShiftNo = GetShiftNo(),
                 ButtonFlag = flag,
                 TimeLeft = timeLeft.ToString("hh\\:mm\\:ss")

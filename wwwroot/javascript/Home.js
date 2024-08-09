@@ -2,7 +2,7 @@
 
 function search(keyword) {
 
-    $('#spanSearchingText').show();
+    $('#loader-wrapper').show();
 
     $.ajax({
         type: 'GET',
@@ -10,7 +10,7 @@ function search(keyword) {
         data: { keyword: keyword },
         success: function (data) {
             $('#homeBody').html(data);
-            $('#spanSearchingText').hide();
+            $('#loader-wrapper').hide();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {

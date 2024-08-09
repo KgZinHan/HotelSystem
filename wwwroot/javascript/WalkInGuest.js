@@ -13,7 +13,21 @@ function calculateCheckOutDate() {
         chkOutDate.setDate(chkOutDate.getDate() + noOfDays);
         const formattedChkOutDate = chkOutDate.toISOString().slice(0, 10); // Format the date as YYYY-MM-DD
         $('#inputCheckOutDate').val(formattedChkOutDate);
+        $('#inputStringCheckOutDate').val(formatDate(chkOutDate));
     }
+}
+
+function formatDate(date) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const day = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const
+        dayOfMonth = String(date.getDate()).padStart(2, '0');
+
+    return `${dayOfMonth} ${month} ${year}`;
 }
 
 
@@ -103,7 +117,7 @@ function chooseRoom() {
             $('#roomModalBodyId').html(data);
             $('#roomModal').show();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR) {
             if (jqXHR.status === 401) {
                 alert('Session Expired!');
                 window.location.href = '/MsUsers/Login';  // Redirect to login

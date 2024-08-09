@@ -11,5 +11,6 @@
         public bool ButtonFlag { get; set; }
 
         public string TimeLeft { get; set; } = string.Empty;
+        public string StringNightDate { get; set; } = string.Empty;
     }
 }

@@ -30,9 +30,7 @@ function chooseInHouseRoom(roomLgId) {
             $('#hiddenRoomLgId').val(room.roomLgId);
             $('#inputRoomNo').val(room.roomno);
             $('#inputGuestName').val(room.guestName);
-            $('#inputCheckInId').val(room.checkInId);
-            var occudte = room.occudte.split('T')[0];
-            $('#inputArriveDate').val(occudte);
+            $('#inputArriveDate').val(room.stringArriveDte);
             $('#inputNightQty').val(room.nightqty);
             closeInHouseRoomModal();
         },

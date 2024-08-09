@@ -1,5 +1,40 @@
 ﻿@model Hotel_Core_MVC_V1.Models.GuestChoose
 
+<style>
+    #loader-wrapper {
+        position: relative;
+        height: 500px;
+        background: #fff; /* background color of the loader wrapper */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #loader {
+        border: 8px solid #f3f3f3; /* light grey */
+        border-top: 8px solid #3498db; /* blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    #content {
+        text-align: center;
+        padding: 20px;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
 <script>
     $(function () {
         $("#guestInfoTable").DataTable({
@@ -12,6 +47,7 @@
             theme: 'bootstrap4'
         })
     });
+
 </script>
 
 <!-- Create Country Modal -->
@@ -127,7 +163,9 @@
                 
                 <div class="table-responsive mt-3" style="height: 500px">
                     <div class="container-fluid">
-                        <span id="hdnLoading" style="display: none;margin-left: 10px">Loading ....</span>
+                        <div id="hdnLoading" style="display: none;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                            <div id="loader"></div>
+                        </div>
                         <table id="guestInfoTable" class="table table-bordered table-hover">
                             <thead class="text-md-center">
                                 <tr style="font-size: 14px;text-align: left">
@@ -222,52 +260,7 @@
                                         <span asp-validation-for="@Model.Guest.Chrgacccde" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label asp-for="@Model.Guest.Gender" class="col-sm-5 col-form-label"></label>
-                                    <div class="col-sm-7">
-                                        <select id="selectGender" asp-for="@Model.Guest.Gender" class="form-control" style="width: 100%;">
-                                            <option value="">Select One</option>
-                                            <option value="0">Male</option>
-                                            <option value="1">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label asp-for="@Model.Guest.Countryid" class="col-sm-5 col-form-label">Country</label>
-                                    <div class="col-sm-5">
-                                        <select id="selectCountryid" asp-for="@Model.Guest.Countryid" asp-items="ViewBag.GuestCountries" class="form-control" style="width: 100%;" onchange="changeStateSelectList(this.value,'')">
-                                            <option value="">Select One</option>
-                                        </select>
-                                    </div>
-                                    <span asp-validation-for="@Model.Guest.Countryid" class="text-danger"></span>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-default" onclick="openCreateCountryModal()"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label asp-for="@Model.Guest.Stateid" class="col-sm-5 col-form-label">State</label>
-                                    <div class="col-sm-5">
-                                        <select id="selectStateid" asp-for="@Model.Guest.Stateid" asp-items="ViewBag.GuestStates" class="form-control" style="width: 100%;">
-                                            <option value="">Select One</option>
-                                        </select>
-                                    </div>
-                                    <span asp-validation-for="@Model.Guest.Stateid" class="text-danger"></span>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-default" onclick="openCreateStateModal()"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label asp-for="@Model.Guest.Nationid" class="col-sm-5 col-form-label">Nationality</label>
-                                    <div class="col-sm-5">
-                                        <select id="selectNationid" asp-for="@Model.Guest.Nationid" asp-items="ViewBag.GuestNationalities" class="form-control" style="width: 100%;">
-                                            <option value="">Select One</option>
-                                        </select>
-                                    </div>
-                                    <span asp-validation-for="@Model.Guest.Nationid" class="text-danger"></span>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-default" onclick="openCreateNationalityModal()"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
+                                
                                 <div class="card collapsed-card">
                                     <div class="card-header">
                                         <h3 class="card-title">More</h3>
@@ -278,6 +271,52 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
+                                        <div class="form-group row">
+                                            <label asp-for="@Model.Guest.Gender" class="col-sm-5 col-form-label"></label>
+                                            <div class="col-sm-7">
+                                                <select id="selectGender" asp-for="@Model.Guest.Gender" class="form-control" style="width: 100%;">
+                                                    <option value="">Select One</option>
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="@Model.Guest.Countryid" class="col-sm-5 col-form-label">Country</label>
+                                            <div class="col-sm-5">
+                                                <select id="selectCountryid" asp-for="@Model.Guest.Countryid" asp-items="ViewBag.GuestCountries" class="form-control" style="width: 100%;" onchange="changeStateSelectList(this.value,'')">
+                                                    <option value="">Select One</option>
+                                                </select>
+                                            </div>
+                                            <span asp-validation-for="@Model.Guest.Countryid" class="text-danger"></span>
+                                            <div class="col-sm-2">
+                                                <button type="button" class="btn btn-default" onclick="openCreateCountryModal()"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="@Model.Guest.Stateid" class="col-sm-5 col-form-label">State</label>
+                                            <div class="col-sm-5">
+                                                <select id="selectStateid" asp-for="@Model.Guest.Stateid" asp-items="ViewBag.GuestStates" class="form-control" style="width: 100%;">
+                                                    <option value="">Select One</option>
+                                                </select>
+                                            </div>
+                                            <span asp-validation-for="@Model.Guest.Stateid" class="text-danger"></span>
+                                            <div class="col-sm-2">
+                                                <button type="button" class="btn btn-default" onclick="openCreateStateModal()"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label asp-for="@Model.Guest.Nationid" class="col-sm-5 col-form-label">Nationality</label>
+                                            <div class="col-sm-5">
+                                                <select id="selectNationid" asp-for="@Model.Guest.Nationid" asp-items="ViewBag.GuestNationalities" class="form-control" style="width: 100%;">
+                                                    <option value="">Select One</option>
+                                                </select>
+                                            </div>
+                                            <span asp-validation-for="@Model.Guest.Nationid" class="text-danger"></span>
+                                            <div class="col-sm-2">
+                                                <button type="button" class="btn btn-default" onclick="openCreateNationalityModal()"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <label asp-for="@Model.Guest.Guestlastnme" class="col-sm-5 col-form-label">Last Name</label>
                                             <div class="col-sm-7">
@@ -356,8 +395,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-default" style="background-color: #31849B;color: white"  type="button" onclick="addGuest()">Add</button>
-                                <button class="btn btn-default" style="background-color: #31849B;color: white" type="button" style="float: right" onclick="clearGuestForm()">Clear</button>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-default" style="background-color: #31849B;color: white" type="button" onclick="addGuest()">Add</button>
+                                    <button class="btn btn-danger" type="button" onclick="clearGuestForm()">Clear</button>
+                                </div>
+                                
                             </form>
                         </div>
                     </div>

@@ -84,16 +84,19 @@
                         <form id="quickCheckInForm" asp-action="Add" asp-controller="WalkInGuest" method="POST">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label asp-for="Occudte" class="control-label col-sm-4"></label>
-                                        <input id="inputCheckInDate" asp-for="Occudte" type="date" class="form-control col-sm-7" readonly />
-                                        <span asp-validation-for="Occudte" class="text-danger"></span>
+                                        <label asp-for="Occudte" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputCheckInDate" asp-for="Occudte" type="hidden"  />
+                                            <input asp-for="StringArriveDte" class="form-control" readonly/>
+                                            <span asp-validation-for="Occudte" class="text-danger"></span>
+                                        </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Roomno" class="control-label col-sm-4"></label>
+                                        <label asp-for="Roomno" class="col-form-label col-sm-4"></label>
                                         <div class="col-sm-7">
-                                            <div class="input-group mb-3">
+                                            <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <a class="btn btn-default" style="background-color: #31849B;color: white" asp-action="RoomOccupancy" asp-controller="RoomEnquiry" asp-route-rmTypCde="ALL">Choose</a>
                                                 </div>
@@ -102,56 +105,86 @@
                                         </div>
                                         <span asp-validation-for="Roomno" class="text-danger"></span>
                                     </div>
-                                    <input asp-for="RmtypId" class="form-control col-sm-7" type="hidden" />
+                                    <input asp-for="RmtypId" type="hidden" />
                                     <div class="form-group row">
-                                        <label asp-for="Rmtypdesc" class="control-label col-sm-4"></label>
-                                        <input asp-for="Rmtypdesc" class="form-control col-sm-7" readonly />
-                                        <span asp-validation-for="Rmtypdesc" class="text-danger"></span>
+                                        <label asp-for="Rmtypdesc" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input asp-for="Rmtypdesc" class="form-control" readonly />
+                                            <span asp-validation-for="Rmtypdesc" class="text-danger"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label asp-for="Nightqty" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputNightQty" asp-for="Nightqty" class="form-control" min="0" oninput="calculateCheckOutDate()" />
+                                            <span asp-validation-for="Nightqty" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-4">Room Rate</label>
+                                        <label asp-for="Departdte" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputCheckOutDate" type="hidden" asp-for="Departdte"  />
+                                            <input id="inputStringCheckOutDate" asp-for="StringDepartDte" class="form-control" readonly />
+                                            <span asp-validation-for="Departdte" class="text-danger"></span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Room Rate</label>
                                         <div class="col-sm-7">
                                             <select id="selectRmRate" class="form-control" asp-for="Rmrateid" asp-items="ViewBag.Rates" style="width: 100%;" onchange="changeAmount()">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Rmprice" class="control-label col-sm-4"></label>
-                                        <input id="inputRmprice" asp-for="Rmprice" type="number" min="0" step="1" class="form-control col-sm-7" oninput="calculateAmount()" />
-                                        <span asp-validation-for="Rmprice" class="text-danger"></span>
+                                        <label asp-for="Rmprice" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputRmprice" type="number" asp-for="Rmprice" min="0" class="form-control" oninput="calculateAmount()" />
+                                            <span asp-validation-for="Rmprice" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Nightqty" class="control-label col-sm-4"></label>
-                                        <input id="inputNightQty" asp-for="Nightqty" class="form-control col-sm-7" min="0" oninput="calculateCheckOutDate()" />
-                                        <span asp-validation-for="Nightqty" class="text-danger"></span>
+                                        <label asp-for="Extrabedqty" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputExtrabedqty" type="number" asp-for="Extrabedqty" min="0" class="form-control" oninput="calculateAmount()" />
+                                            <span asp-validation-for="Extrabedqty" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Departdte" class="control-label col-sm-4"></label>
-                                        <input id="inputCheckOutDate" type="date" asp-for="Departdte" class="form-control col-sm-7" readonly />
-                                        <span asp-validation-for="Departdte" class="text-danger"></span>
+                                        <label asp-for="Extrabedprice" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputExtrabedprice" type="number" asp-for="Extrabedprice" min="0" class="form-control" oninput="calculateAmount()" />
+                                            <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Extrabedqty" class="control-label col-sm-4"></label>
-                                        <input id="inputExtrabedqty" type="number" asp-for="Extrabedqty" min="0" class="form-control col-sm-7" oninput="calculateAmount()" />
-                                        <span asp-validation-for="Extrabedqty" class="text-danger"></span>
+                                        <label asp-for="Discountamt" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputDiscountamt" type="number" asp-for="Discountamt" min="0" class="form-control" oninput="calculateAmount()" />
+                                            <span asp-validation-for="Discountamt" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Extrabedprice" class="control-label col-sm-4"></label>
-                                        <input id="inputExtrabedprice" type="number" asp-for="Extrabedprice" min="0" step="1" class="form-control col-sm-7" oninput="calculateAmount()" />
-                                        <span asp-validation-for="Extrabedprice" class="text-danger"></span>
+                                        <label asp-for="Amt" class="col-form-label col-sm-4"></label>
+                                        <div class="col-sm-7">
+                                            <input id="inputAmt" asp-for="Amt" min="0"  class="form-control" readonly />
+                                            <span asp-validation-for="Amt" class="text-danger"></span>
+                                        </div>
+                                        
                                     </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label asp-for="Discountamt" class="control-label col-sm-4"></label>
-                                        <input id="inputDiscountamt" type="number" asp-for="Discountamt" min="0" step="1" class="form-control col-sm-7" oninput="calculateAmount()" />
-                                        <span asp-validation-for="Discountamt" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label asp-for="Amt" class="control-label col-sm-4"></label>
-                                        <input id="inputAmt" type="number" asp-for="Amt" min="0" step="1" class="form-control col-sm-7" readonly />
-                                        <span asp-validation-for="Amt" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="control-label col-sm-4">Guests</label>
+                                        <label class="col-form-label col-sm-4">Guests</label>
                                         <div class="col-sm-7">
                                             <div class="input-group mb-3">
                                                 <button type="button" class="btn btn-default" style="background-color: #31849B;color: white" onclick="chooseGuest()">Browse</button>
@@ -176,38 +209,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="guestDetailsTableBody" class="text-md-left">
-                                                    @* <tr style="font-size: 14px; text-align: left;">
-                                                        <td style="padding: 5px; text-align: center;">1</td>
-                                                        <td style="display: none;">1</td>
-                                                        <td style="padding: 5px;">Default Guest</td>
-                                                        <td style="display: none;"></td>
-                                                        <td style="display: none;">12/Htoutkyant(N)112233</td>
-                                                        <td style="display: none;">0001-01-01</td>
-                                                        <td style="display: none;">0001-01-01</td>
-                                                        <td style="display: none;">13</td>
-                                                        <td style="display: none;">1</td>
-                                                        <td style="display: none;">11</td>
-                                                        <td style="display: none;">false</td>
-                                                        <td style="display: none;"></td>
-                                                        <td style="display: none;"></td>
-                                                        <td style="display: none;"></td>
-                                                        <td style="display: none;">0</td>
-                                                        <td style="display: none;"></td>
-                                                        <td style="display: none;">0</td>
-                                                        <td style="display: none;">72070</td>
-                                                        <td style="padding: 5px; text-align: center;">
-                                                            <input type="checkbox" checked>
-                                                        </td>
-                                                        <td style="display: none;">0001-01-01</td>
-                                                        <td style="display: none;">0</td>
-                                                        <td style="display: none;">1401/H01</td>
-                                                        <td style="padding: 5px; color: red; text-align: center; cursor: pointer;" onclick="removeRow(this)">Remove</td>
-                                                    </tr> *@
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-default" style="background-color: #31849B;color: white" />

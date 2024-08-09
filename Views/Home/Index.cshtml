@@ -28,6 +28,39 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         }
 
+        #loader-wrapper {
+            position: relative;
+            height: 500px;
+            background: #fff; /* background color of the loader wrapper */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loader {
+            border: 8px solid #f3f3f3; /* light grey */
+            border-top: 8px solid #3498db; /* blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        #content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
     </style>
 }
 
@@ -109,39 +142,6 @@
 <div class="text-center">
     <h2 class="display-4">Welcome to @ViewData["Hotel Name"]</h2>
 </div>
-@* <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="hotelStatusTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="hotelStatusTable_info">
-                    <thead>
-                        <tr>
-                            <th>
-                                Description
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td style="text-align: center">
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.status)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section> *@
 
 <section class="content">
     <div class="container-fluid">
@@ -155,7 +155,6 @@
                         </button>
                     </div>
                 </div>
-                <span id="spanSearchingText" style="display: none;">Searching...</span>
             </div>
         </div>
     </div>
@@ -163,6 +162,9 @@
 <section class="content">
     <div class="container-fluid">
         <div id="homeBody">
+            <div id="loader-wrapper" style="display: none">
+                <div id="loader"></div>
+            </div>
         </div>
     </div>
 </section>
